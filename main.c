@@ -6,6 +6,7 @@ EAPI_MAIN int
 elm_main(int argc, char **argv)
 {
    gui_create();
+   theme_init();
    theme_load();
 
    elm_run();
