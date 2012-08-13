@@ -6,9 +6,12 @@ gui_create(void)
    Evas_Object *win, *o;
    Evas_Object *box, *lbl, *btn, *panes;
 
-   win = elm_win_util_standard_add("elm-theme-viewer", "Elm Theme Viewer");
-   evas_object_resize(win, 300, 400);
-   evas_object_show(win);
+   elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
+
+   win = o = elm_win_util_standard_add("elm-theme-viewer", "Elm Theme Viewer");
+   elm_win_autodel_set(o, EINA_TRUE);
+   evas_object_resize(o, 300, 400);
+   evas_object_show(o);
 
    box = o = elm_box_add(win);
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
