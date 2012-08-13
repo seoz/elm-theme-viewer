@@ -43,14 +43,34 @@ theme_init(void)
 void
 theme_load(void)
 {
-   Eina_List *l, *ll;
-   const char *group;
+   Eina_List *l = NULL, *ll = NULL;
+   char *group = NULL, *token = NULL;
+   char *style = NULL;
+   char buf[PATH_MAX] = {0, };
+   Widget_Data *wd = NULL;
 
    l = edje_file_collection_list("/usr/local/share/elementary/themes/default.edj");
    if (!l) return;
 
    EINA_LIST_FOREACH(l, ll, group)
-     fprintf(stderr, "%s\n", group);
+     {
+        strncpy(buf, group, sizeof(buf));
+
+        token = strtok(buf, "/");
+        if (strncmp("elm", token, 5)) continue;
+
+        token = strtok(NULL, "/");
+        if (!token) continue;
+
+        wd = eina_hash_find(widget_list, token);
+        if (!wd) continue;
+
+        style = strstr(group, "/");
+        style = strstr(style + 1, "/");
+        style++;
+
+        fprintf(stderr, "%s %s %p\n", group, style, wd);
+     }
 
    edje_file_collection_list_free(l);
 }
