@@ -1,5 +1,6 @@
 #include <Edje.h>
 #include "log.h"
+#include "theme.h"
 
 typedef struct _Widget_Data Widget_Data;
 struct _Widget_Data
@@ -51,6 +52,7 @@ theme_load(void)
    char *style = NULL;
    char buf[PATH_MAX] = {0, };
    Widget_Data *wd = NULL;
+   Eina_Compare_Cb cmp_func = (Eina_Compare_Cb)strcmp;
 
    l = edje_file_collection_list("/usr/local/share/elementary/themes/default.edj");
    if (!l) return;
@@ -62,20 +64,36 @@ theme_load(void)
         token = strtok(buf, "/");
         if (strncmp("elm", token, 5)) continue;
 
+        // get the widget name
         token = strtok(NULL, "/");
         if (!token) continue;
 
+        // get the widget data of the widget
         wd = eina_hash_find(widget_list, token);
         if (!wd) continue;
 
+        // get the style name
         style = strstr(group, "/");
         style = strstr(style + 1, "/");
         style++;
 
-        fprintf(stderr, "%s %s %p\n", group, style, wd);
+        //fprintf(stderr, "%s %s %p\n", group, style, wd);
+        wd->styles = eina_list_sorted_insert(wd->styles, cmp_func, style);
      }
 
    edje_file_collection_list_free(l);
 
    INF("Theme Load Done");
+}
+
+void
+widget_style_print(const char *widget)
+{
+   Eina_List *l = NULL;
+   Widget_Data *wd = NULL;
+   char *style = NULL;
+
+   wd = eina_hash_find(widget_list, widget);
+   EINA_LIST_FOREACH(wd->styles, l, style)
+     INF("%s", style);
 }
