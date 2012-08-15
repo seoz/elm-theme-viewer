@@ -37,7 +37,8 @@ theme_init(void)
         // TODO : free the data when it's not used anymore.
         wd = (Widget_Data *)calloc(1, sizeof(Widget_Data));
         eina_hash_add(widget_list, widgets[i], wd);
-        //fprintf(stderr, "%s\n", widgets[i++]);
+        //fprintf(stderr, "%s\n", widgets[i]);
+        i++;
      }
    INF("Theme Init Done");
 }
