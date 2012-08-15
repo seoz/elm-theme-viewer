@@ -1,11 +1,14 @@
 #include <Elementary.h>
 #include "log.h"
+#include "theme.h"
+
+Evas_Object *widget_gl;
 
 void
 gui_create(void)
 {
    Evas_Object *win, *o;
-   Evas_Object *box, *lbl, *btn, *panes;
+   Evas_Object *box, *lbl, *btn, *panes, *left_box;
 
    elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
 
@@ -33,10 +36,33 @@ gui_create(void)
 
    panes = o = elm_panes_add(win);
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
    elm_box_pack_end(box, o);
+   evas_object_show(o);
+
+   left_box = o = elm_box_add(win);
+   elm_object_part_content_set(panes, "left", o);
+   evas_object_show(o);
+
+   widget_gl = o = elm_list_add(win);
+   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   elm_box_pack_end(left_box, o);
    evas_object_show(o);
 
    INF("GUI Creation Done");
 
    return;
+}
+
+void
+gui_widget_load(void)
+{
+   int i = 0;
+
+   while (widgets[i])
+     {
+        elm_list_item_append(widget_gl, widgets[i], NULL, NULL, NULL, NULL);
+        i++;
+     }
 }

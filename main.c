@@ -7,9 +7,13 @@ EAPI_MAIN int
 elm_main(int argc, char **argv)
 {
    log_init();
-   gui_create();
+
+   // TODO: run this in a background
    theme_init();
    theme_load();
+
+   gui_create();
+   gui_widget_load();
 
    elm_run();
    elm_shutdown();
