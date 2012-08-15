@@ -38,7 +38,7 @@ theme_init(void)
         // TODO : free the data when it's not used anymore.
         wd = (Widget_Data *)calloc(1, sizeof(Widget_Data));
         eina_hash_add(widget_list, widgets[i], wd);
-        //fprintf(stderr, "%s\n", widgets[i]);
+        //INF("%s", widgets[i]);
         i++;
      }
    INF("Theme Init Done");
@@ -62,7 +62,11 @@ theme_load(void)
         strncpy(buf, group, sizeof(buf));
 
         token = strtok(buf, "/");
-        if (strncmp("elm", token, 5)) continue;
+        if (strncmp("elm", token, 5))
+          {
+             ERR("%s is not a proper elementary style.", token);
+             continue;
+          }
 
         // get the widget name
         token = strtok(NULL, "/");
@@ -70,14 +74,18 @@ theme_load(void)
 
         // get the widget data of the widget
         wd = eina_hash_find(widget_list, token);
-        if (!wd) continue;
+        if (!wd)
+          {
+             ERR("%s is not a proper elementary widget.", token);
+             continue;
+          }
 
         // get the style name
         style = strstr(group, "/");
         style = strstr(style + 1, "/");
         style++;
 
-        //fprintf(stderr, "%s %s %p\n", group, style, wd);
+        //INF(stderr, "%s %s %p", group, style, wd);
         wd->styles = eina_list_sorted_insert(wd->styles, cmp_func, style);
      }
 
