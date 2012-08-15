@@ -1,4 +1,5 @@
 #include <Elementary.h>
+#include "log.h"
 
 void
 gui_create(void)
@@ -34,6 +35,8 @@ gui_create(void)
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
    elm_box_pack_end(box, o);
    evas_object_show(o);
+
+   INF("GUI Creation Done");
 
    return;
 }

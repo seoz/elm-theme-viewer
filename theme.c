@@ -1,4 +1,5 @@
 #include <Edje.h>
+#include "log.h"
 
 typedef struct _Widget_Data Widget_Data;
 struct _Widget_Data
@@ -38,6 +39,7 @@ theme_init(void)
         eina_hash_add(widget_list, widgets[i], wd);
         //fprintf(stderr, "%s\n", widgets[i++]);
      }
+   INF("Theme Init Done");
 }
 
 void
@@ -73,4 +75,6 @@ theme_load(void)
      }
 
    edje_file_collection_list_free(l);
+
+   INF("Theme Load Done");
 }
