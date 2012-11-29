@@ -96,8 +96,17 @@ theme_load(const char *edje_file)
    INF("Theme Load Done");
 }
 
+Eina_List *
+widget_styles_get(const char *widget)
+{
+   Widget_Data *wd = NULL;
+
+   wd = eina_hash_find(widget_list, widget);
+   return wd->styles;
+}
+
 void
-widget_style_print(const char *widget)
+widget_styles_print(const char *widget)
 {
    Eina_List *l = NULL;
    Widget_Data *wd = NULL;
