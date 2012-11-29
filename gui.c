@@ -5,10 +5,12 @@
 Evas_Object *widget_gl;
 
 void
-gui_create(void)
+gui_create(const char *edje_file)
 {
    Evas_Object *win, *o;
    Evas_Object *box, *lbl, *btn, *panes, *left_box;
+
+   if (!edje_file) return;
 
    elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
 
@@ -23,7 +25,7 @@ gui_create(void)
    evas_object_show(o);
 
    lbl = o = elm_label_add(win);
-   elm_object_text_set(o, "/usr/local/share/elementary/themes/default.edj");
+   elm_object_text_set(o, edje_file);
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
    elm_box_pack_end(box, o);
    evas_object_show(o);

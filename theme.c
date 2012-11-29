@@ -45,7 +45,7 @@ theme_init(void)
 }
 
 void
-theme_load(void)
+theme_load(const char *edje_file)
 {
    Eina_List *l = NULL, *ll = NULL;
    char *group = NULL, *token = NULL;
@@ -54,7 +54,9 @@ theme_load(void)
    Widget_Data *wd = NULL;
    Eina_Compare_Cb cmp_func = (Eina_Compare_Cb)strcmp;
 
-   l = edje_file_collection_list("/usr/local/share/elementary/themes/default.edj");
+   if (!edje_file) return;
+
+   l = edje_file_collection_list(edje_file);
    if (!l) return;
 
    EINA_LIST_FOREACH(l, ll, group)
