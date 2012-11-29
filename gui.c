@@ -2,13 +2,29 @@
 #include "log.h"
 #include "theme.h"
 
-Evas_Object *widget_gl;
+Evas_Object *list;
+
+static Evas_Object *
+_left_menu_create(Evas_Object *parent)
+{
+   Evas_Object *nf;
+
+   nf = elm_naviframe_add(parent);
+   evas_object_show(nf);
+
+   list  = elm_list_add(parent);
+   evas_object_data_set(list, "nf", nf);
+   elm_naviframe_item_push(nf, "Widgets", NULL, NULL, list, NULL);
+   evas_object_show(list);
+
+   return nf;
+}
 
 void
 gui_create(const char *edje_file)
 {
    Evas_Object *win, *o;
-   Evas_Object *box, *lbl, *btn, *panes, *left_box;
+   Evas_Object *box, *lbl, *btn, *panes, *table, *left;
 
    if (!edje_file) return;
 
@@ -42,19 +58,22 @@ gui_create(const char *edje_file)
    elm_box_pack_end(box, o);
    evas_object_show(o);
 
-   left_box = o = elm_box_add(win);
-   elm_object_part_content_set(panes, "left", o);
-   evas_object_show(o);
-
-   widget_gl = o = elm_list_add(win);
-   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   left = o = _left_menu_create(win);
+   evas_object_size_hint_weight_set(o, 0.0, EVAS_HINT_EXPAND);
    evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
-   elm_box_pack_end(left_box, o);
+   elm_object_part_content_set(panes, "left", o);
    evas_object_show(o);
 
    INF("GUI Creation Done");
 
    return;
+}
+
+static void
+_widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   Evas_Object *nf = evas_object_data_get(obj, "nf");
+   if (!nf) return;
 }
 
 void
@@ -64,7 +83,7 @@ gui_widget_load(void)
 
    while (widgets[i])
      {
-        elm_list_item_append(widget_gl, widgets[i], NULL, NULL, NULL, NULL);
+        elm_list_item_append(list, widgets[i], NULL, NULL, _widget_list_sel_cb, widgets[i]);
         i++;
      }
 }
