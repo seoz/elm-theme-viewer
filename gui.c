@@ -97,7 +97,7 @@ gui_create(const char *edje_file)
    evas_object_show(o);
 
    left = _left_menu_create(win);
-   table = o = _elm_min_set(left, box, 200, 0); // set min size hint
+   table = o = _elm_min_set(left, box, 250, 0); // set min size hint
    WEIGHT(o, 0.0, EVAS_HINT_EXPAND);
    FILL(o);
    elm_box_pack_end(box2, table);
