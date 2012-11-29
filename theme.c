@@ -78,7 +78,7 @@ theme_load(const char *edje_file)
         wd = eina_hash_find(widget_list, token);
         if (!wd)
           {
-             ERR("%s is not a proper elementary widget.", token);
+             //ERR("%s is not a proper elementary widget.", token);
              continue;
           }
 
@@ -87,7 +87,7 @@ theme_load(const char *edje_file)
         style = strstr(style + 1, "/");
         style++;
 
-        //INF(stderr, "%s %s %p", group, style, wd);
+        //INF("%s %s %p", group, style, wd);
         wd->styles = eina_list_sorted_insert(wd->styles, cmp_func, style);
      }
 
