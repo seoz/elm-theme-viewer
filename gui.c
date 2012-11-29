@@ -67,7 +67,7 @@ gui_create(const char *edje_file)
 
    win = o = elm_win_util_standard_add("elm-theme-viewer", "Elm Theme Viewer");
    elm_win_autodel_set(o, EINA_TRUE);
-   evas_object_resize(o, 300, 400);
+   evas_object_resize(o, 500, 400);
    evas_object_show(o);
 
    // outer box
@@ -83,6 +83,7 @@ gui_create(const char *edje_file)
    evas_object_show(o);
 
    btn = o = elm_button_add(win);
+   elm_object_disabled_set(btn, EINA_TRUE);
    elm_object_text_set(o, "Select Theme");
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
    elm_box_pack_end(box, o);
