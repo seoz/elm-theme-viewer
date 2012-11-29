@@ -115,7 +115,21 @@ static void
 _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 {
    Evas_Object *nf = evas_object_data_get(obj, "nf");
+   Evas_Object *li;
+   Elm_Object_Item *it;
+   Eina_List *styles;
+   char *style;
+   Eina_List *l;
+
    if (!nf) return;
+
+   li = elm_list_add(nf);
+   styles = widget_styles_get((const char *)data);
+   EINA_LIST_FOREACH(styles, l, style)
+     elm_list_item_append(li, style, NULL, NULL, NULL, NULL);
+
+   it = elm_naviframe_item_push(nf, "Styles", NULL, NULL, li, NULL);
+   elm_object_item_part_text_set(it, "subtitle", (char *)data);
 }
 
 void
