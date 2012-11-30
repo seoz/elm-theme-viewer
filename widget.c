@@ -208,6 +208,137 @@ _widget_icon_create(const char *orig_style)
    return o;
 }
 
+static Evas_Object *
+_widget_layout_content_create(Evas_Object *layout)
+{
+   Evas_Object *table, *bg, *lbl;
+
+   table = elm_table_add(layout);
+   EXPAND(table); FILL(table);
+   evas_object_show(table);
+
+   bg = elm_bg_add(win);
+   EXPAND(bg); FILL(bg);
+   elm_bg_color_set(bg, 100, 100, 100);
+   elm_table_pack(table, bg, 0, 0, 1, 1);
+   evas_object_show(bg);
+
+   lbl = elm_label_add(win);
+   EXPAND(lbl); FILL(lbl);
+   elm_object_text_set(lbl, "This dark area is a content area.");
+   elm_table_pack(table, lbl, 0, 0, 1, 1);
+   evas_object_show(lbl);
+
+   return table;
+}
+
+static void
+_widget_layout_icon_create(Evas_Object *layout)
+{
+   Evas_Object *ic;
+
+   ic = elm_icon_add(win);
+   elm_icon_standard_set(ic, "chat");
+   evas_object_size_hint_min_set(ic, 20, 20);
+   elm_layout_icon_set(layout, ic);
+}
+
+static void
+_widget_layout_end_create(Evas_Object *layout)
+{
+   Evas_Object *ic;
+
+   ic = elm_icon_add(win);
+   elm_icon_standard_set(ic, "close");
+   evas_object_size_hint_min_set(ic, 20, 20);
+   elm_layout_end_set(layout, ic);
+}
+
+static Evas_Object *
+_widget_layout_create(const char *style)
+{
+   Evas_Object *o, *lbl, *content;
+
+   o = elm_layout_add(win);
+   elm_layout_theme_set(o, "layout", "application", style);
+   EXPAND(o); FILL(o);
+   evas_object_show(o);
+
+   if (!strcmp("toolbar-content", style))
+     {
+        content = _widget_layout_content_create(o);
+        elm_layout_content_set(o, "elm.swallow.content", content);
+     }
+   else if (!strcmp("toolbar-content-back", style))
+     {
+        elm_object_part_text_set(o, "elm.text.title", "Layout Title");
+        _widget_layout_end_create(o);
+        content = _widget_layout_content_create(o);
+        elm_layout_content_set(o, "elm.swallow.content", content);
+     }
+   else if (!strcmp("toolbar-content-back-next", style))
+     {
+        elm_object_part_text_set(o, "elm.text.title", "Layout Title");
+        elm_object_part_text_set(o, "elm.text.title", "Layout Title");
+        content = _widget_layout_content_create(o);
+        elm_layout_content_set(o, "elm.swallow.content", content);
+     }
+   else if (!strcmp("content-back", style))
+     {
+        elm_object_part_text_set(o, "elm.text.title", "Layout Title");
+        _widget_layout_end_create(o);
+        content = _widget_layout_content_create(o);
+        elm_layout_content_set(o, "elm.swallow.content", content);
+     }
+   else if (!strcmp("content-back-next", style))
+     {
+        elm_object_part_text_set(o, "elm.text.title", "Layout Title");
+        content = _widget_layout_content_create(o);
+        elm_layout_content_set(o, "elm.swallow.content", content);
+     }
+   else if (!strcmp("titlebar", style))
+     {
+        elm_object_part_text_set(o, "elm.text", "Layout Title");
+        _widget_layout_icon_create(o);
+        _widget_layout_end_create(o);
+        content = _widget_layout_content_create(o);
+        elm_layout_content_set(o, "elm.swallow.content", content);
+     }
+   else if (!strcmp("toolbar-table", style))
+     {
+        content = _widget_layout_content_create(o);
+        elm_layout_table_pack(o, "elm.table.content", content, 0, 0, 1, 1);
+
+        lbl = elm_label_add(win);
+        elm_object_text_set(lbl, "This area is also a content area which packed into a table.");
+        EXPAND(lbl); FILL(lbl);
+        evas_object_show(lbl);
+        elm_layout_table_pack(o, "elm.table.content", lbl, 0, 1, 1, 1);
+
+        lbl = elm_label_add(win);
+        elm_object_text_set(lbl, "This area is also a content area which packed into a table.");
+        EXPAND(lbl); FILL(lbl);
+        evas_object_show(lbl);
+        elm_layout_table_pack(o, "elm.table.content", lbl, 1, 0, 1, 1);
+
+        content = _widget_layout_content_create(o);
+        elm_layout_table_pack(o, "elm.table.content", content, 1, 1, 1, 1);
+     }
+   else if (!strcmp("toolbar-vbox", style))
+     {
+        content = _widget_layout_content_create(o);
+        elm_layout_box_append(o, "elm.box.content", content);
+
+        lbl = elm_label_add(win);
+        elm_object_text_set(lbl, "This area is also a content area which packed into a box.");
+        EXPAND(lbl); FILL(lbl);
+        evas_object_show(lbl);
+        elm_layout_box_append(o, "elm.box.content", lbl);
+     }
+
+   return o;
+}
+
 Evas_Object *
 _widget_progressbar_create(const char *style2)
 {
@@ -309,6 +440,8 @@ widget_create(const char *widget, const char *orig_style)
      o = _widget_hover_create(style);
    else if (!strcmp(widget, "icon"))
      o = _widget_icon_create(orig_style);
+   else if (!strcmp(widget, "layout"))
+     o = _widget_layout_create(style);
    else if (!strcmp(widget, "progressbar"))
      o = _widget_progressbar_create(orig_style);
    else if (!strcmp(widget, "separator"))
