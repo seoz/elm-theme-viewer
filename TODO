@@ -1,2 +1,3 @@
 * use enum for widget type.
 * use hash to search widget name.
+* use eina_stringshare correctly
