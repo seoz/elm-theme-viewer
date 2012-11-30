@@ -9,6 +9,13 @@
 
 Evas_Object *list;
 
+typedef struct _Style_Data Style_Data;
+struct _Style_Data
+{
+   const char *widget;
+   const char *style;
+};
+
 static Evas_Object *
 _elm_min_set(Evas_Object *obj, Evas_Object *parent, Evas_Coord w, Evas_Coord h)
 {
@@ -114,21 +121,39 @@ gui_create(const char *edje_file)
 }
 
 static void
+_style_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   Style_Data *sd = data;
+
+   if (!data) return;
+
+   INF("%s %s", sd->widget, sd->style);
+}
+
+static void
 _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 {
    Evas_Object *nf = evas_object_data_get(obj, "nf");
    Evas_Object *li;
    Elm_Object_Item *it;
-   Eina_List *styles;
+   Eina_List *styles, *l;
    char *style;
-   Eina_List *l;
+   Style_Data *sd;
 
    if (!nf) return;
 
    li = elm_list_add(nf);
+   evas_object_data_set(obj, "widget", data);
+   elm_list_select_mode_set(li, ELM_OBJECT_SELECT_MODE_ALWAYS);
    styles = widget_styles_get((const char *)data);
    EINA_LIST_FOREACH(styles, l, style)
-     elm_list_item_append(li, style, NULL, NULL, NULL, NULL);
+     {
+        // TODO: sd needs to be freed properly
+        sd = (Style_Data *)calloc(1, sizeof(Style_Data));
+        sd->widget = data;
+        sd->style = style;
+        elm_list_item_append(li, style, NULL, NULL, _style_list_sel_cb, sd);
+     }
 
    it = elm_naviframe_item_push(nf, "Styles", NULL, NULL, li, NULL);
    elm_object_item_part_text_set(it, "subtitle", (char *)data);
