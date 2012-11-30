@@ -2,8 +2,6 @@
 #include "log.h"
 #include "theme.h"
 
-//#define USE_HASH 1
-
 typedef struct _Widget_Data Widget_Data;
 struct _Widget_Data
 {
@@ -21,17 +19,7 @@ char *widgets[] = {
      "photo", "photocam", "player", "pointer", "popup", "progressbar", "radio",
      "scroller", "segment_control", "separator", "slider", "slideshow",
      "spinner", "thumb", "toolbar", "tooltip", "video", "win", NULL };
-#ifdef USE_HASH
-Eina_Hash *widget_list;
-#else
 Eina_List *widget_list;
-#endif
-
-static void
-_widget_entry_free_cb(void *data)
-{
-   free(data);
-}
 
 void
 theme_init(void)
@@ -41,18 +29,6 @@ theme_init(void)
 
    if (widget_list) return;
 
-#ifdef USE_HASH
-   widget_list = eina_hash_string_superfast_new(_widget_entry_free_cb);
-   while (widgets[i])
-     {
-        // TODO : free the data when it's not used anymore.
-        wd = (Widget_Data *)calloc(1, sizeof(Widget_Data));
-        wd->widget = widgets[i];
-        eina_hash_add(widget_list, widgets[i], wd);
-        //INF("%s", widgets[i]);
-        i++;
-     }
-#else
    while (widgets[i])
      {
         wd = (Widget_Data *)calloc(1, sizeof(Widget_Data));
@@ -60,7 +36,6 @@ theme_init(void)
         widget_list = eina_list_append(widget_list, wd);
         i++;
      }
-#endif
    INF("Theme Init Done");
 }
 
@@ -96,15 +71,11 @@ theme_load(const char *edje_file)
 
         // get the widget data of the widget
         wd = NULL;
-#ifdef USE_HASH
-        wd = eina_hash_find(widget_list, token);
-#else
         EINA_LIST_FOREACH(widget_list, l, wd)
           {
              if (!strcmp(token, wd->widget))
                 break;
           }
-#endif
         if (!wd)
           {
              //ERR("%s is not a proper elementary widget.", token);
@@ -133,15 +104,11 @@ widget_styles_get(const char *widget)
 
    if (!widget) return NULL;
 
-#ifdef USE_HASH
-   wd = eina_hash_find(widget_list, widget);
-#else
    EINA_LIST_FOREACH(widget_list, l, wd)
      {
         if (!strcmp(widget, wd->widget))
           break;
      }
-#endif
    return wd->styles;
 }
 
@@ -152,15 +119,11 @@ widget_styles_print(const char *widget)
    Widget_Data *wd = NULL;
    char *style = NULL;
 
-#ifdef USE_HASH
-   wd = eina_hash_find(widget_list, widget);
-#else
    EINA_LIST_FOREACH(widget_list, l, wd)
      {
         if (!strcmp(widget, wd->widget))
           break;
      }
-#endif
 
    EINA_LIST_FOREACH(wd->styles, l, style)
      INF("%s", style);
