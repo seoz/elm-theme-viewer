@@ -2,6 +2,7 @@
 #include "common.h"
 #include "gui.h"
 #include "log.h"
+#include "theme.h"
 
 static const char *
 _parse_style(const char *orig_style)
@@ -106,5 +107,6 @@ widget_create(const char *widget, const char *orig_style)
      o = _widget_frame_create(style);
    else
      o = _widget_bg_create(NULL);
+   elm_object_theme_set(o, th);
    return o;
 }

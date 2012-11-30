@@ -1,4 +1,4 @@
-#include <Edje.h>
+#include <Elementary.h>
 #include "log.h"
 #include "theme.h"
 
@@ -13,6 +13,7 @@ char *widgets[] = {
      "scroller", "segment_control", "separator", "slider", "slideshow",
      "spinner", "thumb", "toolbar", "tooltip", "video", "win", NULL };
 Eina_List *widget_list;
+Elm_Theme *th;
 
 void
 theme_init(void)
@@ -22,6 +23,7 @@ theme_init(void)
 
    if (widget_list) return;
 
+   // TODO : create only necessary widget data. do not create all wd for unused widgets.
    while (widgets[i])
      {
         wd = (Widget_Data *)calloc(1, sizeof(Widget_Data));
@@ -30,6 +32,25 @@ theme_init(void)
         i++;
      }
    INF("Theme Init Done");
+}
+
+void
+theme_set(const char *edje_file)
+{
+   if (!edje_file) return;
+
+   th = elm_theme_new();
+   elm_theme_ref_set(th, NULL);
+   elm_theme_overlay_add(th, edje_file);
+}
+
+void
+theme_unset(const char *edje_file)
+{
+   if (!edje_file) return;
+
+   elm_theme_overlay_del(th, edje_file);
+   elm_theme_free(th);
 }
 
 void

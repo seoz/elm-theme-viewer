@@ -23,11 +23,14 @@ elm_main(int argc, char **argv)
    // TODO: run this in a background
    theme_init();
    theme_load(edje_file);
+   theme_set(edje_file);
 
    gui_create(edje_file);
    gui_widget_load();
 
    elm_run();
+
+   theme_unset(edje_file);
    elm_shutdown();
 
    return 0;
