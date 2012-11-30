@@ -48,6 +48,7 @@ _left_menu_create(Evas_Object *parent)
    evas_object_show(nf);
 
    list  = elm_list_add(parent);
+   elm_list_select_mode_set(list, ELM_OBJECT_SELECT_MODE_ALWAYS);
    evas_object_data_set(list, "nf", nf);
    elm_naviframe_item_push(nf, "Widgets", NULL, NULL, list, NULL);
    evas_object_show(list);
@@ -136,11 +137,15 @@ _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 void
 gui_widget_load(void)
 {
-   int i = 0;
+   Eina_List *l;
+   Widget_Data *wd;
 
-   while (widgets[i])
+   EINA_LIST_FOREACH(widget_list, l, wd)
      {
-        elm_list_item_append(list, widgets[i], NULL, NULL, _widget_list_sel_cb, widgets[i]);
-        i++;
+        if (eina_list_count(wd->styles))
+          {
+             elm_list_item_append(list, wd->widget, NULL, NULL,
+                                  _widget_list_sel_cb, wd->widget);
+          }
      }
 }

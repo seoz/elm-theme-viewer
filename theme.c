@@ -2,13 +2,6 @@
 #include "log.h"
 #include "theme.h"
 
-typedef struct _Widget_Data Widget_Data;
-struct _Widget_Data
-{
-   const char *widget;
-   Eina_List *styles;
-};
-
 char *widgets[] = {
      "access", "actionslider", "bg", "border", "bubble", "button", "calendar",
      "check", "clock", "colorselector", "conformant", "ctxpopup", "datetime",
@@ -73,8 +66,8 @@ theme_load(const char *edje_file)
         wd = NULL;
         EINA_LIST_FOREACH(widget_list, l, wd)
           {
-             if (!strcmp(token, wd->widget))
-                break;
+             if (!strcmp(wd->widget, token))
+               break;
           }
         if (!wd)
           {
