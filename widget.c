@@ -137,18 +137,10 @@ _hover_bt_cb(void *data, Evas_Object *obj, void *event_info)
    evas_object_show(data);
 }
 
-static void
-_top_bt_clicked(void *data, Evas_Object *obj, void *event_info)
-{
-   Evas_Object *hv = (Evas_Object *)data;
-   elm_hover_dismiss(hv);
-}
-
 Evas_Object *
 _widget_hover_create(const char* style)
 {
-   Evas_Object *hv, *bt, *bt2, *ic, *bx;
-   char buf[PATH_MAX];
+   Evas_Object *hv, *bt, *bt2;
 
    hv = elm_hover_add(win);
    elm_object_style_set(hv, style);
