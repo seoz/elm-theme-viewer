@@ -59,7 +59,7 @@ void
 gui_create(const char *edje_file)
 {
    Evas_Object *win, *o;
-   Evas_Object *box, *lbl, *btn, *box2, *table, *left, *right;
+   Evas_Object *box, *btn, *box2, *table, *left;
 
    if (!edje_file) return;
 
@@ -76,7 +76,7 @@ gui_create(const char *edje_file)
    elm_win_resize_object_add(win, o);
    evas_object_show(o);
 
-   lbl = o = elm_label_add(win);
+   o = elm_label_add(win);
    elm_object_text_set(o, edje_file);
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
    elm_box_pack_end(box, o);
@@ -103,7 +103,7 @@ gui_create(const char *edje_file)
    FILL(o);
    elm_box_pack_end(box2, table);
 
-   right = o = _right_content_create(win);
+   o = _right_content_create(win);
    EXPAND(o); FILL(o);
    elm_box_pack_end(box2, o);
 
