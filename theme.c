@@ -105,7 +105,7 @@ theme_load(const char *edje_file)
         wd->styles = eina_list_sorted_insert(wd->styles, cmp_func, style);
      }
 
-   edje_file_collection_list_free(l);
+   //edje_file_collection_list_free(l); // TODO
 
    INF("Theme Load Done");
 }

@@ -1,3 +1,4 @@
 * use enum for widget type.
 * use hash to search widget name.
 * use eina_stringshare correctly
+* do edje_file_collection_list_free correctly. now it frees 'frame' from the list when this api is called. weird..
