@@ -209,6 +209,30 @@ _widget_icon_create(const char *orig_style)
 }
 
 Evas_Object *
+_widget_progressbar_create(const char *style2)
+{
+   char buf[PATH_MAX] = {0, };
+   const char *style;
+   Evas_Object *o;
+
+   o = elm_progressbar_add(win);
+   EXPAND(o); FILL(o);
+   elm_progressbar_pulse(o, EINA_TRUE);
+   evas_object_show(o);
+
+   strncpy(buf, style2, sizeof(buf));
+   style = strtok(buf, "/");
+   if (!strcmp("vertical", style))
+     elm_progressbar_horizontal_set(o, EINA_FALSE);
+   style = strtok(NULL, "/");
+
+   elm_object_style_set(o, style);
+   elm_object_text_set(o, style);
+
+   return o;
+}
+
+Evas_Object *
 _widget_separator_create(const char *style, const char *orig_style)
 {
    Evas_Object *o;
@@ -285,6 +309,8 @@ widget_create(const char *widget, const char *orig_style)
      o = _widget_hover_create(style);
    else if (!strcmp(widget, "icon"))
      o = _widget_icon_create(orig_style);
+   else if (!strcmp(widget, "progressbar"))
+     o = _widget_progressbar_create(orig_style);
    else if (!strcmp(widget, "separator"))
      o = _widget_separator_create(style, orig_style);
    else if (!strcmp(widget, "spinner"))
