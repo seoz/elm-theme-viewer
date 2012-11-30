@@ -61,6 +61,34 @@ _widget_button_create(const char* style)
 }
 
 Evas_Object *
+_widget_clock_create(const char* style)
+{
+   Evas_Object *o;
+   o = elm_clock_add(win);
+   elm_object_style_set(o, style);
+   evas_object_show(o);
+
+   return o;
+}
+
+Evas_Object *
+_widget_entry_create(const char* style)
+{
+   char buf[PATH_MAX];
+
+   Evas_Object *o;
+   o = elm_entry_add(win);
+   elm_object_style_set(o, style);
+   snprintf(buf, sizeof(buf),
+            "This is an entry widget in this window that<br/>"
+            "uses markup <b>like this</> for styling and<br/>");
+   elm_object_text_set(o, buf);
+   evas_object_show(o);
+
+   return o;
+}
+
+Evas_Object *
 _widget_check_create(const char *style)
 {
    Evas_Object *o;
@@ -102,6 +130,44 @@ _widget_fileselector_create(const char *style)
 
    return o;
 }
+
+static void
+_hover_bt_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   evas_object_show(data);
+}
+
+static void
+_top_bt_clicked(void *data, Evas_Object *obj, void *event_info)
+{
+   Evas_Object *hv = (Evas_Object *)data;
+   elm_hover_dismiss(hv);
+}
+
+Evas_Object *
+_widget_hover_create(const char* style)
+{
+   Evas_Object *hv, *bt, *bt2, *ic, *bx;
+   char buf[PATH_MAX];
+
+   hv = elm_hover_add(win);
+   elm_object_style_set(hv, style);
+
+   bt = elm_button_add(win);
+   elm_object_text_set(bt, "click here to see hover");
+   evas_object_smart_callback_add(bt, "clicked", _hover_bt_cb, hv);
+   elm_hover_parent_set(hv, win);
+   elm_hover_target_set(hv, bt);
+   evas_object_show(bt);
+
+   bt2 = elm_button_add(win);
+   elm_object_text_set(bt2, "Popup");
+   elm_object_part_content_set(hv, "middle", bt2);
+   evas_object_show(bt2);
+
+   return bt;
+}
+
 Evas_Object *
 widget_create(const char *widget, const char *orig_style)
 {
@@ -120,10 +186,16 @@ widget_create(const char *widget, const char *orig_style)
      o = _widget_button_create(style);
    else if (!strcmp(widget, "check"))
      o = _widget_check_create(style);
+   else if (!strcmp(widget, "clock"))
+     o = _widget_clock_create(style);
+   else if (!strcmp(widget, "entry"))
+     o = _widget_entry_create(style);
    else if (!strcmp(widget, "fileselector"))
      o = _widget_fileselector_create(style);
    else if (!strcmp(widget, "frame"))
      o = _widget_frame_create(style);
+   else if (!strcmp(widget, "hover"))
+     o = _widget_hover_create(style);
    else
      o = _widget_bg_create(NULL);
    elm_object_theme_set(o, th);
