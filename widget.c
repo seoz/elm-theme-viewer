@@ -111,6 +111,7 @@ _widget_frame_create(const char *style)
    char buf[PATH_MAX];
 
    o = elm_frame_add(win);
+   elm_object_style_set(o, style);
    EXPAND(o); ALIGN(o, EVAS_HINT_FILL, 0);
    elm_object_text_set(o, "Frame Styles");
    evas_object_show(o);
