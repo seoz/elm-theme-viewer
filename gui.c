@@ -155,6 +155,7 @@ _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
         elm_list_item_append(li, style, NULL, NULL, _style_list_sel_cb, sd);
      }
 
+   elm_list_go(li);
    it = elm_naviframe_item_push(nf, "Styles", NULL, NULL, li, NULL);
    elm_object_item_part_text_set(it, "subtitle", (char *)data);
 }
@@ -173,4 +174,5 @@ gui_widget_load(void)
                                   _widget_list_sel_cb, wd->widget);
           }
      }
+   elm_list_go(list);
 }
