@@ -60,6 +60,16 @@ _widget_button_create(const char* style)
 }
 
 Evas_Object *
+_widget_check_create(const char *style)
+{
+   Evas_Object *o;
+   o = elm_check_add(win);
+   if (style) elm_object_style_set(o, style);
+   evas_object_show(o);
+   return o;
+}
+
+Evas_Object *
 _widget_frame_create(const char *style)
 {
    Evas_Object *fr;
@@ -90,6 +100,8 @@ widget_create(const char *widget, const char *orig_style)
      o = _widget_bg_create(style);
    else if (!strcmp(widget, "button"))
      o = _widget_button_create(style);
+   else if (!strcmp(widget, "check"))
+     o = _widget_check_create(style);
    else if (!strcmp(widget, "frame"))
      o = _widget_frame_create(style);
    else
