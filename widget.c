@@ -219,6 +219,28 @@ _widget_separator_create(const char *style, const char *orig_style)
 }
 
 Evas_Object *
+_widget_spinner_create(const char *style)
+{
+   Evas_Object *o;
+
+   o = elm_spinner_add(win);
+
+   elm_spinner_min_max_set(o, -50.0, 250.0);
+   EXPAND(o);
+   ALIGN(o, EVAS_HINT_FILL, 0.5);
+
+   elm_spinner_label_format_set(o, "%1.1f units");
+   elm_spinner_step_set(o, 1.3);
+   elm_spinner_wrap_set(o, EINA_TRUE);
+
+   if (!strcmp("vertical", style))
+     elm_object_style_set(o, "vertical");
+   evas_object_show(o);
+
+   return o;
+}
+
+Evas_Object *
 widget_create(const char *widget, const char *orig_style)
 {
    Evas_Object *o = NULL;
@@ -250,6 +272,8 @@ widget_create(const char *widget, const char *orig_style)
      o = _widget_icon_create(orig_style);
    else if (!strcmp(widget, "separator"))
      o = _widget_separator_create(style, orig_style);
+   else if (!strcmp(widget, "spinner"))
+     o = _widget_spinner_create(style);
    else
      o = _widget_bg_create(NULL);
    elm_object_theme_set(o, th);
