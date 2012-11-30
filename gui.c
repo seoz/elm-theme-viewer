@@ -144,7 +144,7 @@ _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 
    li = elm_list_add(nf);
    elm_list_select_mode_set(li, ELM_OBJECT_SELECT_MODE_ALWAYS);
-   styles = widget_styles_get((const char *)data);
+   styles = theme_widget_styles_get((const char *)data);
    EINA_LIST_FOREACH(styles, l, style)
      {
         // TODO: sd needs to be freed properly

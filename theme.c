@@ -90,7 +90,7 @@ theme_load(const char *edje_file)
 }
 
 Eina_List *
-widget_styles_get(const char *widget)
+theme_widget_styles_get(const char *widget)
 {
    Widget_Data *wd = NULL;
    Eina_List *l;
@@ -106,7 +106,7 @@ widget_styles_get(const char *widget)
 }
 
 void
-widget_styles_print(const char *widget)
+theme_widget_styles_print(const char *widget)
 {
    Eina_List *l = NULL;
    Widget_Data *wd = NULL;

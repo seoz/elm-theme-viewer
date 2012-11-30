@@ -12,7 +12,7 @@ struct _Widget_Data
 
 void theme_init(void);
 void theme_load(const char *edje_file);
-Eina_List * widget_styles_get(const char *widget);
-void widget_styles_print(const char *widget);
+Eina_List * theme_widget_styles_get(const char *widget);
+void theme_widget_styles_print(const char *widget);
 
 #endif
