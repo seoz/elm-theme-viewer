@@ -15,6 +15,7 @@ void theme_init(void);
 void theme_set(const char *edje_file);
 void theme_unset(const char *edje_file);
 void theme_load(const char *edje_file);
+void theme_widgets_print(void);
 Eina_List * theme_widget_styles_get(const char *widget);
 void theme_widget_styles_print(const char *widget);
 

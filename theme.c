@@ -110,6 +110,16 @@ theme_load(const char *edje_file)
    INF("Theme Load Done");
 }
 
+void
+theme_widgets_print(void)
+{
+   Eina_List *l;
+   Widget_Data *wd;
+
+   EINA_LIST_FOREACH(widget_list, l, wd)
+     INF("%s %d", wd->widget, eina_list_count(wd->styles));
+}
+
 Eina_List *
 theme_widget_styles_get(const char *widget)
 {
