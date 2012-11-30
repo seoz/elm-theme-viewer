@@ -1,13 +1,10 @@
 #include <Elementary.h>
+#include "common.h"
 #include "log.h"
 #include "theme.h"
+#include "widget.h"
 
-#define WEIGHT evas_object_size_hint_weight_set
-#define ALIGN_ evas_object_size_hint_align_set
-#define EXPAND(X) WEIGHT((X), EVAS_HINT_EXPAND, EVAS_HINT_EXPAND)
-#define FILL(X) ALIGN_((X), EVAS_HINT_FILL, EVAS_HINT_FILL)
-
-Evas_Object *list;
+Evas_Object *list, *win, *viewer_box, *viewer_box_cur_obj;
 
 typedef struct _Style_Data Style_Data;
 struct _Style_Data
@@ -36,17 +33,6 @@ _elm_min_set(Evas_Object *obj, Evas_Object *parent, Evas_Coord w, Evas_Coord h)
 }
 
 static Evas_Object *
-_right_content_create(Evas_Object *parent)
-{
-   Evas_Object *o;
-
-   o = elm_bg_add(parent);
-   evas_object_show(o);
-
-   return o;
-}
-
-static Evas_Object *
 _left_menu_create(Evas_Object *parent)
 {
    Evas_Object *nf;
@@ -66,8 +52,8 @@ _left_menu_create(Evas_Object *parent)
 void
 gui_create(const char *edje_file)
 {
-   Evas_Object *win, *o;
-   Evas_Object *box, *btn, *box2, *table, *left;
+   Evas_Object *o;
+   Evas_Object *box, *btn, *table, *left;
 
    if (!edje_file) return;
 
@@ -98,7 +84,7 @@ gui_create(const char *edje_file)
    evas_object_show(o);
 
    // inner box
-   box2 = o = elm_box_add(win);
+   viewer_box = o = elm_box_add(win);
    elm_box_horizontal_set(o, EINA_TRUE);
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
    evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
@@ -109,11 +95,12 @@ gui_create(const char *edje_file)
    table = o = _elm_min_set(left, box, 250, 0); // set min size hint
    WEIGHT(o, 0.0, EVAS_HINT_EXPAND);
    FILL(o);
-   elm_box_pack_end(box2, table);
+   elm_box_pack_end(viewer_box, table);
 
-   o = _right_content_create(win);
+   o = widget_create(NULL, NULL);
    EXPAND(o); FILL(o);
-   elm_box_pack_end(box2, o);
+   elm_box_pack_end(viewer_box, o);
+   viewer_box_cur_obj = o;
 
    INF("GUI Creation Done");
 
@@ -124,10 +111,23 @@ static void
 _style_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 {
    Style_Data *sd = data;
+   Evas_Object *o;
 
-   if (!data) return;
-
+   if (!data || !sd->widget || !sd->style) return;
    INF("%s %s", sd->widget, sd->style);
+
+   o = widget_create(sd->widget, sd->style);
+   if (o)
+     {
+        if (viewer_box_cur_obj)
+          {
+             elm_box_unpack(viewer_box, viewer_box_cur_obj);
+             evas_object_del(viewer_box_cur_obj);
+          }
+		EXPAND(o); FILL(o);
+        elm_box_pack_end(viewer_box, o);
+        viewer_box_cur_obj = o;
+     }
 }
 
 static void
@@ -143,7 +143,6 @@ _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
    if (!nf) return;
 
    li = elm_list_add(nf);
-   evas_object_data_set(obj, "widget", data);
    elm_list_select_mode_set(li, ELM_OBJECT_SELECT_MODE_ALWAYS);
    styles = widget_styles_get((const char *)data);
    EINA_LIST_FOREACH(styles, l, style)
