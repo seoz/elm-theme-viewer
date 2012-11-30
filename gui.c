@@ -13,6 +13,23 @@ struct _Style_Data
    const char *style;
 };
 
+static void
+_viewer_box_obj_add(const char *widget, const char*style)
+{
+   Evas_Object *o;
+
+   o = widget_create(widget, style);
+   elm_box_pack_end(viewer_box, o);
+   viewer_box_cur_obj = o;
+}
+
+static void
+_viewer_box_obj_del(void)
+{
+   evas_object_del(viewer_box_cur_obj);
+   viewer_box_cur_obj = NULL;
+}
+
 static Evas_Object *
 _elm_min_set(Evas_Object *obj, Evas_Object *parent, Evas_Coord w, Evas_Coord h)
 {
@@ -97,10 +114,7 @@ gui_create(const char *edje_file)
    FILL(o);
    elm_box_pack_end(viewer_box, table);
 
-   o = widget_create(NULL, NULL);
-   EXPAND(o); FILL(o);
-   elm_box_pack_end(viewer_box, o);
-   viewer_box_cur_obj = o;
+   _viewer_box_obj_add(NULL, NULL);
 
    INF("GUI Creation Done");
 
@@ -111,29 +125,31 @@ static void
 _style_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 {
    Style_Data *sd = data;
-   Evas_Object *o;
 
    if (!data || !sd->widget || !sd->style) return;
    INF("%s %s", sd->widget, sd->style);
 
-   o = widget_create(sd->widget, sd->style);
-   if (o)
+   _viewer_box_obj_del();
+   _viewer_box_obj_add(sd->widget, sd->style);
+}
+
+static void
+_nf_prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   if (viewer_box_cur_obj)
      {
-        if (viewer_box_cur_obj)
-          {
-             elm_box_unpack(viewer_box, viewer_box_cur_obj);
-             evas_object_del(viewer_box_cur_obj);
-          }
-        elm_box_pack_end(viewer_box, o);
-        viewer_box_cur_obj = o;
+        _viewer_box_obj_del();
+        _viewer_box_obj_add(NULL, NULL);
      }
+
+   elm_naviframe_item_pop(data);
 }
 
 static void
 _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 {
    Evas_Object *nf = evas_object_data_get(obj, "nf");
-   Evas_Object *li;
+   Evas_Object *li, *prev_btn;
    Elm_Object_Item *it;
    Eina_List *styles, *l;
    char *style;
@@ -154,7 +170,14 @@ _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
      }
 
    elm_list_go(li);
-   it = elm_naviframe_item_push(nf, "Styles", NULL, NULL, li, NULL);
+
+   prev_btn = elm_button_add(win);
+   elm_object_text_set(prev_btn, "Back");
+   evas_object_smart_callback_add(prev_btn, "clicked",
+                                  _nf_prev_btn_clicked_cb, nf);
+   evas_object_show(prev_btn);
+
+   it = elm_naviframe_item_push(nf, "Styles", prev_btn, NULL, li, NULL);
    elm_object_item_part_text_set(it, "subtitle", (char *)data);
 }
 
