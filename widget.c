@@ -19,6 +19,21 @@ _parse_style(const char *orig_style)
 }
 
 Evas_Object *
+_widget_not_implemented_create(const char *widget)
+{
+   Evas_Object *o;
+   char buf[PATH_MAX] = {0, };
+
+   o = elm_label_add(win);
+   EXPAND(o); FILL(o);
+   sprintf(buf, "Sorry, %s widget sample is not implemented yet.", widget);
+   elm_object_text_set(o, buf);
+   evas_object_show(o);
+
+   return o;
+}
+
+Evas_Object *
 _widget_actionslider_create(const char *style)
 {
    Evas_Object *as;
@@ -275,7 +290,7 @@ widget_create(const char *widget, const char *orig_style)
    else if (!strcmp(widget, "spinner"))
      o = _widget_spinner_create(style);
    else
-     o = _widget_bg_create(NULL);
+     o = _widget_not_implemented_create(widget);
    elm_object_theme_set(o, th);
    return o;
 }
