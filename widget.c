@@ -175,6 +175,25 @@ _widget_hover_create(const char* style)
 }
 
 Evas_Object *
+_widget_icon_create(const char *orig_style)
+{
+   Evas_Object *o;
+   char style[PATH_MAX] = {0, };
+
+   strncpy(style, orig_style, strlen(orig_style));
+   style[strlen(orig_style) - strlen("/default")] = '\0';
+   INF("%s %d %d", style, strlen(orig_style), strlen("/default"));
+
+   o = elm_icon_add(win);
+   EXPAND(o);
+   elm_icon_standard_set(o, style);
+   evas_object_size_hint_min_set(o, 100, 100);
+   evas_object_show(o);
+
+   return o;
+}
+
+Evas_Object *
 _widget_separator_create(const char *style, const char *orig_style)
 {
    Evas_Object *o;
@@ -227,6 +246,8 @@ widget_create(const char *widget, const char *orig_style)
      o = _widget_frame_create(style);
    else if (!strcmp(widget, "hover"))
      o = _widget_hover_create(style);
+   else if (!strcmp(widget, "icon"))
+     o = _widget_icon_create(orig_style);
    else if (!strcmp(widget, "separator"))
      o = _widget_separator_create(style, orig_style);
    else
