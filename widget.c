@@ -86,6 +86,23 @@ _widget_frame_create(const char *style)
 }
 
 Evas_Object *
+_widget_fileselector_create(const char *style)
+{
+   Evas_Object *o;
+   char buf[40];
+
+   o = elm_fileselector_add(win);
+   elm_fileselector_is_save_set(o, EINA_TRUE);
+   elm_fileselector_expandable_set(o, EINA_FALSE);
+   elm_fileselector_path_set(o, getenv("HOME"));
+   EXPAND(o); FILL(o);
+   sprintf(buf, "%s Style.", style);
+   elm_object_text_set(o, buf);
+   evas_object_show(o);
+
+   return o;
+}
+Evas_Object *
 widget_create(const char *widget, const char *orig_style)
 {
    Evas_Object *o = NULL;
@@ -103,6 +120,8 @@ widget_create(const char *widget, const char *orig_style)
      o = _widget_button_create(style);
    else if (!strcmp(widget, "check"))
      o = _widget_check_create(style);
+   else if (!strcmp(widget, "fileselector"):
+     o = _widget_fileselector_create(style);
    else if (!strcmp(widget, "frame"))
      o = _widget_frame_create(style);
    else
