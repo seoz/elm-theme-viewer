@@ -124,7 +124,6 @@ _style_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
              elm_box_unpack(viewer_box, viewer_box_cur_obj);
              evas_object_del(viewer_box_cur_obj);
           }
-		EXPAND(o); FILL(o);
         elm_box_pack_end(viewer_box, o);
         viewer_box_cur_obj = o;
      }

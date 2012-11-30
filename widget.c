@@ -24,6 +24,7 @@ _widget_actionslider_create(const char *style)
    Evas_Object *as;
 
    as = elm_actionslider_add(win);
+   EXPAND(as); ALIGN(as, EVAS_HINT_FILL, 0);
    if (style) elm_object_style_set(as, style);
    elm_actionslider_indicator_pos_set(as, ELM_ACTIONSLIDER_LEFT);
    elm_actionslider_magnet_pos_set(as, ELM_ACTIONSLIDER_CENTER|
@@ -43,6 +44,7 @@ _widget_bg_create(const char *style)
 {
    Evas_Object *bg;
    bg = elm_bg_add(win);
+   EXPAND(bg); FILL(bg);
    if (style) elm_object_style_set(bg, style);
    evas_object_show(bg);
    return bg;
@@ -53,6 +55,7 @@ _widget_button_create(const char* style)
 {
    Evas_Object *btn;
    btn = elm_button_add(win);
+   EXPAND(btn); ALIGN(btn, EVAS_HINT_FILL, 0);
    elm_object_style_set(btn, style);
    elm_object_text_set(btn, "THIS IS A BUTTON TEST");
    evas_object_show(btn);
@@ -65,6 +68,7 @@ _widget_clock_create(const char* style)
 {
    Evas_Object *o;
    o = elm_clock_add(win);
+   EXPAND(o);
    elm_object_style_set(o, style);
    evas_object_show(o);
 
@@ -78,6 +82,7 @@ _widget_entry_create(const char* style)
 
    Evas_Object *o;
    o = elm_entry_add(win);
+   EXPAND(o); FILL(o);
    elm_object_style_set(o, style);
    snprintf(buf, sizeof(buf),
             "This is an entry widget in this window that<br/>"
@@ -93,6 +98,7 @@ _widget_check_create(const char *style)
 {
    Evas_Object *o;
    o = elm_check_add(win);
+   EXPAND(o);
    if (style) elm_object_style_set(o, style);
    evas_object_show(o);
    return o;
@@ -105,6 +111,7 @@ _widget_frame_create(const char *style)
    char buf[PATH_MAX];
 
    o = elm_frame_add(win);
+   EXPAND(o); ALIGN(o, EVAS_HINT_FILL, 0);
    elm_object_text_set(o, "Frame Styles");
    evas_object_show(o);
 
@@ -124,6 +131,7 @@ _widget_fileselector_create(const char *style)
    char buf[40];
 
    o = elm_fileselector_add(win);
+   EXPAND(o); FILL(o);
    elm_fileselector_is_save_set(o, EINA_TRUE);
    elm_fileselector_expandable_set(o, EINA_FALSE);
    elm_fileselector_path_set(o, getenv("HOME"));
@@ -150,6 +158,7 @@ _widget_hover_create(const char* style)
    elm_object_style_set(hv, style);
 
    bt = elm_button_add(win);
+   EXPAND(bt); ALIGN(bt, EVAS_HINT_FILL, 0);
    elm_object_text_set(bt, "click here to see hover");
    evas_object_smart_callback_add(bt, "clicked", _hover_bt_cb, hv);
    elm_hover_parent_set(hv, win);
