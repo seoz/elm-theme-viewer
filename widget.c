@@ -106,7 +106,7 @@ Evas_Object *
 widget_create(const char *widget, const char *orig_style)
 {
    Evas_Object *o = NULL;
-   const char *style;
+   const char *style = NULL;
 
    if (orig_style)
      style = eina_stringshare_add(_parse_style(orig_style));
@@ -120,7 +120,7 @@ widget_create(const char *widget, const char *orig_style)
      o = _widget_button_create(style);
    else if (!strcmp(widget, "check"))
      o = _widget_check_create(style);
-   else if (!strcmp(widget, "fileselector"):
+   else if (!strcmp(widget, "fileselector"))
      o = _widget_fileselector_create(style);
    else if (!strcmp(widget, "frame"))
      o = _widget_frame_create(style);
