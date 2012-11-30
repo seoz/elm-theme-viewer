@@ -15,12 +15,12 @@ char *widgets[] = {
      "access", "actionslider", "bg", "border", "bubble", "button", "calendar",
      "check", "clock", "colorselector", "conformant", "ctxpopup", "datetime",
      "dayselector", "diskselector", "entry", "ews", "fileselector",
-	 "fileselector_entry", "flipselector", "focus_highlight", "frame",
-	 "gengrid", "genlist", "hover", "icon", "index", "label", "layout", "list",
-	 "map", "menu", "multibuttonentry", "naviframe", "notify", "panel", "panes",
-	 "photo", "photocam", "player", "pointer", "popup", "progressbar", "radio",
-	 "scroller", "segment_control", "separator", "slider", "slideshow",
-	 "spinner", "thumb", "toolbar", "tooltip", "video", "win", NULL };
+     "fileselector_entry", "flipselector", "focus_highlight", "frame",
+     "gengrid", "genlist", "hover", "icon", "index", "label", "layout", "list",
+     "map", "menu", "multibuttonentry", "naviframe", "notify", "panel", "panes",
+     "photo", "photocam", "player", "pointer", "popup", "progressbar", "radio",
+     "scroller", "segment_control", "separator", "slider", "slideshow",
+     "spinner", "thumb", "toolbar", "tooltip", "video", "win", NULL };
 #ifdef USE_HASH
 Eina_Hash *widget_list;
 #else
