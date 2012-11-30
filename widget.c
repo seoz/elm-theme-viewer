@@ -101,16 +101,20 @@ _widget_check_create(const char *style)
 Evas_Object *
 _widget_frame_create(const char *style)
 {
-   Evas_Object *fr;
-   char buf[40];
+   Evas_Object *o, *lbl;
+   char buf[PATH_MAX];
 
-   fr = elm_frame_add(win);
-   EXPAND(fr); FILL(fr);
-   sprintf(buf, "%s Style.", style);
-   elm_object_text_set(fr, buf);
-   evas_object_show(fr);
+   o = elm_frame_add(win);
+   elm_object_text_set(o, "Frame Styles");
+   evas_object_show(o);
 
-   return fr;
+   lbl = elm_label_add(win);
+   sprintf(buf, "This is a %s style frame.", style);
+   elm_object_text_set(lbl, buf);
+   elm_object_content_set(o, lbl);
+   evas_object_show(lbl);
+
+   return o;
 }
 
 Evas_Object *
