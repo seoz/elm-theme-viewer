@@ -1,0 +1,2 @@
+* use enum for widget type.
+* use hash to search widget name.
