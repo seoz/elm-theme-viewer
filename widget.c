@@ -174,6 +174,31 @@ _widget_hover_create(const char* style)
 }
 
 Evas_Object *
+_widget_separator_create(const char *style, const char *orig_style)
+{
+   Evas_Object *o;
+
+   char buf[PATH_MAX] = {0, };
+   const char *type;
+
+   strncpy(buf, orig_style, sizeof(buf));
+   type = strtok(buf, "/");
+   //INF("%s", type);
+
+   o = elm_separator_add(win);
+   if (!strcmp("horizontal", type))
+     {
+        ALIGN(o, EVAS_HINT_FILL, 0);
+        elm_separator_horizontal_set(o, EINA_TRUE);
+     }
+   else
+     ALIGN(o, 0, EVAS_HINT_FILL);
+   evas_object_show(o);
+
+   return o;
+}
+
+Evas_Object *
 widget_create(const char *widget, const char *orig_style)
 {
    Evas_Object *o = NULL;
@@ -201,6 +226,8 @@ widget_create(const char *widget, const char *orig_style)
      o = _widget_frame_create(style);
    else if (!strcmp(widget, "hover"))
      o = _widget_hover_create(style);
+   else if (!strcmp(widget, "separator"))
+     o = _widget_separator_create(style, orig_style);
    else
      o = _widget_bg_create(NULL);
    elm_object_theme_set(o, th);
