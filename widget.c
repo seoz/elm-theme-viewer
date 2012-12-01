@@ -203,9 +203,7 @@ _widget_icon_create(const char *orig_style)
    Evas_Object *o;
    char style[PATH_MAX] = {0, };
 
-   strncpy(style, orig_style, strlen(orig_style));
-   style[strlen(orig_style) - strlen("/default")] = '\0';
-   INF("%s %d %d", style, strlen(orig_style), strlen("/default"));
+   _trim_end_default(orig_style, style);
 
    o = elm_icon_add(win);
    EXPAND(o);
