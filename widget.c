@@ -148,6 +148,55 @@ _widget_frame_create(const char *style)
    return o;
 }
 
+static char *
+_widget_genlist_text_get(void *data, Evas_Object *obj, const char *part)
+{
+   char buf[256];
+   snprintf(buf, sizeof(buf), "Item # %i", (int)(long)data);
+   return strdup(buf);
+}
+
+static Evas_Object *
+_widget_genlist_content_get(void *data, Evas_Object *obj, const char *part)
+{
+   Evas_Object *ic = elm_icon_add(obj);
+   if (!strcmp(part, "elm.swallow.end"))
+     elm_icon_standard_set(ic, "folder");
+   else
+     elm_icon_standard_set(ic, "home");
+   evas_object_size_hint_aspect_set(ic, EVAS_ASPECT_CONTROL_VERTICAL, 1, 1);
+   return ic;
+}
+
+static Evas_Object *
+_widget_genlist_create(const char *style)
+{
+   Evas_Object *o;
+   Elm_Genlist_Item_Class *ic;
+   int i = 0;
+
+   o = elm_genlist_add(win);
+   EXPAND(o); FILL(o);
+   evas_object_show(o);
+
+   ic = elm_genlist_item_class_new();
+   ic->item_style = style;
+   ic->func.text_get = _widget_genlist_text_get;
+   ic->func.content_get = _widget_genlist_content_get;
+   ic->func.state_get = NULL;
+   ic->func.del = NULL;
+
+   for (i = 0; i < 50; i++)
+     {
+        elm_genlist_item_append(o, ic, (void *)(long)i, NULL,
+                                ELM_GENLIST_ITEM_NONE, NULL, NULL);
+     }
+
+   elm_genlist_item_class_free(ic);
+
+   return o;
+}
+
 Evas_Object *
 _widget_fileselector_create(const char *style)
 {
@@ -517,6 +566,8 @@ widget_create(const char *widget, const char *orig_style)
      o = _widget_fileselector_create(style);
    else if (!strcmp(widget, "frame"))
      o = _widget_frame_create(style);
+   else if (!strcmp(widget, "genlist"))
+     o = _widget_genlist_create(style);
    else if (!strcmp(widget, "hover"))
      o = _widget_hover_create(style);
    else if (!strcmp(widget, "icon"))
