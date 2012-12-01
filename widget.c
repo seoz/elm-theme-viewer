@@ -165,7 +165,9 @@ static char *
 _widget_genlist_text_get(void *data, Evas_Object *obj, const char *part)
 {
    char buf[256];
-   snprintf(buf, sizeof(buf), "Item # %i", (int)(long)data);
+   snprintf(buf, sizeof(buf),
+            "Item # %i - elm-theme-viewer is an awesome program!",
+            (int)(long)data);
    return strdup(buf);
 }
 
@@ -182,22 +184,28 @@ _widget_genlist_content_get(void *data, Evas_Object *obj, const char *part)
 }
 
 static Evas_Object *
-_widget_genlist_create(const char *style)
+_widget_genlist_create(const char *orig_style, const char *style)
 {
    Evas_Object *o;
    Elm_Genlist_Item_Class *ic;
    int i = 0;
+   char buf[PATH_MAX] = {0, };
 
    o = elm_genlist_add(win);
    EXPAND(o); FILL(o);
    evas_object_show(o);
 
    ic = elm_genlist_item_class_new();
-   ic->item_style = style;
    ic->func.text_get = _widget_genlist_text_get;
    ic->func.content_get = _widget_genlist_content_get;
    ic->func.state_get = NULL;
    ic->func.del = NULL;
+
+   strncpy(buf, orig_style, sizeof(buf));
+   if (!strncmp("item", strtok(buf, "/"), 4))
+     ic->item_style = style;
+  else
+     elm_object_style_set(o, style);
 
    for (i = 0; i < 50; i++)
      {
@@ -582,7 +590,7 @@ widget_create(const char *widget, const char *orig_style)
    else if (!strcmp(widget, "frame"))
      o = _widget_frame_create(style);
    else if (!strcmp(widget, "genlist"))
-     o = _widget_genlist_create(style);
+     o = _widget_genlist_create(orig_style, style);
    else if (!strcmp(widget, "hover"))
      o = _widget_hover_create(style);
    else if (!strcmp(widget, "icon"))
