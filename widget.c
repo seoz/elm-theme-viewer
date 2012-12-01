@@ -18,6 +18,14 @@ _parse_style(const char *orig_style)
    return style;
 }
 
+static void
+_trim_end_default(const char *orig_style, char *style)
+{
+   strncpy(style, orig_style, strlen(orig_style));
+   style[strlen(orig_style) - strlen("/default")] = '\0';
+   //INF("%s %s", style, orig_style);
+}
+
 Evas_Object *
 _widget_not_implemented_create(const char *widget)
 {
@@ -339,6 +347,81 @@ _widget_layout_create(const char *style)
    return o;
 }
 
+static void
+_widget_menu_resize(void *data, Evas *evas, Evas_Object *obj, void *event)
+{
+   Evas_Coord w, h;
+   Evas_Object *rect = data;
+
+   evas_object_geometry_get(obj, NULL, NULL, &w, &h);
+   evas_object_resize(rect, w, h);
+}
+
+static void
+_widget_menu_show(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Mouse_Down *ev = event_info;
+   elm_menu_move(data, ev->canvas.x, ev->canvas.y);
+   evas_object_show(data);
+}
+
+static Evas_Object *
+_widget_menu_create(const char *orig_style)
+{
+   Evas_Object *o, *rect, *table, *lbl;
+   Elm_Object_Item *menu_it;
+   char style[PATH_MAX] = {0, };
+
+   _trim_end_default(orig_style, style);
+
+   table = elm_table_add(win);
+   EXPAND(table); FILL(table);
+   evas_object_show(table);
+
+   rect = evas_object_rectangle_add(evas_object_evas_get(win));
+   EXPAND(rect); FILL(rect);
+   evas_object_color_set(rect, 100, 100, 100, 255);
+   elm_table_pack(table, rect, 0, 0, 1, 1);
+   evas_object_show(rect);
+
+   lbl = elm_label_add(table);
+   EXPAND(lbl); FILL(lbl);
+   elm_object_text_set(lbl, "Click this dark area.");
+   elm_table_pack(table, lbl, 0, 0, 1, 1);
+   evas_object_repeat_events_set(lbl, EINA_TRUE);
+   evas_object_show(lbl);
+
+   o = elm_menu_add(win);
+   if (!strcmp("item", style))
+     {
+        elm_menu_item_add(o, NULL, NULL, "first item", NULL, NULL);
+        elm_menu_item_add(o, NULL, "mail-reply-all", "second item", NULL, NULL);
+        elm_menu_item_add(o, NULL, "window-new", "third item", NULL, NULL);
+     }
+   else if (!strcmp("item_with_submenu", style))
+     {
+        elm_menu_item_add(o, NULL, NULL, "first item", NULL, NULL);
+        menu_it = elm_menu_item_add(o, NULL, "mail-reply-all", "second item", NULL, NULL);
+        elm_menu_item_add(o, menu_it, NULL, "first sub menu", NULL, NULL);
+        elm_menu_item_add(o, menu_it, "mail-reply-all", "second sub menu", NULL, NULL);
+     }
+   else if (!strcmp("separator", style))
+     {
+        elm_menu_item_add(o, NULL, NULL, "between separator", NULL, NULL);
+        elm_menu_item_separator_add(o, NULL);
+        elm_menu_item_add(o, NULL, NULL, "between separator", NULL, NULL);
+        elm_menu_item_separator_add(o, NULL);
+        elm_menu_item_add(o, NULL, NULL, "between separator", NULL, NULL);
+     }
+
+   evas_object_event_callback_add(win, EVAS_CALLBACK_RESIZE,
+                                  _widget_menu_resize, rect);
+   evas_object_event_callback_add(rect, EVAS_CALLBACK_MOUSE_DOWN,
+                                  _widget_menu_show, o);
+
+   return table;
+}
+
 Evas_Object *
 _widget_progressbar_create(const char *style2)
 {
@@ -442,6 +525,8 @@ widget_create(const char *widget, const char *orig_style)
      o = _widget_icon_create(orig_style);
    else if (!strcmp(widget, "layout"))
      o = _widget_layout_create(style);
+   else if (!strcmp(widget, "menu"))
+     o = _widget_menu_create(orig_style);
    else if (!strcmp(widget, "progressbar"))
      o = _widget_progressbar_create(orig_style);
    else if (!strcmp(widget, "separator"))
