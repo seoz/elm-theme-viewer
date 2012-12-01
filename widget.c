@@ -4,6 +4,14 @@
 #include "log.h"
 #include "theme.h"
 
+/*
+ * Get the second part from the orig_style
+ *
+ * base/default -> default (actionslider)
+ * base/hoversel_horizontal/entry -> hoversel_horizontal (button)
+ * item/default/default -> default (genlist item)
+ * item/full/default -> full (genlist item)
+ */
 static const char *
 _parse_style(const char *orig_style)
 {
@@ -18,6 +26,11 @@ _parse_style(const char *orig_style)
    return style;
 }
 
+/* Remove "/default" from the end of string.
+ *
+ * arrow_left/default -> arrow_left (icon)
+ * separator/default -> separator (menu)
+ */
 static void
 _trim_end_default(const char *orig_style, char *style)
 {
@@ -548,6 +561,8 @@ widget_create(const char *widget, const char *orig_style)
 
    if (orig_style)
      style = eina_stringshare_add(_parse_style(orig_style));
+   //INF("widget : %s, orig_style : %s, style : %s", widget, orig_style, style);
+
    if (!widget && !style)
      o = _widget_bg_create(NULL);
    else if (!strcmp(widget, "actionslider"))
