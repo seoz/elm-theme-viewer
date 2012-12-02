@@ -273,6 +273,8 @@ _widget_gengrid_create(const char *orig_style, const char *style)
    strncpy(buf, orig_style, sizeof(buf));
    if (!strncmp("item", strtok(buf, "/"), 4))
      ic->item_style = style;
+   else if (!strcmp("h9 grid-check-style", orig_style))
+     ic->item_style = "default";
    else
      elm_object_style_set(o, style);
 
