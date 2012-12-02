@@ -146,6 +146,21 @@ _nf_prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
+_style_list_gengrid_grid_check_sel_cb(void *data, Evas_Object *obj,
+                                      void *event_info)
+{
+   _viewer_box_obj_del();
+   _viewer_box_obj_add("gengrid", "h9 grid-check-style");
+}
+
+static void
+_custom_styles_add(Evas_Object *list)
+{
+   elm_list_item_append(list, "Grid Check Style", NULL, NULL,
+                        _style_list_gengrid_grid_check_sel_cb, NULL);
+}
+
+static void
 _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 {
    Evas_Object *nf = evas_object_data_get(obj, "nf");
@@ -168,6 +183,9 @@ _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
         sd->style = style;
         elm_list_item_append(li, style, NULL, NULL, _style_list_sel_cb, sd);
      }
+
+   // add additional hacky custom styles for special reasons
+   _custom_styles_add(li);
 
    elm_list_go(li);
 

@@ -172,6 +172,35 @@ _widget_gengrid_text_get(void *data, Evas_Object *obj, const char *part)
 }
 
 static Evas_Object *
+_widget_gengrid_grid_check_content_get(void *data, Evas_Object *obj,
+                                       const char *part)
+{
+   Evas_Object *o = NULL;
+   char buf[PATH_MAX] = {0, };
+   int i = ((int)(long)data % 4) + 1;
+
+   if (!strcmp(part, "elm.swallow.icon"))
+     {
+        o = elm_bg_add(obj);
+        snprintf(buf, sizeof(buf),
+                 "%s/images/sky_0%d.jpg", elm_app_data_dir_get(), i);
+
+        elm_bg_file_set(o, buf, NULL);
+        evas_object_size_hint_aspect_set(o, EVAS_ASPECT_CONTROL_VERTICAL,
+                                         1, 1);
+        evas_object_show(o);
+     }
+   else if (!strcmp(part, "elm.swallow.end"))
+     {
+        o = elm_check_add(obj);
+        elm_object_style_set(o, "grid");
+        evas_object_propagate_events_set(o, EINA_FALSE);
+        evas_object_show(o);
+     }
+   return o;
+}
+
+static Evas_Object *
 _widget_gengrid_content_get(void *data, Evas_Object *obj, const char *part)
 {
    Evas_Object *o = NULL;
@@ -183,7 +212,6 @@ _widget_gengrid_content_get(void *data, Evas_Object *obj, const char *part)
         o = elm_bg_add(obj);
         snprintf(buf, sizeof(buf),
                  "%s/images/sky_0%d.jpg", elm_app_data_dir_get(), i);
-printf("%s\n", buf);
 
         elm_bg_file_set(o, buf, NULL);
         evas_object_size_hint_aspect_set(o, EVAS_ASPECT_CONTROL_VERTICAL,
@@ -214,7 +242,6 @@ _widget_gengrid_create(const char *orig_style, const char *style)
 
    ic = elm_gengrid_item_class_new();
    ic->func.text_get = _widget_gengrid_text_get;
-   ic->func.content_get = _widget_gengrid_content_get;
    ic->func.state_get = NULL;
    ic->func.del = NULL;
 
@@ -223,6 +250,11 @@ _widget_gengrid_create(const char *orig_style, const char *style)
      ic->item_style = style;
   else
      elm_object_style_set(o, style);
+
+   if (!strcmp("h9 grid-check-style", orig_style))
+     ic->func.content_get = _widget_gengrid_grid_check_content_get;
+   else
+     ic->func.content_get = _widget_gengrid_content_get;
 
    for (i = 0; i < 50; i++)
      {
