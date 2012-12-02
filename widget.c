@@ -284,6 +284,22 @@ _widget_icon_create(const char *orig_style)
    return o;
 }
 
+Evas_Object *
+_widget_label_create(const char *style)
+{
+   Evas_Object *o;
+   char buf[PATH_MAX] = {0, };
+
+   o = elm_label_add(win);
+   EXPAND(o); FILL(o);
+   sprintf(buf, "This is a %s style label.", style);
+   elm_object_text_set(o, buf);
+   elm_object_style_set(o, style);
+   evas_object_show(o);
+
+   return o;
+}
+
 static Evas_Object *
 _widget_layout_content_create(Evas_Object *layout)
 {
@@ -595,6 +611,8 @@ widget_create(const char *widget, const char *orig_style)
      o = _widget_hover_create(style);
    else if (!strcmp(widget, "icon"))
      o = _widget_icon_create(orig_style);
+   else if (!strcmp(widget, "label"))
+     o = _widget_label_create(style);
    else if (!strcmp(widget, "layout"))
      o = _widget_layout_create(style);
    else if (!strcmp(widget, "menu"))
