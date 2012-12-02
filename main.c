@@ -1,4 +1,5 @@
 #include <Elementary.h>
+#include "common.h"
 #include "log.h"
 #include "gui.h"
 #include "theme.h"
@@ -7,6 +8,9 @@ EAPI_MAIN int
 elm_main(int argc, char **argv)
 {
    const char *edje_file = NULL;
+
+   elm_app_compile_data_dir_set(ELM_THEME_VIEWER_DATA_DIR);
+   elm_app_info_set(elm_main, "elm-theme-viewer", "images/logo.png");
 
    if (argc > 2)
      {

@@ -3,3 +3,5 @@ all:
 
 install:
 	cp ./elm-theme-viewer /usr/local/bin
+	mkdir -p /usr/local/share/elm-theme-viewer/images
+	cp images/* /usr/local/share/elm-theme-viewer/images

@@ -162,6 +162,79 @@ _widget_frame_create(const char *style)
 }
 
 static char *
+_widget_gengrid_text_get(void *data, Evas_Object *obj, const char *part)
+{
+   char buf[256];
+   snprintf(buf, sizeof(buf),
+            "Item # %i - elm-theme-viewer is an awesome program!",
+            (int)(long)data);
+   return strdup(buf);
+}
+
+static Evas_Object *
+_widget_gengrid_content_get(void *data, Evas_Object *obj, const char *part)
+{
+   Evas_Object *o = NULL;
+   char buf[PATH_MAX] = {0, };
+   int i = ((int)(long)data % 4) + 1;
+
+   if (!strcmp(part, "elm.swallow.icon"))
+     {
+        o = elm_bg_add(obj);
+        snprintf(buf, sizeof(buf),
+                 "%s/images/sky_0%d.jpg", elm_app_data_dir_get(), i);
+printf("%s\n", buf);
+
+        elm_bg_file_set(o, buf, NULL);
+        evas_object_size_hint_aspect_set(o, EVAS_ASPECT_CONTROL_VERTICAL,
+                                         1, 1);
+        evas_object_show(o);
+     }
+   else if (!strcmp(part, "elm.swallow.end"))
+     {
+        o = elm_check_add(obj);
+        evas_object_propagate_events_set(o, EINA_FALSE);
+        evas_object_show(o);
+     }
+   return o;
+}
+
+static Evas_Object *
+_widget_gengrid_create(const char *orig_style, const char *style)
+{
+   Evas_Object *o;
+   Elm_Genlist_Item_Class *ic;
+   int i = 0;
+   char buf[PATH_MAX] = {0, };
+
+   o = elm_gengrid_add(win);
+   elm_gengrid_item_size_set(o, 150, 150);
+   EXPAND(o); FILL(o);
+   evas_object_show(o);
+
+   ic = elm_gengrid_item_class_new();
+   ic->func.text_get = _widget_gengrid_text_get;
+   ic->func.content_get = _widget_gengrid_content_get;
+   ic->func.state_get = NULL;
+   ic->func.del = NULL;
+
+   strncpy(buf, orig_style, sizeof(buf));
+   if (!strncmp("item", strtok(buf, "/"), 4))
+     ic->item_style = style;
+  else
+     elm_object_style_set(o, style);
+
+   for (i = 0; i < 50; i++)
+     {
+        elm_gengrid_item_append(o, ic, (void *)(long)i, NULL, NULL);
+     }
+
+   elm_gengrid_item_class_free(ic);
+
+   return o;
+}
+
+static char *
 _widget_genlist_text_get(void *data, Evas_Object *obj, const char *part)
 {
    char buf[256];
@@ -605,6 +678,8 @@ widget_create(const char *widget, const char *orig_style)
      o = _widget_fileselector_create(style);
    else if (!strcmp(widget, "frame"))
      o = _widget_frame_create(style);
+   else if (!strcmp(widget, "gengrid"))
+     o = _widget_gengrid_create(orig_style, style);
    else if (!strcmp(widget, "genlist"))
      o = _widget_genlist_create(orig_style, style);
    else if (!strcmp(widget, "hover"))
