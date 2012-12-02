@@ -156,7 +156,7 @@ _style_list_gengrid_grid_check_sel_cb(void *data, Evas_Object *obj,
 static void
 _custom_styles_add(Evas_Object *list)
 {
-   elm_list_item_append(list, "Grid Check Style", NULL, NULL,
+   elm_list_item_append(list, "(H9) Grid Check Style", NULL, NULL,
                         _style_list_gengrid_grid_check_sel_cb, NULL);
 }
 
