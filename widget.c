@@ -236,7 +236,6 @@ _widget_gengrid_create(const char *orig_style, const char *style)
    char buf[PATH_MAX] = {0, };
 
    o = elm_gengrid_add(win);
-   elm_gengrid_item_size_set(o, 150, 150);
    EXPAND(o); FILL(o);
    evas_object_show(o);
 
@@ -245,16 +244,24 @@ _widget_gengrid_create(const char *orig_style, const char *style)
    ic->func.state_get = NULL;
    ic->func.del = NULL;
 
+   /* check for gengrid style or gengrid item style */
    strncpy(buf, orig_style, sizeof(buf));
    if (!strncmp("item", strtok(buf, "/"), 4))
      ic->item_style = style;
    else
      elm_object_style_set(o, style);
 
+   /* check for special custom style for h9 grid-check-style */
    if (!strcmp("h9 grid-check-style", orig_style))
-     ic->func.content_get = _widget_gengrid_grid_check_content_get;
+     {
+        ic->func.content_get = _widget_gengrid_grid_check_content_get;
+        elm_gengrid_item_size_set(o, 150, 163);
+     }
    else
-     ic->func.content_get = _widget_gengrid_content_get;
+     {
+        ic->func.content_get = _widget_gengrid_content_get;
+        elm_gengrid_item_size_set(o, 150, 150);
+     }
 
    for (i = 0; i < 50; i++)
      {
