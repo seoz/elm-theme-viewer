@@ -172,7 +172,7 @@ _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
    elm_list_go(li);
 
    prev_btn = elm_button_add(win);
-   elm_object_text_set(prev_btn, "Back");
+   elm_object_text_set(prev_btn, "< Back");
    evas_object_smart_callback_add(prev_btn, "clicked",
                                   _nf_prev_btn_clicked_cb, nf);
    evas_object_show(prev_btn);
