@@ -251,13 +251,32 @@ _widget_gengrid_icon_aspect_content_get(void *data, Evas_Object *obj,
    return o;
 }
 
+typedef enum {
+   GENGRID_NORMAL_STYLE,
+   GENGRID_GROUP_INDEX_STYLE,
+   GENGRID_DEFAULT_STYLE_STYLE,
+   GENGRID_H9_GRID_CHECK_STYLE,
+   GENGRID_H9_GROUP_INDEX_STYLE
+} Gengrid_Style_Type;
+
 static Evas_Object *
 _widget_gengrid_create(const char *orig_style, const char *style)
 {
    Evas_Object *o;
-   Elm_Genlist_Item_Class *ic;
+   Elm_Genlist_Item_Class *ic, *group_ic;
    int i = 0;
    char buf[PATH_MAX] = {0, };
+   Gengrid_Style_Type gst = GENGRID_NORMAL_STYLE;
+
+   /* classify styles */
+   if (style && !strcmp("group_index", style))
+     gst = GENGRID_GROUP_INDEX_STYLE;
+   else if (style && !strcmp("default_style", style))
+     gst = GENGRID_DEFAULT_STYLE_STYLE;
+   else if (!strcmp("h9 grid-check-style", orig_style))
+     gst = GENGRID_H9_GRID_CHECK_STYLE;
+   else if (!strcmp("h9 group-index-style", orig_style))
+     gst = GENGRID_H9_GROUP_INDEX_STYLE;
 
    o = elm_gengrid_add(win);
    elm_gengrid_item_size_set(o, 168, 168);
@@ -271,25 +290,53 @@ _widget_gengrid_create(const char *orig_style, const char *style)
 
    /* check for gengrid style or gengrid item style */
    strncpy(buf, orig_style, sizeof(buf));
-   if (!strncmp("item", strtok(buf, "/"), 4))
-     ic->item_style = style;
-   else if (!strcmp("h9 grid-check-style", orig_style))
+   if ((gst == GENGRID_H9_GRID_CHECK_STYLE) ||
+       (gst == GENGRID_GROUP_INDEX_STYLE) ||
+       (gst == GENGRID_H9_GROUP_INDEX_STYLE))
      ic->item_style = "default";
+   else if (!strncmp("item", strtok(buf, "/"), 4))
+     ic->item_style = style;
    else
      elm_object_style_set(o, style);
 
    /* check for special custom style for h9 grid-check-style */
-   if (!strcmp("h9 grid-check-style", orig_style))
+   if (gst == GENGRID_H9_GRID_CHECK_STYLE)
      ic->func.content_get = _widget_gengrid_grid_check_content_get;
-   else if (!strcmp("group_index", style) || !strcmp("default_style", style))
+   else if ((gst == GENGRID_GROUP_INDEX_STYLE) ||
+            (gst == GENGRID_DEFAULT_STYLE_STYLE))
      ic->func.content_get = _widget_gengrid_icon_aspect_content_get;
    else
      ic->func.content_get = _widget_gengrid_content_get;
 
+   /* check for group index */
+   if (gst == GENGRID_H9_GROUP_INDEX_STYLE)
+     elm_gengrid_group_item_size_set(o, 102, 102);
+   else if (gst == GENGRID_GROUP_INDEX_STYLE)
+     elm_gengrid_group_item_size_set(o, 31, 31);
+
+   if ((gst == GENGRID_H9_GROUP_INDEX_STYLE) ||
+       (gst == GENGRID_GROUP_INDEX_STYLE))
+     {
+        group_ic = elm_gengrid_item_class_new();
+        group_ic->item_style = "group_index";
+        group_ic->func.text_get = _widget_gengrid_text_get;
+        group_ic->func.content_get = NULL;
+        group_ic->func.state_get = NULL;
+        group_ic->func.del = NULL;
+     }
+
    for (i = 0; i < 50; i++)
      {
+        if (((i % 10) == 0) &&
+            ((gst == GENGRID_H9_GROUP_INDEX_STYLE) ||
+             (gst == GENGRID_GROUP_INDEX_STYLE)))
+          elm_gengrid_item_append(o, group_ic, (void *)(long)i, NULL, NULL);
         elm_gengrid_item_append(o, ic, (void *)(long)i, NULL, NULL);
      }
+
+   if ((gst == GENGRID_H9_GROUP_INDEX_STYLE) ||
+       (gst == GENGRID_GROUP_INDEX_STYLE))
+     elm_gengrid_item_class_free(group_ic);
 
    elm_gengrid_item_class_free(ic);
 
