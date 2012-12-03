@@ -279,6 +279,7 @@ _widget_gengrid_create(const char *orig_style, const char *style)
      gst = GENGRID_H9_GROUP_INDEX_STYLE;
 
    o = elm_gengrid_add(win);
+   elm_gengrid_align_set(o, 0, 0);
    elm_gengrid_item_size_set(o, 168, 168);
    EXPAND(o); FILL(o);
    evas_object_show(o);
