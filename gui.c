@@ -146,6 +146,14 @@ _nf_prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
+_style_list_gengrid_group_index_sel_cb(void *data, Evas_Object *obj,
+                                      void *event_info)
+{
+   _viewer_box_obj_del();
+   _viewer_box_obj_add("gengrid", "h9 group-index-style");
+}
+
+static void
 _style_list_gengrid_grid_check_sel_cb(void *data, Evas_Object *obj,
                                       void *event_info)
 {
@@ -157,8 +165,12 @@ static void
 _custom_styles_add(Evas_Object *list, const char *widget)
 {
    if (!strcmp("gengrid", widget))
-     elm_list_item_append(list, "(H9) Grid Check Style", NULL, NULL,
-                          _style_list_gengrid_grid_check_sel_cb, NULL);
+     {
+        elm_list_item_append(list, "(H9) Grid Check Style", NULL, NULL,
+                             _style_list_gengrid_grid_check_sel_cb, NULL);
+        elm_list_item_append(list, "(H9) Group Index Style", NULL, NULL,
+                             _style_list_gengrid_group_index_sel_cb, NULL);
+     }
 }
 
 static void
