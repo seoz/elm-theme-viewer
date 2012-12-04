@@ -392,9 +392,10 @@ _widget_genlist_create(const char *orig_style, const char *style)
    /* set item or genlist style */
    if (!strncmp("item", token, 4))
      ic->item_style = style;
-  else
+   else
      elm_object_style_set(o, style);
 
+   /* check compress mode */
    if (!strncmp("item_compress", token, 13))
      elm_genlist_mode_set(o, ELM_LIST_COMPRESS);
 
