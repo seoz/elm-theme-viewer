@@ -375,6 +375,7 @@ _widget_genlist_create(const char *orig_style, const char *style)
    int i = 0;
    char buf[PATH_MAX] = {0, };
    const char *token;
+   Elm_Genlist_Item_Type item_type = ELM_GENLIST_ITEM_NONE;
 
    o = elm_genlist_add(win);
    EXPAND(o); FILL(o);
@@ -390,19 +391,24 @@ _widget_genlist_create(const char *orig_style, const char *style)
    token = strtok(buf, "/");
 
    /* set item or genlist style */
-   if (!strncmp("item", token, 4))
+   if (!strncmp("item", token, 4) || !strncmp("tree", token, 4))
      ic->item_style = style;
    else
      elm_object_style_set(o, style);
 
    /* check compress mode */
-   if (!strncmp("item_compress", token, 13))
+   if (!strncmp("item_compress", token, 13) ||
+       !strncmp("tree_compress", token, 13))
      elm_genlist_mode_set(o, ELM_LIST_COMPRESS);
+
+   /* check tree */
+   if (!strncmp("tree", token, 4))
+     item_type = ELM_GENLIST_ITEM_TREE;
 
    for (i = 0; i < 50; i++)
      {
-        elm_genlist_item_append(o, ic, (void *)(long)i, NULL,
-                                ELM_GENLIST_ITEM_NONE, NULL, NULL);
+        elm_genlist_item_append(o, ic, (void *)(long)i, NULL, item_type,
+                                NULL, NULL);
      }
 
    elm_genlist_item_class_free(ic);
