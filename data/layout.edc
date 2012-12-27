@@ -1,0 +1,105 @@
+#define MENU_HEIGHT 30
+#define LEFT_MENU_WIDTH 250
+
+collections {
+   group { name: "etv/main/layout";
+      parts {
+         part { name: "base";
+            type: RECT;
+            description { state: "default" 0.0;
+            }
+         }
+         part { name: "menu";
+            type: SWALLOW;
+            scale: 1;
+            description { state: "default" 0.0;
+               min: 0 MENU_HEIGHT;
+               fixed: 0 1;
+               rel1.to: "base";
+               rel2 {
+                  to: "base";
+                  relative: 1.0 0.0;
+               }
+               align: 0.5 0.0;
+            }
+         }
+         part { name: "menu_bottom_line";
+            type: RECT;
+            scale: 1;
+            description { state: "default" 0.0;
+               min: 0 2;
+               fixed: 0 1;
+               color: 100 100 100 255;
+               rel1 {
+                  to: "menu";
+                  relative: 0.0 1.0;
+               }
+               rel2.to: "menu";
+               align: 0.5 0.0;
+            }
+         }
+         part { name: "left_menu";
+            type: RECT;
+            scale: 1;
+            description { state: "default" 0.0;
+               min: LEFT_MENU_WIDTH 0;
+               fixed: 1 0;
+               rel1 {
+                  to: "menu_bottom_line";
+                  relative: 0.0 1.0;
+               }
+               rel2 {
+                  to: "base";
+                  relative: 0.0 1.0;
+               }
+               align: 0.0 0.5;
+               color: 100 0 0 100;
+            }
+         }
+         part { name: "description";
+            type: RECT;
+            scale: 1;
+            description { state: "default" 0.0;
+               min: 150 150;
+               fixed: 1 1;
+               rel1 {
+                  to: "menu_bottom_line";
+                  relative: 1.0 1.0;
+               }
+               rel2.to: "menu_bottom_line";
+               align: 1.0 0.0;
+               color: 0 100 0 100;
+            }
+         }
+         part { name: "option";
+            type: RECT;
+            scale: 1;
+            description { state: "default" 0.0;
+               min: 0 150;
+               rel1 {
+                  to: "description";
+                  relative: 0.0 1.0;
+               }
+               rel2.to: "base";
+               color: 0 0 100 100;
+            }
+         }
+         part { name: "preview";
+            type: RECT;
+            scale: 1;
+            description { state: "default" 0.0;
+               min: 200 0;
+               rel1 {
+                  to: "left_menu";
+                  relative: 1.0 0.0;
+               }
+               rel2 {
+                  to: "option";
+                  relative: 0.0 1.0;
+               }
+               color: 100 100 0 100;
+            }
+         }
+      }
+   }
+}
