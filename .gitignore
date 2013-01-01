@@ -1,4 +1,5 @@
-elm-theme-viewer
+elm_theme_viewer
 *.o
 *.swp
 *.swo
+data/layout.edj
