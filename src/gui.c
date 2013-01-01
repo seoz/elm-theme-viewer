@@ -4,7 +4,7 @@
 #include "theme.h"
 #include "widget.h"
 
-Evas_Object *list, *win, *gui_layout, *preview_obj;
+Evas_Object *list, *win, *gui_layout, *preview_box, *preview_obj;
 
 typedef struct _Style_Data Style_Data;
 struct _Style_Data
@@ -14,16 +14,22 @@ struct _Style_Data
 };
 
 static void
-_preview_create(const char *widget, const char*style)
+_preview_create(const char *widget, const char *style)
 {
    Evas_Object *o;
 
    if (preview_obj)
-     evas_object_del(preview_obj);
+     {
+        evas_object_del(preview_obj);
+        preview_obj = NULL;
+     }
 
-   o = widget_create(widget, style);
-   elm_layout_content_set(gui_layout, "preview", o);
-   preview_obj = o;
+   if (widget && style)
+     {
+        o = widget_create(widget, style);
+        elm_box_pack_end(preview_box, o);
+        preview_obj = o;
+     }
 }
 
 static void
@@ -46,7 +52,7 @@ _left_menu_create(Evas_Object *parent)
 void
 gui_create(const char *edje_file)
 {
-   Evas_Object *o;
+   Evas_Object *o, *preview_frame;
 
    if (!edje_file) return;
 
@@ -70,7 +76,15 @@ gui_create(const char *edje_file)
    _left_menu_create(win);
 
    // preview
-   _preview_create(NULL, NULL);
+   preview_frame = o = elm_frame_add(win);
+   elm_object_text_set(o, "Preview");
+   evas_object_show(o);
+
+   preview_box = o = elm_box_add(win);
+   elm_object_content_set(preview_frame, o);
+   evas_object_show(o);
+
+   elm_layout_content_set(gui_layout, "preview", preview_frame);
 
    INF("GUI Creation Done");
 
