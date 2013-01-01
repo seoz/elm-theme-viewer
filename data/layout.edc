@@ -1,4 +1,5 @@
 #define EDJE_NAME_TXT_HEIGHT 30
+#define EDJE_NAME_TXT_SIZE 15
 #define LEFT_MENU_WIDTH 250
 #define DESCRIPTION_WIDTH 150
 #define DESCRIPTION_HEIGHT 150
@@ -26,7 +27,7 @@ collections {
                }
                align: 0.5 0.0;
                color: 0 0 0 255;
-               text.size: 20;
+               text.size: EDJE_NAME_TXT_SIZE;
             }
          }
          part { name: "menu_bottom_line";
