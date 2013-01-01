@@ -5,6 +5,7 @@
 #include "widget.h"
 
 Evas_Object *list, *win, *gui_layout, *preview_box, *preview_obj;
+Evas_Object *description_frame, *option_frame;
 
 typedef struct _Style_Data Style_Data;
 struct _Style_Data
@@ -49,6 +50,61 @@ _left_menu_create(Evas_Object *parent)
    elm_layout_content_set(gui_layout, "left_menu", nf);
 }
 
+static void
+_option_create(Evas_Object *parent)
+{
+   Evas_Object *o, *box;
+
+   option_frame = o = elm_frame_add(parent);
+   elm_object_text_set(o, "Option");
+   evas_object_show(o);
+   elm_layout_content_set(gui_layout, "option", o);
+
+   // outer box
+   box = o = elm_box_add(option_frame);
+   elm_object_content_set(option_frame, o);
+   evas_object_show(o);
+
+   // finger size
+   o = elm_label_add(box);
+   elm_object_text_set(o, "Finger Size");
+   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
+   evas_object_size_hint_align_set(o, 0.0, EVAS_HINT_FILL);
+   elm_box_pack_end(box, o);
+   evas_object_show(o);
+
+   // scale
+   o = elm_label_add(box);
+   elm_object_text_set(o, "Scale");
+   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
+   evas_object_size_hint_align_set(o, 0.0, EVAS_HINT_FILL);
+   elm_box_pack_end(box, o);
+   evas_object_show(o);
+
+   // size width
+   o = elm_label_add(box);
+   elm_object_text_set(o, "Size Width");
+   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
+   evas_object_size_hint_align_set(o, 0.0, EVAS_HINT_FILL);
+   elm_box_pack_end(box, o);
+   evas_object_show(o);
+
+   // size height
+   o = elm_label_add(box);
+   elm_object_text_set(o, "Size Height");
+   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
+   evas_object_size_hint_align_set(o, 0.0, EVAS_HINT_FILL);
+   elm_box_pack_end(box, o);
+   evas_object_show(o);
+
+   // padding
+   o = elm_box_add(box);
+   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   elm_box_pack_end(box, o);
+   evas_object_show(o);
+}
+
 void
 gui_create(const char *edje_file)
 {
@@ -79,12 +135,20 @@ gui_create(const char *edje_file)
    preview_frame = o = elm_frame_add(win);
    elm_object_text_set(o, "Preview");
    evas_object_show(o);
+   elm_layout_content_set(gui_layout, "preview", o);
 
    preview_box = o = elm_box_add(win);
    elm_object_content_set(preview_frame, o);
    evas_object_show(o);
 
-   elm_layout_content_set(gui_layout, "preview", preview_frame);
+   // description
+   description_frame = o = elm_frame_add(win);
+   elm_object_text_set(o, "Description");
+   evas_object_show(o);
+   elm_layout_content_set(gui_layout, "description", o);
+
+   // option
+   _option_create(win);
 
    INF("GUI Creation Done");
 

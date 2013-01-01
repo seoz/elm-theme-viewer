@@ -4,7 +4,7 @@
 #define DESCRIPTION_WIDTH 150
 #define DESCRIPTION_HEIGHT 150
 #define OPTION_HEIGHT 150
-#define PREVIEW_WIDTH 200
+#define PREVIEW_WIDTH 300
 
 collections {
    group { name: "etv/main/layout";
