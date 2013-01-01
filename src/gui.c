@@ -18,16 +18,12 @@ _preview_create(const char *widget, const char*style)
 {
    Evas_Object *o;
 
+   if (preview_obj)
+     evas_object_del(preview_obj);
+
    o = widget_create(widget, style);
    elm_layout_content_set(gui_layout, "preview", o);
    preview_obj = o;
-}
-
-static void
-_preview_del(void)
-{
-   evas_object_del(preview_obj);
-   preview_obj = NULL;
 }
 
 static void
@@ -89,19 +85,13 @@ _style_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
    if (!data || !sd->widget || !sd->style) return;
    INF("%s %s", sd->widget, sd->style);
 
-   _preview_del();
    _preview_create(sd->widget, sd->style);
 }
 
 static void
 _nf_prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
-   if (preview_obj)
-     {
-        _preview_del();
-        _preview_create(NULL, NULL);
-     }
-
+   _preview_create(NULL, NULL);
    elm_naviframe_item_pop(data);
 }
 
@@ -109,7 +99,6 @@ static void
 _style_list_gengrid_group_index_sel_cb(void *data, Evas_Object *obj,
                                       void *event_info)
 {
-   _preview_del();
    _preview_create("gengrid", "h9 group-index-style");
 }
 
@@ -117,7 +106,6 @@ static void
 _style_list_gengrid_grid_check_sel_cb(void *data, Evas_Object *obj,
                                       void *event_info)
 {
-   _preview_del();
    _preview_create("gengrid", "h9 grid-check-style");
 }
 
