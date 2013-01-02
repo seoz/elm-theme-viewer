@@ -69,7 +69,7 @@ _option_create(Evas_Object *parent)
    o = elm_label_add(box);
    elm_object_text_set(o, "Finger Size");
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
-   evas_object_size_hint_align_set(o, 0.0, EVAS_HINT_FILL);
+   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
    elm_box_pack_end(box, o);
    evas_object_show(o);
 
@@ -77,7 +77,7 @@ _option_create(Evas_Object *parent)
    o = elm_label_add(box);
    elm_object_text_set(o, "Scale");
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
-   evas_object_size_hint_align_set(o, 0.0, EVAS_HINT_FILL);
+   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
    elm_box_pack_end(box, o);
    evas_object_show(o);
 
@@ -85,7 +85,7 @@ _option_create(Evas_Object *parent)
    o = elm_label_add(box);
    elm_object_text_set(o, "Size Width");
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
-   evas_object_size_hint_align_set(o, 0.0, EVAS_HINT_FILL);
+   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
    elm_box_pack_end(box, o);
    evas_object_show(o);
 
@@ -93,7 +93,7 @@ _option_create(Evas_Object *parent)
    o = elm_label_add(box);
    elm_object_text_set(o, "Size Height");
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
-   evas_object_size_hint_align_set(o, 0.0, EVAS_HINT_FILL);
+   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
    elm_box_pack_end(box, o);
    evas_object_show(o);
 
