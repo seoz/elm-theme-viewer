@@ -775,12 +775,24 @@ _widget_spinner_create(const char *style)
    return o;
 }
 
+void
+widget_resize(Evas_Object *o)
+{
+   Evas_Coord w = 0, h = 0;
+
+   if (option_is_force_resize())
+     {
+        option_preview_size_get(&w, &h);
+        evas_object_size_hint_min_set(o, w, h);
+        evas_object_size_hint_max_set(o, w, h);
+     }
+}
+
 Evas_Object *
 widget_create(const char *widget, const char *orig_style)
 {
    Evas_Object *o = NULL;
    const char *style = NULL;
-   Evas_Coord w = 0, h = 0;
 
    if (orig_style)
      style = eina_stringshare_add(_parse_style(orig_style));
@@ -828,12 +840,7 @@ widget_create(const char *widget, const char *orig_style)
      o = _widget_not_implemented_create(widget);
    elm_object_theme_set(o, th);
 
-   if (option_is_force_resize())
-     {
-        option_preview_size_get(&w, &h);
-        evas_object_size_hint_min_set(o, w, h);
-        evas_object_size_hint_max_set(o, w, h);
-     }
+   widget_resize(o);
 
    return o;
 }

@@ -91,6 +91,10 @@ _size_width_changed_cb(void *data, Evas_Object *obj, void *event_info)
 
    v = round(val);
    if (v != val) elm_slider_value_set(obj, v);
+
+   if (preview_obj)
+     widget_resize(preview_obj);
+
    INF("size width changed : %f %f", val, v);
 }
 
@@ -102,6 +106,10 @@ _size_height_changed_cb(void *data, Evas_Object *obj, void *event_info)
 
    v = round(val);
    if (v != val) elm_slider_value_set(obj, v);
+
+   if (preview_obj)
+     widget_resize(preview_obj);
+
    INF("size height changed : %f %f", val, v);
 }
 
