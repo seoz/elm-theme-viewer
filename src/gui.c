@@ -67,6 +67,7 @@ _finger_size_changed_cb(void *data, Evas_Object *obj, void *event_info)
 
    v = round(val);
    if (v != val) elm_slider_value_set(obj, v);
+   elm_config_finger_size_set(v);
    INF("finger size changed : %f %f", val, v);
 }
 
@@ -78,6 +79,7 @@ _scale_changed_cb(void *data, Evas_Object *obj, void *event_info)
 
    v = (double)(int)round(val * 10.0) / 10.0;
    if (v != val) elm_slider_value_set(obj, v);
+   elm_config_scale_set(v);
    INF("scale changed : %f %f", val, v);
 }
 
