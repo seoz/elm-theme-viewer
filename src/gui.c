@@ -6,6 +6,7 @@
 
 Evas_Object *list, *win, *gui_layout, *preview_box, *preview_obj;
 Evas_Object *description_frame, *option_frame;
+Evas_Object *size_width_slider, *size_height_slider;
 
 typedef struct _Style_Data Style_Data;
 struct _Style_Data
@@ -95,11 +96,31 @@ _size_height_changed_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
+_force_resize_changed_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   Eina_Bool checked = elm_check_state_get(obj);
+
+   elm_object_disabled_set(size_width_slider, !checked);
+   elm_object_disabled_set(size_height_slider, !checked);
+
+   // TODO: fix slider
+   elm_slider_unit_format_set(size_width_slider, "%1.0f");
+   elm_slider_unit_format_set(size_height_slider, "%1.0f");
+}
+
+static void
 _option_size_create(Evas_Object *box)
 {
    Evas_Object *o;
 
-   // size width
+   o = elm_check_add(box);
+   elm_object_text_set(o, "Force resize");
+   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
+   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   evas_object_smart_callback_add(o, "changed", _force_resize_changed_cb, NULL);
+   elm_box_pack_end(box, o);
+   evas_object_show(o);
+
    o = elm_label_add(box);
    elm_object_text_set(o, "Size Width");
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
@@ -107,7 +128,8 @@ _option_size_create(Evas_Object *box)
    elm_box_pack_end(box, o);
    evas_object_show(o);
 
-   o = elm_slider_add(box);
+   size_width_slider = o = elm_slider_add(box);
+   elm_object_disabled_set(o, EINA_TRUE);
    elm_slider_unit_format_set(o, "%1.0f");
    elm_slider_indicator_format_set(o, "%1.0f");
    elm_slider_min_max_set(o, 20, 300);
@@ -119,7 +141,6 @@ _option_size_create(Evas_Object *box)
    elm_box_pack_end(box, o);
    evas_object_show(o);
 
-   // size height
    o = elm_label_add(box);
    elm_object_text_set(o, "Size Height");
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
@@ -127,7 +148,8 @@ _option_size_create(Evas_Object *box)
    elm_box_pack_end(box, o);
    evas_object_show(o);
 
-   o = elm_slider_add(box);
+   size_height_slider = o = elm_slider_add(box);
+   elm_object_disabled_set(o, EINA_TRUE);
    elm_slider_unit_format_set(o, "%1.0f");
    elm_slider_indicator_format_set(o, "%1.0f");
    elm_slider_min_max_set(o, 20, 300);
