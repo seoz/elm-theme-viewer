@@ -7,6 +7,7 @@
 Evas_Object *list, *win, *gui_layout, *preview_box, *preview_obj;
 Evas_Object *description_frame, *option_frame;
 Evas_Object *size_width_slider, *size_height_slider;
+Evas_Object *option_force_resize;
 
 typedef struct _Style_Data Style_Data;
 struct _Style_Data
@@ -109,7 +110,7 @@ _option_size_create(Evas_Object *box)
 {
    Evas_Object *o;
 
-   o = elm_check_add(box);
+   option_force_resize = o = elm_check_add(box);
    elm_object_text_set(o, "Force resize");
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
    evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
@@ -383,4 +384,26 @@ gui_widget_load(void)
           }
      }
    elm_list_go(list);
+}
+
+Eina_Bool
+option_is_force_resize(void)
+{
+   if (!option_force_resize)
+     return EINA_FALSE;
+   return elm_check_state_get(option_force_resize);
+}
+
+void
+option_preview_size_get(Evas_Coord *w, Evas_Coord *h)
+{
+   if (size_width_slider)
+     *w = elm_slider_value_get(size_width_slider);
+   else
+     *w = -1;
+
+   if (size_height_slider)
+     *h = elm_slider_value_get(size_height_slider);
+   else
+     *h = -1;
 }
