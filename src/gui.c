@@ -4,6 +4,13 @@
 #include "theme.h"
 #include "widget.h"
 
+#define SIZE_WIDTH_MIN 40
+#define SIZE_WIDTH_MAX 500
+#define SIZE_WIDTH_DEFAULT 300
+#define SIZE_HEIGHT_MIN 30
+#define SIZE_HEIGHT_MAX 400
+#define SIZE_HEIGHT_DEFAULT 100
+
 Evas_Object *list, *win, *gui_layout, *preview_box, *preview_obj;
 Evas_Object *description_frame, *option_frame;
 Evas_Object *size_width_slider, *size_height_slider;
@@ -128,8 +135,8 @@ _option_size_create(Evas_Object *box)
    size_width_slider = o = elm_slider_add(box);
    elm_slider_unit_format_set(o, "%1.0f");
    elm_slider_indicator_format_set(o, "%1.0f");
-   elm_slider_min_max_set(o, 20, 300);
-   elm_slider_value_set(o, 20);
+   elm_slider_min_max_set(o, SIZE_WIDTH_MIN, SIZE_WIDTH_MAX);
+   elm_slider_value_set(o, SIZE_WIDTH_DEFAULT);
    elm_object_disabled_set(o, EINA_TRUE);
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
    evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
@@ -148,8 +155,8 @@ _option_size_create(Evas_Object *box)
    size_height_slider = o = elm_slider_add(box);
    elm_slider_unit_format_set(o, "%1.0f");
    elm_slider_indicator_format_set(o, "%1.0f");
-   elm_slider_min_max_set(o, 20, 300);
-   elm_slider_value_set(o, 20);
+   elm_slider_min_max_set(o, SIZE_HEIGHT_MIN, SIZE_HEIGHT_MAX);
+   elm_slider_value_set(o, SIZE_HEIGHT_DEFAULT);
    elm_object_disabled_set(o, EINA_TRUE);
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
    evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
