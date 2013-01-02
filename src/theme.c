@@ -1,17 +1,8 @@
 #include <Elementary.h>
 #include "log.h"
 #include "theme.h"
+#include "widget.h"
 
-char *widgets[] = {
-     "access", "actionslider", "bg", "border", "bubble", "button", "calendar",
-     "check", "clock", "colorselector", "conformant", "ctxpopup", "datetime",
-     "dayselector", "diskselector", "entry", "ews", "fileselector",
-     "fileselector_entry", "flipselector", "focus_highlight", "frame",
-     "gengrid", "genlist", "hover", "icon", "index", "label", "layout", "list",
-     "map", "menu", "multibuttonentry", "naviframe", "notify", "panel", "panes",
-     "photo", "photocam", "player", "pointer", "popup", "progressbar", "radio",
-     "scroller", "segment_control", "separator", "slider", "slideshow",
-     "spinner", "thumb", "toolbar", "tooltip", "video", "win", NULL };
 Eina_List *widget_list;
 Elm_Theme *th;
 
@@ -24,10 +15,10 @@ theme_init(void)
    if (widget_list) return;
 
    // TODO : create only necessary widget data. do not create all wd for unused widgets.
-   while (widgets[i])
+   while (widgets[i].type < ETV_ID_LAST)
      {
         wd = (Widget_Data *)calloc(1, sizeof(Widget_Data));
-        wd->widget = widgets[i];
+        wd->type = widgets[i].type;
         widget_list = eina_list_append(widget_list, wd);
         i++;
      }
@@ -87,7 +78,7 @@ theme_load(const char *edje_file)
         wd = NULL;
         EINA_LIST_FOREACH(widget_list, l, wd)
           {
-             if (!strcmp(wd->widget, token))
+             if (!strcmp(widgets[wd->type].widget, token))
                break;
           }
         if (!wd)
@@ -117,11 +108,11 @@ theme_widgets_print(void)
    Widget_Data *wd;
 
    EINA_LIST_FOREACH(widget_list, l, wd)
-     INF("%s %d", wd->widget, eina_list_count(wd->styles));
+     INF("%s %d", widgets[wd->type].widget, eina_list_count(wd->styles));
 }
 
 Eina_List *
-theme_widget_styles_get(const char *widget)
+theme_widget_styles_get(Widget_Type widget)
 {
    Widget_Data *wd = NULL;
    Eina_List *l;
@@ -130,14 +121,14 @@ theme_widget_styles_get(const char *widget)
 
    EINA_LIST_FOREACH(widget_list, l, wd)
      {
-        if (!strcmp(widget, wd->widget))
+        if (widget == wd->type)
           break;
      }
    return wd->styles;
 }
 
 void
-theme_widget_styles_print(const char *widget)
+theme_widget_styles_print(Widget_Type widget)
 {
    Eina_List *l = NULL;
    Widget_Data *wd = NULL;
@@ -145,7 +136,7 @@ theme_widget_styles_print(const char *widget)
 
    EINA_LIST_FOREACH(widget_list, l, wd)
      {
-        if (!strcmp(widget, wd->widget))
+        if (widget == wd->type)
           break;
      }
 
