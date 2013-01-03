@@ -3,6 +3,67 @@
 #include "gui.h"
 #include "log.h"
 #include "theme.h"
+#include "widget.h"
+
+extern Widget widgets[] = {
+   { NULL, ETV_ID_NONE, NULL },
+   { "access", ETV_ID_ACCESS, NULL },
+   { "actionslider", ETV_ID_ACTIONSLIDER, NULL },
+   { "bg", ETV_ID_BG, NULL },
+   { "border", ETV_ID_BORDER, NULL },
+   { "bubble", ETV_ID_BUBBLE, NULL },
+   { "button", ETV_ID_BUTTON, NULL },
+   { "calendar", ETV_ID_CALENDAR, NULL },
+   { "check", ETV_ID_CHECK, NULL },
+   { "clock", ETV_ID_CLOCK, NULL },
+   { "colorselector", ETV_ID_COLORSELECTOR, NULL },
+   { "conformant", ETV_ID_CONFORMANT, NULL },
+   { "ctxpopup", ETV_ID_CTXPOPUP, NULL },
+   { "datetime", ETV_ID_DATETIME, NULL },
+   { "dayselector", ETV_ID_DAYSELECTOR, NULL },
+   { "diskselector", ETV_ID_DISKSELECTOR, NULL },
+   { "entry", ETV_ID_ENTRY, NULL },
+   { "ews", ETV_ID_EWS, NULL },
+   { "fileselector", ETV_ID_FILESELECTOR, NULL },
+   { "fileselector_button", ETV_ID_FILESELECTOR_BUTTON, NULL },
+   { "fileselector_entry", ETV_ID_FILESELECTOR_ENTRY, NULL },
+   { "flipselector", ETV_ID_FLIPSELECTOR, NULL },
+   { "focus_highlight", ETV_ID_FOCUS_HIGHLIGHT, NULL },
+   { "frame", ETV_ID_FRAME, NULL },
+   { "gengrid", ETV_ID_GENGRID, NULL },
+   { "genlist", ETV_ID_GENLIST, NULL },
+   { "hover", ETV_ID_HOVER, NULL },
+   { "icon", ETV_ID_ICON, NULL },
+   { "index", ETV_ID_INDEX, NULL },
+   { "label", ETV_ID_LABEL, NULL },
+   { "layout", ETV_ID_LAYOUT, NULL },
+   { "list", ETV_ID_LIST, NULL },
+   { "map", ETV_ID_MAP, NULL },
+   { "menu", ETV_ID_MENU, NULL },
+   { "multibuttonentry", ETV_ID_MULTIBUTTONENTRY, NULL },
+   { "naviframe", ETV_ID_NAVIFRAME, NULL },
+   { "notify", ETV_ID_NOTIFY, NULL },
+   { "panel", ETV_ID_PANEL, NULL },
+   { "panes", ETV_ID_PANES, NULL },
+   { "photo", ETV_ID_PHOTO, NULL },
+   { "photocam", ETV_ID_PHOTOCAM, NULL },
+   { "player", ETV_ID_PLAYER, NULL },
+   { "pointer", ETV_ID_POINTER, NULL },
+   { "popup", ETV_ID_POPUP, NULL },
+   { "progressbar", ETV_ID_PROGRESSBAR, NULL },
+   { "radio", ETV_ID_RADIO, NULL },
+   { "scroller", ETV_ID_SCROLLER, NULL },
+   { "segment_control", ETV_ID_SEGMENT_CONTROL, NULL },
+   { "separator", ETV_ID_SEPARATOR, NULL },
+   { "slider", ETV_ID_SLIDER, NULL },
+   { "slideshow", ETV_ID_SLIDESHOW, NULL },
+   { "spinner", ETV_ID_SPINNER, NULL },
+   { "thumb", ETV_ID_THUMB, NULL },
+   { "toolbar", ETV_ID_TOOLBAR, NULL },
+   { "tooltip", ETV_ID_TOOLTIP, NULL },
+   { "video", ETV_ID_VIDEO, NULL },
+   { "win", ETV_ID_WIN, NULL }
+};
 
 /*
  * Get the second part from the orig_style
@@ -40,14 +101,14 @@ _trim_end_default(const char *orig_style, char *style)
 }
 
 Evas_Object *
-_widget_not_implemented_create(const char *widget)
+_widget_not_implemented_create(Widget_Type widget)
 {
    Evas_Object *o;
    char buf[PATH_MAX] = {0, };
 
    o = elm_label_add(win);
    EXPAND(o); FILL(o);
-   sprintf(buf, "Sorry, %s widget sample is not implemented yet.", widget);
+   sprintf(buf, "Sorry, %s widget sample is not implemented yet.", widgets[widget].widget);
    elm_object_text_set(o, buf);
    evas_object_show(o);
 
@@ -789,7 +850,7 @@ widget_resize(Evas_Object *o)
 }
 
 Evas_Object *
-widget_create(const char *widget, const char *orig_style)
+widget_create(Widget_Type widget, const char *orig_style)
 {
    Evas_Object *o = NULL;
    const char *style = NULL;
@@ -798,14 +859,13 @@ widget_create(const char *widget, const char *orig_style)
      style = eina_stringshare_add(_parse_style(orig_style));
    //INF("widget : %s, orig_style : %s, style : %s", widget, orig_style, style);
 
-   if (!widget && !style)
-     o = _widget_bg_create(NULL);
-   else if (!strcmp(widget, "actionslider"))
+   if (widget == ETV_ID_ACTIONSLIDER)
      o = _widget_actionslider_create(style);
-   else if (!strcmp(widget, "bg"))
+   else if (widget == ETV_ID_BG)
      o = _widget_bg_create(style);
-   else if (!strcmp(widget, "button"))
+   else if (widget == ETV_ID_BUTTON)
      o = _widget_button_create(style);
+/*
    else if (!strcmp(widget, "check"))
      o = _widget_check_create(style);
    else if (!strcmp(widget, "clock"))
@@ -836,6 +896,7 @@ widget_create(const char *widget, const char *orig_style)
      o = _widget_separator_create(style, orig_style);
    else if (!strcmp(widget, "spinner"))
      o = _widget_spinner_create(style);
+*/
    else
      o = _widget_not_implemented_create(widget);
    elm_object_theme_set(o, th);

@@ -19,12 +19,12 @@ Evas_Object *option_force_resize;
 typedef struct _Style_Data Style_Data;
 struct _Style_Data
 {
-   const char *widget;
+   Widget_Type widget;
    const char *style;
 };
 
 static void
-_preview_create(const char *widget, const char *style)
+_preview_create(Widget_Type widget, const char *style)
 {
    Evas_Object *o;
 
@@ -317,7 +317,7 @@ _style_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 static void
 _nf_prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
-   _preview_create(NULL, NULL);
+   _preview_create(ETV_ID_NONE, NULL);
    elm_naviframe_item_pop(data);
 }
 
@@ -325,14 +325,14 @@ static void
 _style_list_gengrid_group_index_sel_cb(void *data, Evas_Object *obj,
                                       void *event_info)
 {
-   _preview_create("gengrid", "h9 group-index-style");
+   _preview_create(ETV_ID_GENGRID, "h9 group-index-style");
 }
 
 static void
 _style_list_gengrid_grid_check_sel_cb(void *data, Evas_Object *obj,
                                       void *event_info)
 {
-   _preview_create("gengrid", "h9 grid-check-style");
+   _preview_create(ETV_ID_GENGRID, "h9 grid-check-style");
 }
 
 static void
@@ -361,7 +361,7 @@ _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 
    li = elm_list_add(nf);
    elm_list_select_mode_set(li, ELM_OBJECT_SELECT_MODE_ALWAYS);
-   styles = theme_widget_styles_get((const char *)data);
+   styles = theme_widget_styles_get((Widget_Type)data);
    EINA_LIST_FOREACH(styles, l, style)
      {
         // TODO: sd needs to be freed properly
@@ -396,8 +396,8 @@ gui_widget_load(void)
      {
         if (eina_list_count(wd->styles))
           {
-             elm_list_item_append(list, wd->widget, NULL, NULL,
-                                  _widget_list_sel_cb, wd->widget);
+             elm_list_item_append(list, widgets[wd->type].widget, NULL, NULL,
+                                  _widget_list_sel_cb, (void *)wd->type);
           }
      }
    elm_list_go(list);
