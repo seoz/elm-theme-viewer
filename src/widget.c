@@ -5,8 +5,8 @@
 #include "theme.h"
 #include "widget.h"
 
-extern Widget widgets[] = {
-   { NULL, ETV_ID_NONE, NULL },
+Widget widgets[WIDGET_COUNT] = {
+   { "none", ETV_ID_NONE, NULL },
    { "access", ETV_ID_ACCESS, NULL },
    { "actionslider", ETV_ID_ACTIONSLIDER, NULL },
    { "bg", ETV_ID_BG, NULL },
@@ -108,7 +108,8 @@ _widget_not_implemented_create(Widget_Type widget)
 
    o = elm_label_add(win);
    EXPAND(o); FILL(o);
-   sprintf(buf, "Sorry, %s widget sample is not implemented yet.", widgets[widget].widget);
+   sprintf(buf, "Sorry, %s widget sample is not implemented yet.",
+           widgets[widget].name);
    elm_object_text_set(o, buf);
    evas_object_show(o);
 
@@ -865,38 +866,36 @@ widget_create(Widget_Type widget, const char *orig_style)
      o = _widget_bg_create(style);
    else if (widget == ETV_ID_BUTTON)
      o = _widget_button_create(style);
-/*
-   else if (!strcmp(widget, "check"))
+   else if (widget == ETV_ID_CHECK)
      o = _widget_check_create(style);
-   else if (!strcmp(widget, "clock"))
+   else if (widget == ETV_ID_CLOCK)
      o = _widget_clock_create(style);
-   else if (!strcmp(widget, "entry"))
+   else if (widget == ETV_ID_ENTRY)
      o = _widget_entry_create(style);
-   else if (!strcmp(widget, "fileselector"))
+   else if (widget == ETV_ID_FILESELECTOR)
      o = _widget_fileselector_create(style);
-   else if (!strcmp(widget, "frame"))
+   else if (widget == ETV_ID_FRAME)
      o = _widget_frame_create(style);
-   else if (!strcmp(widget, "gengrid"))
+   else if (widget == ETV_ID_GENGRID)
      o = _widget_gengrid_create(orig_style, style);
-   else if (!strcmp(widget, "genlist"))
+   else if (widget == ETV_ID_GENLIST)
      o = _widget_genlist_create(orig_style, style);
-   else if (!strcmp(widget, "hover"))
+   else if (widget == ETV_ID_HOVER)
      o = _widget_hover_create(style);
-   else if (!strcmp(widget, "icon"))
+   else if (widget == ETV_ID_ICON)
      o = _widget_icon_create(orig_style);
-   else if (!strcmp(widget, "label"))
+   else if (widget == ETV_ID_LABEL)
      o = _widget_label_create(style);
-   else if (!strcmp(widget, "layout"))
+   else if (widget == ETV_ID_LAYOUT)
      o = _widget_layout_create(style);
-   else if (!strcmp(widget, "menu"))
+   else if (widget == ETV_ID_MENU)
      o = _widget_menu_create(orig_style);
-   else if (!strcmp(widget, "progressbar"))
+   else if (widget == ETV_ID_PROGRESSBAR)
      o = _widget_progressbar_create(orig_style);
-   else if (!strcmp(widget, "separator"))
+   else if (widget == ETV_ID_SEPARATOR)
      o = _widget_separator_create(style, orig_style);
-   else if (!strcmp(widget, "spinner"))
+   else if (widget == ETV_ID_SPINNER)
      o = _widget_spinner_create(style);
-*/
    else
      o = _widget_not_implemented_create(widget);
    elm_object_theme_set(o, th);

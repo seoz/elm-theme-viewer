@@ -19,7 +19,7 @@ Evas_Object *option_force_resize;
 typedef struct _Style_Data Style_Data;
 struct _Style_Data
 {
-   Widget_Type widget;
+   Widget_Type widget_type;
    const char *style;
 };
 
@@ -308,10 +308,10 @@ _style_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 {
    Style_Data *sd = data;
 
-   if (!data || !sd->widget || !sd->style) return;
-   INF("%s %s", sd->widget, sd->style);
+   if (!data || !sd->widget_type || !sd->style) return;
+   INF("%s %s", widgets[sd->widget_type].name, sd->style);
 
-   _preview_create(sd->widget, sd->style);
+   _preview_create(sd->widget_type, sd->style);
 }
 
 static void
@@ -336,9 +336,9 @@ _style_list_gengrid_grid_check_sel_cb(void *data, Evas_Object *obj,
 }
 
 static void
-_custom_styles_add(Evas_Object *list, const char *widget)
+_custom_styles_add(Evas_Object *list, Widget_Type widget)
 {
-   if (!strcmp("gengrid", widget))
+   if (ETV_ID_GENGRID == widget)
      {
         elm_list_item_append(list, "(H9) Grid Check Style", NULL, NULL,
                              _style_list_gengrid_grid_check_sel_cb, NULL);
@@ -366,13 +366,13 @@ _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
      {
         // TODO: sd needs to be freed properly
         sd = (Style_Data *)calloc(1, sizeof(Style_Data));
-        sd->widget = data;
+        sd->widget_type = (Widget_Type)data;
         sd->style = style;
         elm_list_item_append(li, style, NULL, NULL, _style_list_sel_cb, sd);
      }
 
    // add additional hacky custom styles for special reasons
-   _custom_styles_add(li, sd->widget);
+   _custom_styles_add(li, sd->widget_type);
 
    elm_list_go(li);
 
@@ -383,7 +383,7 @@ _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
    evas_object_show(prev_btn);
 
    it = elm_naviframe_item_push(nf, "Styles", prev_btn, NULL, li, NULL);
-   elm_object_item_part_text_set(it, "subtitle", (char *)data);
+   elm_object_item_part_text_set(it, "subtitle", (char *)widgets[(int)data].name);
 }
 
 void
@@ -396,7 +396,7 @@ gui_widget_load(void)
      {
         if (eina_list_count(wd->styles))
           {
-             elm_list_item_append(list, widgets[wd->type].widget, NULL, NULL,
+             elm_list_item_append(list, eina_stringshare_add(widgets[wd->type].name), NULL, NULL,
                                   _widget_list_sel_cb, (void *)wd->type);
           }
      }

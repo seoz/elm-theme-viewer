@@ -1,6 +1,8 @@
 #ifndef __INCLUDE_WIDGET__
 #define __INCLUDE_WIDGET__
 
+#define WIDGET_COUNT 58
+
 typedef enum
 {
    ETV_ID_NONE,
@@ -66,7 +68,7 @@ typedef enum
 typedef struct _Widget Widget;
 struct _Widget
 {
-   const char *widget;
+   const char *name;
    Widget_Type type;
    const char *desc;
 };
@@ -78,7 +80,7 @@ struct _Widget_Data
    Eina_List *styles; // list of styles
 };
 
-Widget widgets[];
+Widget widgets[WIDGET_COUNT];
 
 Evas_Object *widget_create(Widget_Type widget, const char *style);
 void widget_resize(Evas_Object *o);
