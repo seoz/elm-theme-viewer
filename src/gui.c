@@ -303,6 +303,20 @@ gui_create(const char *edje_file)
    return;
 }
 
+void
+gui_description_set(const char *txt)
+{
+   Evas_Object *o;
+
+   o = elm_label_add(win);
+   elm_label_line_wrap_set(o, ELM_WRAP_MIXED);
+   elm_object_text_set(o, txt);
+   elm_object_content_set(description_frame, o);
+   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   evas_object_show(o);
+}
+
 static void
 _style_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 {
@@ -318,6 +332,7 @@ static void
 _nf_prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
    _preview_create(ETV_ID_NONE, NULL);
+   gui_description_set(NULL);
    elm_naviframe_item_pop(data);
 }
 
@@ -384,6 +399,8 @@ _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 
    it = elm_naviframe_item_push(nf, "Styles", prev_btn, NULL, li, NULL);
    elm_object_item_part_text_set(it, "subtitle", (char *)widgets[(int)data].name);
+
+   gui_description_set(widgets[(int)data].desc);
 }
 
 void

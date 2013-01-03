@@ -8,8 +8,8 @@
 Widget widgets[WIDGET_COUNT] = {
    { "none", ETV_ID_NONE, NULL },
    { "access", ETV_ID_ACCESS, NULL },
-   { "actionslider", ETV_ID_ACTIONSLIDER, NULL },
-   { "bg", ETV_ID_BG, NULL },
+   { "actionslider", ETV_ID_ACTIONSLIDER, "An actionslider is a switcher for 2 or 3 labels with customizable magnet properties. The user drags and releases the indicator, to choose a label." },
+   { "bg", ETV_ID_BG, "Background object, used for setting a solid color, image or Edje group as a background to a window or any container object." },
    { "border", ETV_ID_BORDER, NULL },
    { "bubble", ETV_ID_BUBBLE, NULL },
    { "button", ETV_ID_BUTTON, NULL },
