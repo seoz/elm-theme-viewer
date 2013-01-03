@@ -390,6 +390,7 @@ _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
    // add additional hacky custom styles for special reasons
    _custom_styles_add(li, sd->widget_type);
 
+   elm_list_item_selected_set(elm_list_first_item_get(li), EINA_TRUE);
    elm_list_go(li);
 
    prev_btn = elm_button_add(win);
