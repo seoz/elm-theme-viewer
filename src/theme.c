@@ -78,7 +78,7 @@ theme_load(const char *edje_file)
         wd = NULL;
         EINA_LIST_FOREACH(widget_list, l, wd)
           {
-             if (!strcmp(widgets[wd->type].name, token))
+             if (!strcmp(widget_name_get_by_type(wd->type), token))
                break;
           }
         if (!wd)
@@ -108,7 +108,7 @@ theme_widgets_print(void)
    Widget_Data *wd;
 
    EINA_LIST_FOREACH(widget_list, l, wd)
-     INF("%s %d", widgets[wd->type].name, eina_list_count(wd->styles));
+     INF("%s %d", widget_name_get_by_type(wd->type), eina_list_count(wd->styles));
 }
 
 Eina_List *
