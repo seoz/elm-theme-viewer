@@ -904,3 +904,21 @@ widget_create(Widget_Type widget, const char *orig_style)
 
    return o;
 }
+
+const char *
+widget_name_get_by_type(Widget_Type type)
+{
+   if (type < WIDGET_COUNT)
+     return widgets[type].name;
+   else
+     return NULL;
+}
+
+const char *
+widget_desc_get_by_type(Widget_Type type)
+{
+   if (type < WIDGET_COUNT)
+     return widgets[type].desc;
+   else
+     return NULL;
+}

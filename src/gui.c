@@ -323,7 +323,7 @@ _style_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
    Style_Data *sd = data;
 
    if (!data || !sd->widget_type || !sd->style) return;
-   INF("%s %s", widgets[sd->widget_type].name, sd->style);
+   INF("%s %s", widget_name_get_by_type(sd->widget_type), sd->style);
 
    _preview_create(sd->widget_type, sd->style);
 }
@@ -371,17 +371,18 @@ _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
    Eina_List *styles, *l;
    char *style;
    Style_Data *sd;
+   Widget_Type type = (Widget_Type)data;
 
    if (!nf) return;
 
    li = elm_list_add(nf);
    elm_list_select_mode_set(li, ELM_OBJECT_SELECT_MODE_ALWAYS);
-   styles = theme_widget_styles_get((Widget_Type)data);
+   styles = theme_widget_styles_get(type);
    EINA_LIST_FOREACH(styles, l, style)
      {
         // TODO: sd needs to be freed properly
         sd = (Style_Data *)calloc(1, sizeof(Style_Data));
-        sd->widget_type = (Widget_Type)data;
+        sd->widget_type = type;
         sd->style = style;
         elm_list_item_append(li, style, NULL, NULL, _style_list_sel_cb, sd);
      }
@@ -398,9 +399,9 @@ _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
    evas_object_show(prev_btn);
 
    it = elm_naviframe_item_push(nf, "Styles", prev_btn, NULL, li, NULL);
-   elm_object_item_part_text_set(it, "subtitle", (char *)widgets[(int)data].name);
+   elm_object_item_part_text_set(it, "subtitle", (char *)widget_name_get_by_type(type));
 
-   gui_description_set(widgets[(int)data].desc);
+   gui_description_set(widget_desc_get_by_type(type));
 }
 
 void
@@ -413,7 +414,9 @@ gui_widget_load(void)
      {
         if (eina_list_count(wd->styles))
           {
-             elm_list_item_append(list, eina_stringshare_add(widgets[wd->type].name), NULL, NULL,
+             elm_list_item_append(list,
+                                  widget_name_get_by_type(wd->type),
+                                  NULL, NULL,
                                   _widget_list_sel_cb, (void *)wd->type);
           }
      }
