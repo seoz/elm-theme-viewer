@@ -262,6 +262,7 @@ void
 gui_create(const char *edje_file)
 {
    Evas_Object *o, *preview_frame;
+   char path[PATH_MAX];
 
    if (!edje_file) return;
 
@@ -273,7 +274,8 @@ gui_create(const char *edje_file)
    evas_object_show(o);
 
    gui_layout = o = elm_layout_add(win);
-   elm_layout_file_set(o, "data/layout.edj", "etv/main/layout");
+   snprintf(path, sizeof(path), "%s/themes/layout.edj", elm_app_data_dir_get());
+   elm_layout_file_set(o, path, "etv/main/layout");
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
    elm_win_resize_object_add(win, o);
    evas_object_show(o);

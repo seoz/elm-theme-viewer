@@ -3,7 +3,7 @@ dnl Process this file with autoconf to produce a configure script.
 # get rid of that stupid cache mechanism
 rm -f config.cache
 
-AC_INIT([elm_theme_viewer], [0.1.0], [seojuyung2@gmail.com])
+AC_INIT([elm-theme-viewer], [0.1.0], [seojuyung2@gmail.com])
 AC_PREREQ([2.60])
 AC_CONFIG_SRCDIR([configure.ac])
 AC_CONFIG_MACRO_DIR([m4])
@@ -53,6 +53,8 @@ AC_CONFIG_FILES([
 Makefile
 src/Makefile
 data/Makefile
+data/images/Makefile
+data/themes/Makefile
 ])
 
 AC_OUTPUT
