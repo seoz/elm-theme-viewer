@@ -3,3 +3,4 @@
 * use eina_stringshare correctly
 * do edje_file_collection_list_free correctly. now it frees 'frame' from the list when this api is called. weird..
 * add entry emoticon samples.
+* rpm support.
