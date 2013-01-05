@@ -62,7 +62,8 @@ Widget widgets[WIDGET_COUNT] = {
    { "toolbar", ETV_ID_TOOLBAR, "A toolbar is a widget that displays a list of items inside a box. It can be scrollable, show a menu with items that don't fit to toolbar size or even crop them." },
    { "tooltip", ETV_ID_TOOLTIP, "The Tooltip is an (internal, for now) smart object used to show a content in a frame on mouse hover of objects(or widgets), with tips/information about them." },
    { "video", ETV_ID_VIDEO, "Elementary comes with two object that help design application that need to display video." },
-   { "win", ETV_ID_WIN, "The window class of Elementary. Contains functions to manipulate windows. The Evas engine used to render the window contents is specified in the system or user elementary config files (whichever is found last), and can be overridden with the ELM_ENGINE environment variable for testing. Engines that may be supported (depending on Evas and Ecore-Evas compilation setup and modules actually installed at runtime) are (listed in order of best supported and most likely to be complete and work to lowest quality)." }
+   { "win", ETV_ID_WIN, "The window class of Elementary. Contains functions to manipulate windows. The Evas engine used to render the window contents is specified in the system or user elementary config files (whichever is found last), and can be overridden with the ELM_ENGINE environment variable for testing. Engines that may be supported (depending on Evas and Ecore-Evas compilation setup and modules actually installed at runtime) are (listed in order of best supported and most likely to be complete and work to lowest quality)." },
+   { "none", ETV_ID_LAST, NULL }
 };
 
 /*
