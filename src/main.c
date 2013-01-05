@@ -9,7 +9,8 @@ elm_main(int argc, char **argv)
 {
    const char *edje_file = NULL;
 
-   elm_app_compile_data_dir_set(ELM_THEME_VIEWER_DATA_DIR);
+   elm_app_compile_bin_dir_set(PACKAGE_BIN_DIR);
+   elm_app_compile_data_dir_set(PACKAGE_DATA_DIR);
    elm_app_info_set(elm_main, "elm-theme-viewer", "images/logo.png");
 
    if (argc > 2)
