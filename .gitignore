@@ -2,7 +2,7 @@ elm_theme_viewer
 *.o
 *.swp
 *.swo
-data/layout.edj
+data/themes/layout.edj
 tags
 Makefile
 Makefile.in
