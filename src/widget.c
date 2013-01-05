@@ -224,7 +224,8 @@ _widget_frame_create(const char *style)
 }
 
 static char *
-_widget_gengrid_text_get(void *data, Evas_Object *obj, const char *part)
+_widget_gengrid_text_get(void *data, Evas_Object *obj EINA_UNUSED,
+                         const char *part EINA_UNUSED)
 {
    char buf[256];
    snprintf(buf, sizeof(buf),
@@ -408,7 +409,8 @@ _widget_gengrid_create(const char *orig_style, const char *style)
 }
 
 static char *
-_widget_genlist_text_get(void *data, Evas_Object *obj, const char *part)
+_widget_genlist_text_get(void *data, Evas_Object *obj EINA_UNUSED,
+                         const char *part EINA_UNUSED)
 {
    char buf[256];
    snprintf(buf, sizeof(buf),
@@ -418,7 +420,8 @@ _widget_genlist_text_get(void *data, Evas_Object *obj, const char *part)
 }
 
 static Evas_Object *
-_widget_genlist_content_get(void *data, Evas_Object *obj, const char *part)
+_widget_genlist_content_get(void *data EINA_UNUSED, Evas_Object *obj,
+                            const char *part)
 {
    Evas_Object *ic = elm_icon_add(obj);
    if (!strcmp(part, "elm.swallow.end"))
@@ -498,7 +501,8 @@ _widget_fileselector_create(const char *style)
 }
 
 static void
-_hover_bt_cb(void *data, Evas_Object *obj, void *event_info)
+_hover_bt_cb(void *data, Evas_Object *obj EINA_UNUSED,
+             void *event_info EINA_UNUSED)
 {
    evas_object_show(data);
 }
@@ -692,7 +696,8 @@ _widget_layout_create(const char *style)
 }
 
 static void
-_widget_menu_resize(void *data, Evas *evas, Evas_Object *obj, void *event)
+_widget_menu_resize(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj,
+                    void *event EINA_UNUSED)
 {
    Evas_Coord w, h;
    Evas_Object *rect = data;
@@ -702,7 +707,8 @@ _widget_menu_resize(void *data, Evas *evas, Evas_Object *obj, void *event)
 }
 
 static void
-_widget_menu_show(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_widget_menu_show(void *data, Evas *e EINA_UNUSED,
+                  Evas_Object *obj EINA_UNUSED, void *event_info)
 {
    Evas_Event_Mouse_Down *ev = event_info;
    elm_menu_move(data, ev->canvas.x, ev->canvas.y);
@@ -791,7 +797,7 @@ _widget_progressbar_create(const char *style2)
 }
 
 Evas_Object *
-_widget_separator_create(const char *style, const char *orig_style)
+_widget_separator_create(const char *style EINA_UNUSED, const char *orig_style)
 {
    Evas_Object *o;
 
