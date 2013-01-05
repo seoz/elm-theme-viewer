@@ -60,7 +60,8 @@ _left_menu_create(Evas_Object *parent)
 }
 
 static void
-_finger_size_changed_cb(void *data, Evas_Object *obj, void *event_info)
+_finger_size_changed_cb(void *data EINA_UNUSED, Evas_Object *obj,
+                        void *event_info EINA_UNUSED)
 {
    double val = elm_slider_value_get(obj);
    double v;
@@ -72,7 +73,8 @@ _finger_size_changed_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_scale_changed_cb(void *data, Evas_Object *obj, void *event_info)
+_scale_changed_cb(void *data EINA_UNUSED, Evas_Object *obj,
+                  void *event_info EINA_UNUSED)
 {
    double val = elm_slider_value_get(obj);
    double v;
@@ -84,7 +86,8 @@ _scale_changed_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_size_width_changed_cb(void *data, Evas_Object *obj, void *event_info)
+_size_width_changed_cb(void *data EINA_UNUSED, Evas_Object *obj,
+                       void *event_info EINA_UNUSED)
 {
    double val = elm_slider_value_get(obj);
    double v;
@@ -99,7 +102,8 @@ _size_width_changed_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_size_height_changed_cb(void *data, Evas_Object *obj, void *event_info)
+_size_height_changed_cb(void *data EINA_UNUSED, Evas_Object *obj,
+                        void *event_info EINA_UNUSED)
 {
    double val = elm_slider_value_get(obj);
    double v;
@@ -114,7 +118,8 @@ _size_height_changed_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_force_resize_changed_cb(void *data, Evas_Object *obj, void *event_info)
+_force_resize_changed_cb(void *data EINA_UNUSED, Evas_Object *obj,
+                         void *event_info EINA_UNUSED)
 {
    Eina_Bool checked = elm_check_state_get(obj);
 
@@ -318,7 +323,8 @@ gui_description_set(const char *txt)
 }
 
 static void
-_style_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
+_style_list_sel_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
+                   void *event_info EINA_UNUSED)
 {
    Style_Data *sd = data;
 
@@ -329,7 +335,8 @@ _style_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_nf_prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
+_nf_prev_btn_clicked_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
+                        void *event_info EINA_UNUSED)
 {
    _preview_create(ETV_ID_NONE, NULL);
    gui_description_set(NULL);
@@ -337,15 +344,17 @@ _nf_prev_btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_style_list_gengrid_group_index_sel_cb(void *data, Evas_Object *obj,
-                                      void *event_info)
+_style_list_gengrid_group_index_sel_cb(void *data EINA_UNUSED,
+                                       Evas_Object *obj EINA_UNUSED,
+                                       void *event_info EINA_UNUSED)
 {
    _preview_create(ETV_ID_GENGRID, "h9 group-index-style");
 }
 
 static void
-_style_list_gengrid_grid_check_sel_cb(void *data, Evas_Object *obj,
-                                      void *event_info)
+_style_list_gengrid_grid_check_sel_cb(void *data EINA_UNUSED,
+                                      Evas_Object *obj EINA_UNUSED,
+                                      void *event_info EINA_UNUSED)
 {
    _preview_create(ETV_ID_GENGRID, "h9 grid-check-style");
 }
@@ -363,7 +372,7 @@ _custom_styles_add(Evas_Object *list, Widget_Type widget)
 }
 
 static void
-_widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info)
+_widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info EINA_UNUSED)
 {
    Evas_Object *nf = evas_object_data_get(obj, "nf");
    Evas_Object *li, *prev_btn;
