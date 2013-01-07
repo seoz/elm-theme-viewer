@@ -150,6 +150,42 @@ _widget_bg_create(const char *style)
 }
 
 Evas_Object *
+_widget_bubble_create(const char *orig_style)
+{
+   char buf[PATH_MAX];
+   char style[PATH_MAX] = {0, };
+   Evas_Object *o, *ic, *lbl;
+
+   ic = elm_icon_add(win);
+   snprintf(buf, sizeof(buf), "%s/images/sky_01.jpg", elm_app_data_dir_get());
+   elm_image_file_set(ic, buf, NULL);
+   evas_object_show(ic);
+
+   lbl = elm_label_add(win);
+   elm_object_text_set(lbl, "Bubble is a widget to show text similar to how speech is represented in comics.");
+   evas_object_show(lbl);
+
+   o = elm_bubble_add(win);
+   elm_object_text_set(o, "Title");
+   elm_object_part_text_set(o, "info", "Information");
+   elm_object_content_set(o, lbl);
+   elm_object_part_content_set(o, "icon", ic);
+   evas_object_show(o);
+
+   _trim_end_default(orig_style, style);
+   if (!strcmp("bottom_left", style))
+     elm_bubble_pos_set(o, ELM_BUBBLE_POS_BOTTOM_LEFT);
+   else if (!strcmp("bottom_right", style))
+     elm_bubble_pos_set(o, ELM_BUBBLE_POS_BOTTOM_RIGHT);
+   else if (!strcmp("top_left", style))
+     elm_bubble_pos_set(o, ELM_BUBBLE_POS_TOP_LEFT);
+   else if (!strcmp("top_right", style))
+     elm_bubble_pos_set(o, ELM_BUBBLE_POS_TOP_RIGHT);
+
+   return o;
+}
+
+Evas_Object *
 _widget_button_create(const char* style)
 {
    Evas_Object *btn;
@@ -871,6 +907,8 @@ widget_create(Widget_Type widget, const char *orig_style)
      o = _widget_actionslider_create(style);
    else if (widget == ETV_ID_BG)
      o = _widget_bg_create(style);
+   else if (widget == ETV_ID_BUBBLE)
+     o = _widget_bubble_create(orig_style);
    else if (widget == ETV_ID_BUTTON)
      o = _widget_button_create(style);
    else if (widget == ETV_ID_CHECK)
