@@ -903,44 +903,33 @@ widget_create(Widget_Type widget, const char *orig_style)
      style = eina_stringshare_add(_parse_style(orig_style));
    //INF("widget : %s, orig_style : %s, style : %s", widget, orig_style, style);
 
+#define ADD_WIDGET(name__, id__, style__) \
+   else if (widget == id__) \
+    o = _widget_##name__##_create(style__)
+#define ADD_WIDGET2(name__, id__, style1__, style2__) \
+   else if (widget == id__) \
+    o = _widget_##name__##_create(style1__, style2__)
+
    if (widget == ETV_ID_ACTIONSLIDER)
      o = _widget_actionslider_create(style);
-   else if (widget == ETV_ID_BG)
-     o = _widget_bg_create(style);
-   else if (widget == ETV_ID_BUBBLE)
-     o = _widget_bubble_create(orig_style);
-   else if (widget == ETV_ID_BUTTON)
-     o = _widget_button_create(style);
-   else if (widget == ETV_ID_CHECK)
-     o = _widget_check_create(style);
-   else if (widget == ETV_ID_CLOCK)
-     o = _widget_clock_create(style);
-   else if (widget == ETV_ID_ENTRY)
-     o = _widget_entry_create(style);
-   else if (widget == ETV_ID_FILESELECTOR)
-     o = _widget_fileselector_create(style);
-   else if (widget == ETV_ID_FRAME)
-     o = _widget_frame_create(style);
-   else if (widget == ETV_ID_GENGRID)
-     o = _widget_gengrid_create(orig_style, style);
-   else if (widget == ETV_ID_GENLIST)
-     o = _widget_genlist_create(orig_style, style);
-   else if (widget == ETV_ID_HOVER)
-     o = _widget_hover_create(style);
-   else if (widget == ETV_ID_ICON)
-     o = _widget_icon_create(orig_style);
-   else if (widget == ETV_ID_LABEL)
-     o = _widget_label_create(style);
-   else if (widget == ETV_ID_LAYOUT)
-     o = _widget_layout_create(style);
-   else if (widget == ETV_ID_MENU)
-     o = _widget_menu_create(orig_style);
-   else if (widget == ETV_ID_PROGRESSBAR)
-     o = _widget_progressbar_create(orig_style);
-   else if (widget == ETV_ID_SEPARATOR)
-     o = _widget_separator_create(style, orig_style);
-   else if (widget == ETV_ID_SPINNER)
-     o = _widget_spinner_create(style);
+   ADD_WIDGET(bg, ETV_ID_BG, style);
+   ADD_WIDGET(bubble, ETV_ID_BUBBLE, orig_style);
+   ADD_WIDGET(button, ETV_ID_BUTTON, style);
+   ADD_WIDGET(check, ETV_ID_CHECK, style);
+   ADD_WIDGET(clock, ETV_ID_CLOCK, style);
+   ADD_WIDGET(entry, ETV_ID_ENTRY, style);
+   ADD_WIDGET(fileselector, ETV_ID_FILESELECTOR, style);
+   ADD_WIDGET(frame, ETV_ID_FRAME, style);
+   ADD_WIDGET2(gengrid, ETV_ID_GENGRID, orig_style, style);
+   ADD_WIDGET2(genlist, ETV_ID_GENLIST, orig_style, style);
+   ADD_WIDGET(hover, ETV_ID_HOVER, style);
+   ADD_WIDGET(icon, ETV_ID_ICON, orig_style);
+   ADD_WIDGET(label, ETV_ID_LABEL, style);
+   ADD_WIDGET(layout, ETV_ID_LAYOUT, style);
+   ADD_WIDGET(menu, ETV_ID_MENU, orig_style);
+   ADD_WIDGET(progressbar, ETV_ID_PROGRESSBAR, orig_style);
+   ADD_WIDGET2(separator, ETV_ID_SEPARATOR, style, orig_style);
+   ADD_WIDGET(spinner, ETV_ID_SPINNER, style);
    else
      o = _widget_not_implemented_create(widget);
    elm_object_theme_set(o, th);
