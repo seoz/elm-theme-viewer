@@ -834,7 +834,7 @@ _widget_progressbar_create(const char *style2)
 }
 
 Evas_Object *
-_widget_separator_create(const char *style EINA_UNUSED, const char *orig_style)
+_widget_separator_create(const char *orig_style)
 {
    Evas_Object *o;
 
@@ -928,7 +928,7 @@ widget_create(Widget_Type widget, const char *orig_style)
    ADD_WIDGET(layout, ETV_ID_LAYOUT, style);
    ADD_WIDGET(menu, ETV_ID_MENU, orig_style);
    ADD_WIDGET(progressbar, ETV_ID_PROGRESSBAR, orig_style);
-   ADD_WIDGET2(separator, ETV_ID_SEPARATOR, style, orig_style);
+   ADD_WIDGET(separator, ETV_ID_SEPARATOR, orig_style);
    ADD_WIDGET(spinner, ETV_ID_SPINNER, style);
    else
      o = _widget_not_implemented_create(widget);
