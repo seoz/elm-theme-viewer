@@ -3,8 +3,8 @@ elm-theme-viewer
 Author: Daniel Juyung Seo (SeoZ)
 
 Elm Theme Viewer is an EFL(Enlightenment Foundation Libraries) elementary
-widget preview program. It lists all the widget and the styles from the theme.
-It actually creates widgets with a proper code.
+widget preview program. It lists all widgets and styles from the theme.  It
+actually creates widgets with a proper code.
 
 Usage:
    $ elm_theme_viewer
