@@ -101,7 +101,7 @@ _trim_end_default(const char *orig_style, char *style)
    //INF("%s %s", style, orig_style);
 }
 
-Evas_Object *
+static Evas_Object *
 _widget_not_implemented_create(Widget_Type widget)
 {
    Evas_Object *o;
@@ -117,7 +117,7 @@ _widget_not_implemented_create(Widget_Type widget)
    return o;
 }
 
-Evas_Object *
+static Evas_Object *
 _widget_actionslider_create(const char *style)
 {
    Evas_Object *as;
@@ -138,7 +138,7 @@ _widget_actionslider_create(const char *style)
    return as;
 }
 
-Evas_Object *
+static Evas_Object *
 _widget_bg_create(const char *style)
 {
    Evas_Object *bg;
@@ -149,7 +149,7 @@ _widget_bg_create(const char *style)
    return bg;
 }
 
-Evas_Object *
+static Evas_Object *
 _widget_bubble_create(const char *orig_style)
 {
    char buf[PATH_MAX];
@@ -185,7 +185,7 @@ _widget_bubble_create(const char *orig_style)
    return o;
 }
 
-Evas_Object *
+static Evas_Object *
 _widget_button_create(const char* style)
 {
    Evas_Object *btn;
@@ -198,7 +198,7 @@ _widget_button_create(const char* style)
    return btn;
 }
 
-Evas_Object *
+static Evas_Object *
 _widget_clock_create(const char* style)
 {
    Evas_Object *o;
@@ -210,7 +210,7 @@ _widget_clock_create(const char* style)
    return o;
 }
 
-Evas_Object *
+static Evas_Object *
 _widget_entry_create(const char* style)
 {
    char buf[PATH_MAX];
@@ -228,7 +228,7 @@ _widget_entry_create(const char* style)
    return o;
 }
 
-Evas_Object *
+static Evas_Object *
 _widget_check_create(const char *style)
 {
    Evas_Object *o;
@@ -239,7 +239,7 @@ _widget_check_create(const char *style)
    return o;
 }
 
-Evas_Object *
+static Evas_Object *
 _widget_frame_create(const char *style)
 {
    Evas_Object *o, *lbl;
@@ -518,7 +518,7 @@ _widget_genlist_create(const char *orig_style, const char *style)
    return o;
 }
 
-Evas_Object *
+static Evas_Object *
 _widget_fileselector_create(const char *style)
 {
    Evas_Object *o;
@@ -544,7 +544,7 @@ _hover_bt_cb(void *data, Evas_Object *obj EINA_UNUSED,
    evas_object_show(data);
 }
 
-Evas_Object *
+static Evas_Object *
 _widget_hover_create(const char* style)
 {
    Evas_Object *hv, *bt, *bt2;
@@ -593,7 +593,7 @@ _widget_index_create(const char *style)
    return o;
 }
 
-Evas_Object *
+static Evas_Object *
 _widget_icon_create(const char *orig_style)
 {
    Evas_Object *o;
@@ -610,7 +610,7 @@ _widget_icon_create(const char *orig_style)
    return o;
 }
 
-Evas_Object *
+static Evas_Object *
 _widget_label_create(const char *style)
 {
    Evas_Object *o;
@@ -875,7 +875,7 @@ _widget_panel_create(const char *orig_style)
    return o;
 }
 
-Evas_Object *
+static Evas_Object *
 _widget_progressbar_create(const char *style2)
 {
    char buf[PATH_MAX] = {0, };
@@ -899,7 +899,7 @@ _widget_progressbar_create(const char *style2)
    return o;
 }
 
-Evas_Object *
+static Evas_Object *
 _widget_separator_create(const char *orig_style)
 {
    Evas_Object *o;
@@ -924,7 +924,7 @@ _widget_separator_create(const char *orig_style)
    return o;
 }
 
-Evas_Object *
+static Evas_Object *
 _widget_spinner_create(const char *style)
 {
    Evas_Object *o;
