@@ -568,6 +568,31 @@ _widget_hover_create(const char* style)
    return bt;
 }
 
+static Evas_Object *
+_widget_index_create(const char *style)
+{
+   Evas_Object *o;
+   char buf[2] = {0, };
+   int i = 0;
+
+   o = elm_index_add(win);
+   EXPAND(o); FILL(o);
+
+   if (!strcmp("horizontal", style))
+     elm_index_horizontal_set(o, EINA_TRUE);
+
+   for (i = 0; i < 26; i++)
+     {
+        snprintf(buf, sizeof(buf), "%c", 'A' + i);
+        elm_index_item_append(o, buf, NULL, NULL);
+     }
+   elm_index_autohide_disabled_set(o, EINA_TRUE);
+   elm_index_level_go(o, 0);
+   evas_object_show(o);
+
+   return o;
+}
+
 Evas_Object *
 _widget_icon_create(const char *orig_style)
 {
@@ -923,6 +948,7 @@ widget_create(Widget_Type widget, const char *orig_style)
    ADD_WIDGET2(gengrid, ETV_ID_GENGRID, orig_style, style);
    ADD_WIDGET2(genlist, ETV_ID_GENLIST, orig_style, style);
    ADD_WIDGET(hover, ETV_ID_HOVER, style);
+   ADD_WIDGET(index, ETV_ID_INDEX, style);
    ADD_WIDGET(icon, ETV_ID_ICON, orig_style);
    ADD_WIDGET(label, ETV_ID_LABEL, style);
    ADD_WIDGET(layout, ETV_ID_LAYOUT, style);
