@@ -834,6 +834,47 @@ _widget_menu_create(const char *orig_style)
    return table;
 }
 
+static Evas_Object *
+_widget_panel_create(const char *orig_style)
+{
+   Evas_Object *o, *lbl;
+   char style[PATH_MAX] = {0, };
+
+   lbl = elm_label_add(win);
+   elm_object_text_set(lbl, "This is a panel.<br>"
+                       "Panel has four orientation:<br>"
+                       "TOP, BOTTOM, LEFT, RIGHT");
+   evas_object_show(lbl);
+
+   o = elm_panel_add(win);
+   elm_object_content_set(o, lbl);
+   evas_object_show(o);
+
+   _trim_end_default(orig_style, style);
+   if (!strcmp(style, "bottom"))
+     {
+        EXPAND(o); ALIGN(o, EVAS_HINT_FILL, 1.0);
+        elm_panel_orient_set(o, ELM_PANEL_ORIENT_BOTTOM);
+     }
+   else if (!strcmp(style, "top"))
+     {
+        EXPAND(o); ALIGN(o, EVAS_HINT_FILL, 0);
+        elm_panel_orient_set(o, ELM_PANEL_ORIENT_TOP);
+     }
+   else if (!strcmp(style, "left"))
+     {
+        EXPAND(o); ALIGN(o, 0.0, EVAS_HINT_FILL);
+        elm_panel_orient_set(o, ELM_PANEL_ORIENT_LEFT);
+     }
+   else if (!strcmp(style, "right"))
+     {
+        EXPAND(o); ALIGN(o, 1.0, EVAS_HINT_FILL);
+        elm_panel_orient_set(o, ELM_PANEL_ORIENT_RIGHT);
+     }
+
+   return o;
+}
+
 Evas_Object *
 _widget_progressbar_create(const char *style2)
 {
@@ -953,6 +994,7 @@ widget_create(Widget_Type widget, const char *orig_style)
    ADD_WIDGET(label, ETV_ID_LABEL, style);
    ADD_WIDGET(layout, ETV_ID_LAYOUT, style);
    ADD_WIDGET(menu, ETV_ID_MENU, orig_style);
+   ADD_WIDGET(panel, ETV_ID_PANEL, orig_style);
    ADD_WIDGET(progressbar, ETV_ID_PROGRESSBAR, orig_style);
    ADD_WIDGET(separator, ETV_ID_SEPARATOR, orig_style);
    ADD_WIDGET(spinner, ETV_ID_SPINNER, style);
