@@ -946,6 +946,47 @@ _widget_spinner_create(const char *style)
    return o;
 }
 
+static Evas_Object *
+_widget_toolbar_create(const char *orig_style, const char *style)
+{
+   Evas_Object *o;
+   char style2[PATH_MAX] = {0, };
+
+   _trim_end_default(orig_style, style2);
+
+   o = elm_toolbar_add(win);
+   EXPAND(o); ALIGN(o, EVAS_HINT_FILL, 0.0);
+
+   if (!strcmp("item_centered", style))
+     elm_object_style_set(o, "item_centered");
+   else if (!strcmp("item_horizontal", style))
+     elm_object_style_set(o, "item_horizontal");
+
+   elm_toolbar_item_append(o, "document-print", "Item 1", NULL, NULL);
+   elm_toolbar_item_append(o, "folder-new", "Item 2", NULL, NULL);
+
+   if (!strcmp("separator", style2))
+     {
+        elm_toolbar_item_separator_set(elm_toolbar_item_append(o, NULL, NULL, NULL, NULL),
+                                       EINA_TRUE);
+     }
+   elm_toolbar_item_append(o, "object-rotate-right", "Item 3", NULL, NULL);
+   elm_toolbar_item_append(o, "clock", "Item 4", NULL, NULL);
+
+   if (!strcmp("separator", style2))
+     {
+        elm_toolbar_item_separator_set(elm_toolbar_item_append(o, NULL, NULL, NULL, NULL),
+                                       EINA_TRUE);
+     }
+
+   elm_toolbar_item_append(o, "clock", "Item 5", NULL, NULL);
+   elm_toolbar_item_append(o, "clock", "Item 6", NULL, NULL);
+   elm_toolbar_item_append(o, "clock", "Item 7", NULL, NULL);
+   evas_object_show(o);
+
+   return o;
+}
+
 void
 widget_resize(Evas_Object *o)
 {
@@ -998,6 +1039,7 @@ widget_create(Widget_Type widget, const char *orig_style)
    ADD_WIDGET(progressbar, ETV_ID_PROGRESSBAR, orig_style);
    ADD_WIDGET(separator, ETV_ID_SEPARATOR, orig_style);
    ADD_WIDGET(spinner, ETV_ID_SPINNER, style);
+   ADD_WIDGET2(toolbar, ETV_ID_TOOLBAR, orig_style, style);
    else
      o = _widget_not_implemented_create(widget);
    elm_object_theme_set(o, th);
