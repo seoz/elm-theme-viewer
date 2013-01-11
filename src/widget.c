@@ -240,6 +240,33 @@ _widget_check_create(const char *style)
 }
 
 static Evas_Object *
+_widget_colorselector_create(const char *style)
+{
+   Evas_Object *o;
+
+   o = elm_colorselector_add(win);
+   EXPAND(o); FILL(o);
+   elm_colorselector_color_set(o, 255, 160, 132, 180);
+
+   elm_colorselector_palette_color_add(o, 255, 90, 18, 255);
+   elm_colorselector_palette_color_add(o, 255, 213, 0, 255);
+   elm_colorselector_palette_color_add(o, 146, 255, 11, 255);
+   elm_colorselector_palette_color_add(o, 9, 186, 10, 255);
+   elm_colorselector_palette_color_add(o, 86, 201, 242, 255);
+   elm_colorselector_palette_color_add(o, 18, 83, 128, 255);
+   elm_colorselector_palette_color_add(o, 140, 53, 238, 255);
+   elm_colorselector_palette_color_add(o, 255, 145, 145, 255);
+   elm_colorselector_palette_color_add(o, 255, 59, 119, 255);
+   elm_colorselector_palette_color_add(o, 133, 100, 69, 255);
+   elm_colorselector_palette_color_add(o, 255, 255, 119, 255);
+   elm_colorselector_palette_color_add(o, 133, 100, 255, 255);
+
+   evas_object_show(o);
+
+   return o;
+}
+
+static Evas_Object *
 _widget_frame_create(const char *style)
 {
    Evas_Object *o, *lbl;
@@ -532,6 +559,27 @@ _widget_fileselector_create(const char *style)
    EXPAND(o); FILL(o);
    sprintf(buf, "%s Style.", style);
    elm_object_text_set(o, buf);
+   evas_object_show(o);
+
+   return o;
+}
+
+static Evas_Object *
+_widget_fileselector_entry_create(const char *style)
+{
+   Evas_Object *o, *ic;
+
+   ic = elm_icon_add(win);
+   elm_icon_standard_set(ic, "file");
+   evas_object_size_hint_aspect_set(ic, EVAS_ASPECT_CONTROL_VERTICAL, 1, 1);
+   evas_object_show(ic);
+
+   o = elm_fileselector_entry_add(win);
+   WEIGHT(o, EVAS_HINT_EXPAND, 0.0); FILL(o);
+   elm_fileselector_entry_path_set(o, getenv("HOME"));
+   elm_object_style_set(o, style);
+   elm_object_text_set(o, "Select a file");
+   elm_object_part_content_set(o, "button icon", ic);
    evas_object_show(o);
 
    return o;
@@ -947,6 +995,21 @@ _widget_spinner_create(const char *style)
 }
 
 static Evas_Object *
+_widget_thumb_create(const char *style)
+{
+   char buf[PATH_MAX];
+   Evas_Object *o;
+
+   o = elm_thumb_add(win);
+   elm_object_style_set(o, style);
+   snprintf(buf, sizeof(buf), "%s/images/sky_01.jpg", elm_app_data_dir_get());
+   elm_thumb_file_set(o, buf, NULL);
+   evas_object_show(o);
+
+   return o;
+}
+
+static Evas_Object *
 _widget_toolbar_create(const char *orig_style, const char *style)
 {
    Evas_Object *o;
@@ -1024,8 +1087,10 @@ widget_create(Widget_Type widget, const char *orig_style)
    ADD_WIDGET(button, ETV_ID_BUTTON, style);
    ADD_WIDGET(check, ETV_ID_CHECK, style);
    ADD_WIDGET(clock, ETV_ID_CLOCK, style);
+   ADD_WIDGET(colorselector, ETV_ID_COLORSELECTOR, style);
    ADD_WIDGET(entry, ETV_ID_ENTRY, style);
    ADD_WIDGET(fileselector, ETV_ID_FILESELECTOR, style);
+   ADD_WIDGET(fileselector_entry, ETV_ID_FILESELECTOR_ENTRY, style);
    ADD_WIDGET(frame, ETV_ID_FRAME, style);
    ADD_WIDGET2(gengrid, ETV_ID_GENGRID, orig_style, style);
    ADD_WIDGET2(genlist, ETV_ID_GENLIST, orig_style, style);
@@ -1039,6 +1104,7 @@ widget_create(Widget_Type widget, const char *orig_style)
    ADD_WIDGET(progressbar, ETV_ID_PROGRESSBAR, orig_style);
    ADD_WIDGET(separator, ETV_ID_SEPARATOR, orig_style);
    ADD_WIDGET(spinner, ETV_ID_SPINNER, style);
+   ADD_WIDGET(thumb, ETV_ID_THUMB, style);
    ADD_WIDGET2(toolbar, ETV_ID_TOOLBAR, orig_style, style);
    else
      o = _widget_not_implemented_create(widget);
