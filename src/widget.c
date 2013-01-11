@@ -246,6 +246,7 @@ _widget_colorselector_create(const char *style)
 
    o = elm_colorselector_add(win);
    EXPAND(o); FILL(o);
+   elm_object_style_set(o, style);
    elm_colorselector_color_set(o, 255, 160, 132, 180);
 
    elm_colorselector_palette_color_add(o, 255, 90, 18, 255);
