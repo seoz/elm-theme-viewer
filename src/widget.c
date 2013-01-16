@@ -1001,10 +1001,13 @@ _widget_thumb_create(const char *style)
    char buf[PATH_MAX];
    Evas_Object *o;
 
+   elm_need_ethumb();
+
    o = elm_thumb_add(win);
-   elm_object_style_set(o, style);
    snprintf(buf, sizeof(buf), "%s/images/sky_01.jpg", elm_app_data_dir_get());
    elm_thumb_file_set(o, buf, NULL);
+   elm_object_style_set(o, style);
+   evas_object_size_hint_min_set(o, 200, 200);
    evas_object_show(o);
 
    return o;
