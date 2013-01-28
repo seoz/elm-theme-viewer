@@ -7,3 +7,4 @@
 extern int log_dom;
 
 void log_init(void);
+void log_shutdown(void);

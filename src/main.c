@@ -52,10 +52,10 @@ elm_main(int argc, char **argv)
    if (args < 0)
      {
         ERR("Could not parse command line options.");
-        return 1;
+        goto end;
      }
 
-   if (quit_option) return 0;
+   if (quit_option) goto end;
 
    if (theme)
      {
@@ -83,8 +83,10 @@ elm_main(int argc, char **argv)
 
    elm_run();
 
+end:
    theme_unset(edje_file);
    elm_shutdown();
+   log_shutdown();
 
    return 0;
 }
