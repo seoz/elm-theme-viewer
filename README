@@ -5,19 +5,22 @@ Author: Daniel Juyung Seo (SeoZ)
 Elm Theme Viewer is an EFL(Enlightenment Foundation Libraries) elementary
 widget preview program. It lists all widgets and styles from the theme.  It
 actually creates widgets with a proper code.
+This is a very useful program for elementary application programmers,
+elementary theme creators, and elementary widget developers.
 
 Build and installation:
    $ ./autogen.sh && make && sudo make install
 
-Usage:
+Usage 1:
    $ elm_theme_viewer
 
 It loads default theme (default.edj from /usr/local/share/elementary/themes) by
 default. But you can see the preview of other themes with the following
 instruction.
 
-Usage2:
-   $ elm_theme_viewer ./darkness.edj
+Usage 2:
+   $ elm_theme_viewer -t ./darkness.edj
 
-This is a very useful program for elementary application programmers, elementary
-theme creators, and elementary widget developers.
+Usage 3:
+   $ elm_theme_viewer -h
+
