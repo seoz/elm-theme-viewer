@@ -16,6 +16,7 @@ static const Ecore_Getopt options = {
    {
       ECORE_GETOPT_STORE_STR('t', "theme",
                              "Set the theme to load and parse."),
+      ECORE_GETOPT_STORE_STR('s', "screensize", "Set the screen size"),
       ECORE_GETOPT_VERSION  ('V', "version"),
       ECORE_GETOPT_COPYRIGHT('C', "copyright"),
       ECORE_GETOPT_LICENSE  ('L', "license"),
@@ -31,10 +32,13 @@ elm_main(int argc, char **argv)
 
    int args;
    char *theme = NULL;
+   char *screen_size = NULL;
    Eina_Bool quit_option = EINA_FALSE;
+   Evas_Coord width = WIN_WIDTH, height = WIN_HEIGHT;
 
    Ecore_Getopt_Value values[] = {
      ECORE_GETOPT_VALUE_STR(theme),
+     ECORE_GETOPT_VALUE_STR(screen_size),
      ECORE_GETOPT_VALUE_BOOL(quit_option),
      ECORE_GETOPT_VALUE_BOOL(quit_option),
      ECORE_GETOPT_VALUE_BOOL(quit_option),
@@ -78,7 +82,13 @@ elm_main(int argc, char **argv)
    theme_load(edje_file);
    theme_set(edje_file);
 
-   gui_create(edje_file);
+   if (screen_size)
+     {
+        width = atoi(strtok(screen_size, "x"));
+        height = atoi(strtok(NULL, "x"));
+     }
+
+   gui_create(edje_file, width, height);
    gui_widget_load();
 
    elm_run();

@@ -261,7 +261,7 @@ _option_create(Evas_Object *parent)
 }
 
 void
-gui_create(const char *edje_file)
+gui_create(const char *edje_file, Evas_Coord width, Evas_Coord height)
 {
    Evas_Object *o, *preview_frame;
    char path[PATH_MAX];
@@ -272,7 +272,7 @@ gui_create(const char *edje_file)
 
    win = o = elm_win_util_standard_add("elm-theme-viewer", "Elm Theme Viewer");
    elm_win_autodel_set(o, EINA_TRUE);
-   evas_object_resize(o, 600, 500);
+   evas_object_resize(o, width, height);
    evas_object_show(o);
 
    gui_layout = o = elm_layout_add(win);
