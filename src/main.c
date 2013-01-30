@@ -3,6 +3,7 @@
 #include "common.h"
 #include "log.h"
 #include "gui.h"
+#include "gui_mobile.h"
 #include "theme.h"
 
 static const Ecore_Getopt options = {
@@ -16,6 +17,7 @@ static const Ecore_Getopt options = {
    {
       ECORE_GETOPT_STORE_STR('t', "theme",
                              "Set the theme to load and parse."),
+      ECORE_GETOPT_STORE_TRUE('m', "mobile", "Set the mobile view."),
       ECORE_GETOPT_STORE_STR('s', "screensize", "Set the screen size"),
       ECORE_GETOPT_VERSION  ('V', "version"),
       ECORE_GETOPT_COPYRIGHT('C', "copyright"),
@@ -33,11 +35,13 @@ elm_main(int argc, char **argv)
    int args;
    char *theme = NULL;
    char *screen_size = NULL;
+   Eina_Bool mobile_version = EINA_FALSE;
    Eina_Bool quit_option = EINA_FALSE;
    Evas_Coord width = WIN_WIDTH, height = WIN_HEIGHT;
 
    Ecore_Getopt_Value values[] = {
      ECORE_GETOPT_VALUE_STR(theme),
+     ECORE_GETOPT_VALUE_BOOL(mobile_version),
      ECORE_GETOPT_VALUE_STR(screen_size),
      ECORE_GETOPT_VALUE_BOOL(quit_option),
      ECORE_GETOPT_VALUE_BOOL(quit_option),
@@ -74,7 +78,7 @@ elm_main(int argc, char **argv)
    else
      {
         edje_file = "/usr/local/share/elementary/themes/default.edj";
-	 }
+     }
    INF("theme file : %s", edje_file);
 
    // TODO: run this in a background
@@ -88,8 +92,17 @@ elm_main(int argc, char **argv)
         height = atoi(strtok(NULL, "x"));
      }
 
-   gui_create(edje_file, width, height);
-   gui_widget_load();
+   if (mobile_version)
+     {
+        gui_mobile_create(edje_file, width, height);
+        gui_widget_load();
+        gui_mobile_widget_load();
+     }
+   else
+     {
+        gui_create(edje_file, width, height);
+        gui_widget_load();
+     }
 
    elm_run();
 

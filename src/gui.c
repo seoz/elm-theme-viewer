@@ -42,8 +42,9 @@ _preview_create(Widget_Type widget, const char *style)
      }
 }
 
-static void
-_left_menu_create(Evas_Object *parent)
+
+void
+gui_left_menu_create(Evas_Object *parent)
 {
    Evas_Object *nf;
 
@@ -286,7 +287,7 @@ gui_create(const char *edje_file, Evas_Coord width, Evas_Coord height)
    elm_layout_text_set(gui_layout, "edje_name_txt", edje_file);
 
    // left menu
-   _left_menu_create(win);
+   gui_left_menu_create(win);
 
    // preview
    preview_frame = o = elm_frame_add(win);

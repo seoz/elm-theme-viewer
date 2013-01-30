@@ -13,4 +13,5 @@ gui.c gui.h \
 log.c log.h \
 theme.c theme.h \
 widget.c widget.h \
-main.c common.h
+main.c common.h \
+gui_mobile.c gui_mobile.h

@@ -1,0 +1,84 @@
+collections {
+     group { name : "etv/main/layout";
+          parts {
+               part { name : "background";
+                  type: RECT;
+                  mouse_events: 0;
+                  description { state : "default" 0.0; }
+               }
+               part { name : "button_hide";
+                  type : SWALLOW;
+                  scale : 1;
+                  description {
+                     state : "default" 0.0;
+                     fixed : 1 1;
+                     rel1 {
+                        relative : 0.0 0.0;
+                     }
+                     rel2 {
+                        relative : 0.1 0.0;
+                        offset : 0 22;
+                     }
+                     color : 0 0 0 0;
+                  }
+               }
+               part { name : "button_description";
+                  type : SWALLOW;
+                  scale : 1;
+                  description {
+                     state : "default" 0.0;
+                     fixed : 1 1;
+                     rel1 {
+                        to : "button_hide";
+                        relative : 1.0 0.0;
+                     }
+                     rel2 {
+                        relative : 1.0 0.0;
+                        offset : 0 22;
+                     }
+                  }
+               }
+               part { name : "left_menu";
+                  type : SWALLOW;
+                  scale : 1;
+                  description {
+                     fixed : 1 1;
+                     rel1 {
+                        to : "button_hide";
+                        relative : 0.0 1.0;
+                     }
+                     rel2 {
+                        relative : 0.5 0.9;
+                     }
+                  }
+               }
+               part { name : "widget_preview";
+                  type : SWALLOW;
+                  scale : 1;
+                  description {
+                     fixed : 1 1;
+                     rel1 {
+                        to : "left_menu";
+                        relative : 1.0 0.0;
+                     }
+                     rel2 {
+                        relative : 1.0 0.9;
+                     }
+                  }
+               }
+               part { name : "option";
+                  type : SWALLOW;
+                  scale : 1;
+                  description {
+                     fixed : 1 1;
+                     rel1 {
+                        relative : 0.0 0.9;
+                     }
+                     rel2 {
+                        relative : 1.0 1.0;
+                     }
+                  }
+               }
+          }
+     }
+}
