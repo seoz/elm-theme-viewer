@@ -16,8 +16,6 @@ Evas_Object *description_frame, *option_frame;
 Evas_Object *size_width_slider, *size_height_slider;
 Evas_Object *option_force_resize;
 
-EAPI void elm_widget_scale_set(Evas_Object *obj, double scale);
-
 typedef struct _Style_Data Style_Data;
 struct _Style_Data
 {
@@ -84,9 +82,7 @@ _scale_changed_cb(void *data EINA_UNUSED, Evas_Object *obj,
    v = (double)(int)round(val * 10.0) / 10.0;
    if (v != val) elm_slider_value_set(obj, v);
 
-   // i know this api is not stable and not recommended to use
-   // but this application has a special use case for elementary configuration.
-   elm_widget_scale_set(preview_obj, v);
+   elm_object_scale_set(preview_obj, v);
 
    INF("scale changed : %f %f", val, v);
 }
