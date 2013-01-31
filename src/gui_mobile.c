@@ -5,7 +5,7 @@
 #include "widget.h"
 #include "gui.h"
 
-Evas_Object *label, *bt_hide, *bt_desc, *pv_frame;
+Evas_Object *label, *bt_hide, *bt_desc;
 
 void
 gui_mobile_create(const char *edje_file, int width, int height)
@@ -43,13 +43,13 @@ gui_mobile_create(const char *edje_file, int width, int height)
    elm_layout_content_set(gui_layout, "button_description", o);
 
    // preview_frame
-   pv_frame = o = elm_frame_add(win);
+   preview_frame = o = elm_frame_add(win);
    elm_object_text_set(o, "Preview");
    evas_object_show(o);
    elm_layout_content_set(gui_layout, "widget_preview", o);
 
    preview_box = o = elm_box_add(win);
-   elm_object_content_set(pv_frame, o);
+   elm_object_content_set(preview_frame, o);
    evas_object_show(o);
 
    // widget_list
