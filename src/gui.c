@@ -83,7 +83,7 @@ _scale_changed_cb(void *data EINA_UNUSED, Evas_Object *obj,
    v = (double)(int)round(val * 10.0) / 10.0;
    if (v != val) elm_slider_value_set(obj, v);
 
-   elm_object_scale_set(preview_obj, v);
+   if (preview_obj) elm_object_scale_set(preview_obj, v);
 
    INF("scale changed : %f %f", val, v);
 }
