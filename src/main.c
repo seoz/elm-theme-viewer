@@ -18,7 +18,8 @@ static const Ecore_Getopt options = {
       ECORE_GETOPT_STORE_STR('t', "theme",
                              "Set the theme to load and parse."),
       ECORE_GETOPT_STORE_TRUE('m', "mobile", "Set the mobile view."),
-      ECORE_GETOPT_STORE_STR('s', "screensize", "Set the screen size"),
+      ECORE_GETOPT_STORE_STR('s', "screensize", "Set the screen size in "
+                             "WIDTHxHEIGHT format. (300x500)"),
       ECORE_GETOPT_VERSION  ('V', "version"),
       ECORE_GETOPT_COPYRIGHT('C', "copyright"),
       ECORE_GETOPT_LICENSE  ('L', "license"),
