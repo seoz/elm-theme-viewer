@@ -109,6 +109,7 @@ _widget_not_implemented_create(Widget_Type widget)
 
    o = elm_label_add(win);
    EXPAND(o); FILL(o);
+   elm_label_line_wrap_set(o, ELM_WRAP_MIXED);
    sprintf(buf, "Sorry, %s widget sample is not implemented yet.",
            widgets[widget].name);
    elm_object_text_set(o, buf);
@@ -162,7 +163,7 @@ _widget_bubble_create(const char *orig_style)
    evas_object_show(ic);
 
    lbl = elm_label_add(win);
-   elm_object_text_set(lbl, "Bubble is a widget to show text similar to how speech is represented in comics.");
+   elm_object_text_set(lbl, "This is a bubble widget preview.");
    evas_object_show(lbl);
 
    o = elm_bubble_add(win);
@@ -281,6 +282,7 @@ _widget_frame_create(const char *style)
 
    lbl = elm_label_add(win);
    sprintf(buf, "This is a %s style frame.", style);
+   elm_label_line_wrap_set(lbl, ELM_WRAP_MIXED);
    elm_object_text_set(lbl, buf);
    elm_object_content_set(o, lbl);
    evas_object_show(lbl);
@@ -692,6 +694,7 @@ _widget_layout_content_create(Evas_Object *layout)
 
    lbl = elm_label_add(win);
    EXPAND(lbl); FILL(lbl);
+   elm_label_line_wrap_set(lbl, ELM_WRAP_MIXED);
    elm_object_text_set(lbl, "This dark area is a content area.");
    elm_table_pack(table, lbl, 0, 0, 1, 1);
    evas_object_show(lbl);
@@ -777,12 +780,14 @@ _widget_layout_create(const char *style)
         elm_layout_table_pack(o, "elm.table.content", content, 0, 0, 1, 1);
 
         lbl = elm_label_add(win);
+        elm_label_line_wrap_set(lbl, ELM_WRAP_MIXED);
         elm_object_text_set(lbl, "This area is also a content area which packed into a table.");
         EXPAND(lbl); FILL(lbl);
         evas_object_show(lbl);
         elm_layout_table_pack(o, "elm.table.content", lbl, 0, 1, 1, 1);
 
         lbl = elm_label_add(win);
+        elm_label_line_wrap_set(lbl, ELM_WRAP_MIXED);
         elm_object_text_set(lbl, "This area is also a content area which packed into a table.");
         EXPAND(lbl); FILL(lbl);
         evas_object_show(lbl);
@@ -797,6 +802,7 @@ _widget_layout_create(const char *style)
         elm_layout_box_append(o, "elm.box.content", content);
 
         lbl = elm_label_add(win);
+        elm_label_line_wrap_set(lbl, ELM_WRAP_MIXED);
         elm_object_text_set(lbl, "This area is also a content area which packed into a box.");
         EXPAND(lbl); FILL(lbl);
         evas_object_show(lbl);
@@ -846,6 +852,7 @@ _widget_menu_create(const char *orig_style)
    evas_object_show(rect);
 
    lbl = elm_label_add(table);
+   elm_label_line_wrap_set(lbl, ELM_WRAP_MIXED);
    EXPAND(lbl); FILL(lbl);
    elm_object_text_set(lbl, "Click this dark area.");
    elm_table_pack(table, lbl, 0, 0, 1, 1);
@@ -890,6 +897,7 @@ _widget_panel_create(const char *orig_style)
    char style[PATH_MAX] = {0, };
 
    lbl = elm_label_add(win);
+   elm_label_line_wrap_set(lbl, ELM_WRAP_MIXED);
    elm_object_text_set(lbl, "This is a panel.<br>"
                        "Panel has four orientation:<br>"
                        "TOP, BOTTOM, LEFT, RIGHT");
