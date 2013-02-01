@@ -3,6 +3,7 @@
 #include "log.h"
 #include "theme.h"
 #include "widget.h"
+#include "gui_mobile.h"
 
 #define SIZE_WIDTH_MIN 40
 #define SIZE_WIDTH_MAX 500
