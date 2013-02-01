@@ -8,7 +8,8 @@
 Evas_Object *label, *bt_hide, *bt_desc;
 
 void
-gui_mobile_create(const char *edje_file, int width, int height)
+gui_mobile_create(const char *edje_file, int width, int height,
+                  Eina_Bool fullscreen)
 {
    Evas_Object *o, *preview_frame;
    char path[PATH_MAX];
@@ -19,7 +20,10 @@ gui_mobile_create(const char *edje_file, int width, int height)
 
    win = o = elm_win_util_standard_add("elm-theme-viewer", "Elm Theme Viewer");
    elm_win_autodel_set(o, EINA_TRUE);
-   evas_object_resize(o, width, height);
+   if (fullscreen)
+     elm_win_fullscreen_set(win, EINA_TRUE);
+   else
+     evas_object_resize(o, width, height);
    evas_object_show(o);
 
    gui_layout = o = elm_layout_add(win);

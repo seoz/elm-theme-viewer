@@ -20,6 +20,8 @@ static const Ecore_Getopt options = {
       ECORE_GETOPT_STORE_TRUE('m', "mobile", "Set the mobile view."),
       ECORE_GETOPT_STORE_STR('s', "screensize", "Set the screen size in "
                              "WIDTHxHEIGHT format. (300x500)"),
+      ECORE_GETOPT_STORE_TRUE('F', "fullscreen",
+                              "Go into the fullscreen mode from start."),
       ECORE_GETOPT_VERSION  ('V', "version"),
       ECORE_GETOPT_COPYRIGHT('C', "copyright"),
       ECORE_GETOPT_LICENSE  ('L', "license"),
@@ -37,6 +39,7 @@ elm_main(int argc, char **argv)
    char *theme = NULL;
    char *screen_size = NULL;
    Eina_Bool mobile_version = EINA_FALSE;
+   Eina_Bool fullscreen = EINA_FALSE;
    Eina_Bool quit_option = EINA_FALSE;
    Evas_Coord width = WIN_WIDTH, height = WIN_HEIGHT;
 
@@ -44,6 +47,7 @@ elm_main(int argc, char **argv)
      ECORE_GETOPT_VALUE_STR(theme),
      ECORE_GETOPT_VALUE_BOOL(mobile_version),
      ECORE_GETOPT_VALUE_STR(screen_size),
+     ECORE_GETOPT_VALUE_BOOL(fullscreen),
      ECORE_GETOPT_VALUE_BOOL(quit_option),
      ECORE_GETOPT_VALUE_BOOL(quit_option),
      ECORE_GETOPT_VALUE_BOOL(quit_option),
@@ -95,13 +99,13 @@ elm_main(int argc, char **argv)
 
    if (mobile_version)
      {
-        gui_mobile_create(edje_file, width, height);
+        gui_mobile_create(edje_file, width, height, fullscreen);
         gui_widget_load();
         gui_mobile_widget_load();
      }
    else
      {
-        gui_create(edje_file, width, height);
+        gui_create(edje_file, width, height, fullscreen);
         gui_widget_load();
      }
 

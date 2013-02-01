@@ -7,7 +7,9 @@
 extern Evas_Object *win, *viewer_box;
 extern Evas_Object *gui_layout, *preview_box, *option_frame, *list;
 
-void gui_create(const char *edje_file, Evas_Coord width, Evas_Coord height);
+void gui_create(const char *edje_file,
+                Evas_Coord width, Evas_Coord height,
+                Eina_Bool fullscreen);
 void gui_widget_load(void);
 void gui_left_menu_create(Evas_Object *parent);
 
