@@ -10,7 +10,7 @@ static const Ecore_Getopt options = {
    PACKAGE_NAME,
    "%prog [options]",
    PACKAGE_VERSION,
-   "(C) 2012-2013 Daniel Juyung Seo",
+   "(C) 2012-2013 Daniel Juyung Seo and others",
    "BSD 2-Clause",
    "Elementary theme previewer witten with Enlightenment Foundation Libraries.",
    EINA_TRUE,

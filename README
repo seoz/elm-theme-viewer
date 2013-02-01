@@ -1,6 +1,6 @@
 elm-theme-viewer
 ===============================================================================
-Author: Daniel Juyung Seo (SeoZ)
+Author: Daniel Juyung Seo (SeoZ) and others
 
 Elm Theme Viewer is an EFL(Enlightenment Foundation Libraries) elementary
 widget preview program. It lists all widgets and styles from the theme.  It
