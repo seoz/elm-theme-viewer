@@ -344,7 +344,6 @@ _nf_prev_btn_clicked_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
                         void *event_info EINA_UNUSED)
 {
    _preview_create(ETV_ID_NONE, NULL);
-   gui_description_set(NULL);
    elm_naviframe_item_pop(data);
 }
 
