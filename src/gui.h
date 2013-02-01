@@ -13,6 +13,8 @@ void gui_create(const char *edje_file,
 void gui_widget_load(void);
 void gui_left_menu_create(Evas_Object *parent);
 
+void gui_version_set(Eina_Bool version);
+
 Eina_Bool option_is_force_resize(void);
 void option_preview_size_get(Evas_Coord *w, Evas_Coord *h);
 

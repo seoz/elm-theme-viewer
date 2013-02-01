@@ -15,6 +15,13 @@ Evas_Object *list, *win, *gui_layout, *preview_box, *preview_obj;
 Evas_Object *description_frame, *option_frame;
 Evas_Object *size_width_slider, *size_height_slider;
 Evas_Object *option_force_resize;
+Eina_Bool m_version = EINA_FALSE;
+
+void
+gui_version_set(Eina_Bool version)
+{
+   m_version = version;
+}
 
 typedef struct _Style_Data Style_Data;
 struct _Style_Data
@@ -417,9 +424,13 @@ _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info EINA_UNUSED)
    evas_object_show(prev_btn);
 
    it = elm_naviframe_item_push(nf, "Styles", prev_btn, NULL, li, NULL);
-   elm_object_item_part_text_set(it, "subtitle", (char *)widget_name_get_by_type(type));
+   elm_object_item_part_text_set(it, "subtitle",
+                                 (char *)widget_name_get_by_type(type));
 
-   gui_description_set(widget_desc_get_by_type(type));
+   if (m_version)
+     gui_mobile_description_set(widget_desc_get_by_type(type));
+   else
+     gui_description_set(widget_desc_get_by_type(type));
 }
 
 void

@@ -97,11 +97,12 @@ elm_main(int argc, char **argv)
         height = atoi(strtok(NULL, "x"));
      }
 
+   gui_version_set(mobile_version);
+
    if (mobile_version)
      {
         gui_mobile_create(edje_file, width, height, fullscreen);
         gui_widget_load();
-        gui_mobile_widget_load();
      }
    else
      {

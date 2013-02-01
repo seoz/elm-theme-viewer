@@ -7,6 +7,92 @@
 
 Evas_Object *label, *bt_hide, *bt_desc;
 
+static void
+_hide_btn_clicked_cb(void *data EINA_UNUSED,
+                     Evas_Object *obj EINA_UNUSED,
+                     void *event_info EINA_UNUSED);
+
+static void
+_block_clicked(void *data EINA_UNUSED, Evas_Object *obj,
+			   void *event_info EINA_UNUSED)
+{
+   evas_object_hide(obj);
+}
+
+static void
+_finger_size_sel_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
+                    void *event_info EINA_UNUSED)
+{
+
+}
+
+static void
+_width_size_sel_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
+                    void *event_info EINA_UNUSED)
+{
+}
+
+static void
+_height_size_sel_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
+                    void *event_info EINA_UNUSED)
+{
+}
+
+static void
+_show_btn_clicked_cb(void *data EINA_UNUSED,
+                     Evas_Object *obj EINA_UNUSED,
+                     void *event_info EINA_UNUSED)
+{
+   elm_object_text_set(bt_hide, "Hide");
+   evas_object_smart_callback_del(bt_hide, "clicked", _show_btn_clicked_cb);
+   evas_object_smart_callback_add(bt_hide, "clicked",
+                                  _hide_btn_clicked_cb, NULL);
+
+   elm_layout_signal_emit(gui_layout,
+                          "show,button,clicked", "button_description");
+}
+
+static void
+_hide_btn_clicked_cb(void *data EINA_UNUSED,
+                     Evas_Object *obj EINA_UNUSED,
+                     void *event_info EINA_UNUSED)
+{
+   elm_object_text_set(bt_hide, "Show");
+   evas_object_smart_callback_del(bt_hide, "clicked", _hide_btn_clicked_cb);
+   evas_object_smart_callback_add(bt_hide, "clicked",
+                                  _show_btn_clicked_cb, NULL);
+
+   elm_layout_signal_emit(gui_layout,
+                          "hide,button,clicked", "button_description");
+}
+
+static void
+_desc_btn_clicked_cb(void *data EINA_UNUSED,
+                     Evas_Object *obj EINA_UNUSED,
+                     void *event_info EINA_UNUSED)
+{
+   Evas_Object *popup;
+   popup = elm_popup_add(win);
+   elm_object_part_text_set(popup, "title,text", "Description of Widget");
+   elm_object_content_set(popup, label);
+   evas_object_show(popup);
+
+   evas_object_smart_callback_add(popup, "block,clicked",
+                                  _block_clicked, NULL);
+}
+static void
+_mobile_option_create(Evas_Object *parent)
+{
+   Evas_Object *tb;
+   tb = elm_toolbar_add(parent);
+   elm_layout_content_set(gui_layout, "option", tb);
+   evas_object_show(tb);
+
+   elm_toolbar_item_append(tb, NULL, "finger", _finger_size_sel_cb, NULL);
+   elm_toolbar_item_append(tb, NULL, "width", _width_size_sel_cb, NULL);
+   elm_toolbar_item_append(tb, NULL, "height", _height_size_sel_cb, NULL);
+}
+
 void
 gui_mobile_create(const char *edje_file, int width, int height,
                   Eina_Bool fullscreen)
@@ -36,15 +122,19 @@ gui_mobile_create(const char *edje_file, int width, int height,
 
    // button_hide
    bt_hide = o = elm_button_add(win);
-   elm_object_text_set(o, "|<->|");
+   elm_object_text_set(o, "Hide");
    evas_object_show(o);
    elm_layout_content_set(gui_layout, "button_hide", o);
+   evas_object_smart_callback_add(o, "clicked",
+                                  _hide_btn_clicked_cb, NULL);
 
    // button_description
    bt_desc = o = elm_button_add(win);
    elm_object_text_set(o, "Description");
    evas_object_show(o);
    elm_layout_content_set(gui_layout, "button_description", o);
+   evas_object_smart_callback_add(o, "clicked",
+                                  _desc_btn_clicked_cb, NULL);
 
    // preview_frame
    preview_frame = o = elm_frame_add(win);
@@ -59,51 +149,13 @@ gui_mobile_create(const char *edje_file, int width, int height,
    // widget_list
    gui_left_menu_create(win);
 
-   // option
-   option_frame = o = elm_frame_add(win);
-   elm_object_text_set(o, "Options");
-   evas_object_show(o);
-   elm_layout_content_set(gui_layout, "option", o);
-
-   return;
-}
-
-static void
-_block_clicked(void *data EINA_UNUSED, Evas_Object *obj,
-               void *event_info EINA_UNUSED)
-{
-   evas_object_hide(obj);
-}
-
-static void
-_hide_btn_clicked_cb(void *data EINA_UNUSED,
-                     Evas_Object *obj EINA_UNUSED,
-                     void *event_info EINA_UNUSED)
-{
-   evas_object_hide(list);
-}
-
-
-static void
-_desc_btn_clicked_cb(void *data EINA_UNUSED,
-                     Evas_Object *obj EINA_UNUSED,
-                     void *event_info EINA_UNUSED)
-{
-   Evas_Object *popup;
-   popup = elm_popup_add(win);
-   elm_object_part_text_set(popup, "title,text", "Description of Widget");
-   evas_object_show(popup);
-
-   evas_object_smart_callback_add(popup, "block,clicked", _block_clicked, NULL);
+   _mobile_option_create(win);
 }
 
 void
-gui_mobile_widget_load(void)
+gui_mobile_description_set(const char *txt)
 {
-   evas_object_smart_callback_add(bt_hide, "clicked",
-                                  _hide_btn_clicked_cb, NULL);
-   evas_object_smart_callback_add(bt_desc, "clicked",
-                                  _desc_btn_clicked_cb, NULL);
+   label = elm_label_add(win);
+   elm_label_line_wrap_set(label, ELM_WRAP_MIXED);
+   elm_object_text_set(label, txt);
 }
-
-
