@@ -3,6 +3,7 @@ elm_theme_viewer
 *.swp
 *.swo
 data/themes/layout.edj
+data/themes/layout_mobile.edj
 tags
 Makefile
 Makefile.in
