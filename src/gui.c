@@ -43,7 +43,7 @@ _preview_create(Widget_Type widget, const char *style)
      }
 }
 
-void
+Evas_Object *
 gui_left_menu_create(Evas_Object *parent)
 {
    Evas_Object *nf;
@@ -58,7 +58,7 @@ gui_left_menu_create(Evas_Object *parent)
 
    evas_object_show(list);
 
-   elm_layout_content_set(gui_layout, "menu", nf);
+   return nf;
 }
 
 static void
@@ -295,7 +295,7 @@ _option_create(Evas_Object *parent)
    evas_object_show(o);
 }
 
-void
+Evas_Object *
 gui_preview_create(Evas_Object *parent)
 {
    Evas_Object *o, *preview_frame;
@@ -304,11 +304,12 @@ gui_preview_create(Evas_Object *parent)
    elm_object_text_set(o, "Preview");
 
    evas_object_show(o);
-   elm_layout_content_set(gui_layout, "preview", o);
 
    preview_box = o = elm_box_add(win);
    elm_object_content_set(preview_frame, o);
    evas_object_show(o);
+
+   return preview_frame;
 }
 
 void
@@ -341,10 +342,10 @@ gui_create(const char *edje_file, Evas_Coord width, Evas_Coord height,
    elm_layout_text_set(gui_layout, "edje_name_txt", edje_file);
 
    // left menu
-   gui_left_menu_create(win);
+   elm_layout_content_set(gui_layout, "menu", gui_left_menu_create(win));
 
    // preview
-   gui_preview_create(win);
+   elm_layout_content_set(gui_layout, "preview", gui_preview_create(win));
 
    // description
    description_frame = o = elm_frame_add(win);

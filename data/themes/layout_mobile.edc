@@ -38,22 +38,6 @@ collections {
                      }
                   }
                }
-               part { name : "menu";
-                  type : SWALLOW;
-                  scale : 1;
-                  description {
-                     state : "default" 0.0;
-                     //fixed : 1 1;
-                     rel1 {
-                        to : "preview";
-                        relative : 0.0 1.0;
-                     }
-                     rel2 {
-                        to : "option_set";
-                        relative : 1.0 0.0;
-                     }
-                  }
-               }
                part { name : "preview";
                   type : SWALLOW;
                   scale : 1;
@@ -64,7 +48,8 @@ collections {
                         relative : 0.0 1.0;
                      }
                      rel2 {
-                        relative : 1.0 0.5;
+                        to : "option_set";
+                        relative : 1.0 0.0;
                      }
                   }
                   description {

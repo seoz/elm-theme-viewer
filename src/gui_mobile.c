@@ -8,11 +8,6 @@
 Evas_Object *label, *bt_hide, *bt_desc;
 
 static void
-_hide_btn_clicked_cb(void *data EINA_UNUSED,
-                     Evas_Object *obj EINA_UNUSED,
-                     void *event_info EINA_UNUSED);
-
-static void
 _block_clicked(void *data EINA_UNUSED, Evas_Object *obj,
                void *event_info EINA_UNUSED)
 {
@@ -65,34 +60,6 @@ _option_size_sel_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
    gui_option_force_resize_create(box);
    gui_option_width_size_create(box);
    gui_option_height_size_create(box);
-}
-
-static void
-_show_btn_clicked_cb(void *data EINA_UNUSED,
-                     Evas_Object *obj EINA_UNUSED,
-                     void *event_info EINA_UNUSED)
-{
-   elm_object_text_set(bt_hide, "Hide");
-   evas_object_smart_callback_del(bt_hide, "clicked", _show_btn_clicked_cb);
-   evas_object_smart_callback_add(bt_hide, "clicked",
-                                  _hide_btn_clicked_cb, NULL);
-
-   elm_layout_signal_emit(gui_layout,
-                          "show,button,clicked", "button_description");
-}
-
-static void
-_hide_btn_clicked_cb(void *data EINA_UNUSED,
-                     Evas_Object *obj EINA_UNUSED,
-                     void *event_info EINA_UNUSED)
-{
-   elm_object_text_set(bt_hide, "Show");
-   evas_object_smart_callback_del(bt_hide, "clicked", _hide_btn_clicked_cb);
-   evas_object_smart_callback_add(bt_hide, "clicked",
-                                  _show_btn_clicked_cb, NULL);
-
-   elm_layout_signal_emit(gui_layout,
-                          "hide,button,clicked", "button_description");
 }
 
 static void
@@ -154,8 +121,6 @@ gui_mobile_create(const char *edje_file, int width, int height,
    elm_object_text_set(o, "Hide");
    evas_object_show(o);
    elm_layout_content_set(gui_layout, "button_hide", o);
-   evas_object_smart_callback_add(o, "clicked",
-                                  _hide_btn_clicked_cb, NULL);
 
    // button_description
    bt_desc = o = elm_button_add(win);
@@ -165,11 +130,18 @@ gui_mobile_create(const char *edje_file, int width, int height,
    evas_object_smart_callback_add(o, "clicked",
                                   _desc_btn_clicked_cb, NULL);
 
+   // panes for preview and menu
+   o = elm_panes_add(win);
+   elm_panes_horizontal_set(o, EINA_TRUE);
+   evas_object_show(o);
+
+   elm_layout_content_set(gui_layout, "preview", o);
+
    // preview_frame
-   gui_preview_create(win);
+   elm_object_part_content_set(o, "top", gui_preview_create(win));
 
    // widget_list
-   gui_left_menu_create(win);
+   elm_object_part_content_set(o, "bottom", gui_left_menu_create(win));
 
    _mobile_option_create(win);
 }
