@@ -52,17 +52,6 @@ collections {
                         relative : 1.0 0.0;
                      }
                   }
-                  description {
-                     state : "hide" 0.1;
-                     rel1 {
-                        to : "button_hide";
-                        relative : 0.0 1.0;
-                     }
-                     rel2 {
-                        to : "option_set";
-                        relative : 1.0 0.0;
-                     }
-                  }
                }
                part { name : "option";
                   type : SWALLOW;
@@ -109,22 +98,6 @@ collections {
                   }
                }
                programs {
-                  program {
-                     name : "left_show";
-                     signal : "show,button,clicked";
-                     source : "button_description";
-                     action : STATE_SET "default" 0.0;
-                     target : "preview";
-                     transition : DECELERATE 0.3;
-                  }
-                  program {
-                     name : "left_hide";
-                     signal : "hide,button,clicked";
-                     source : "button_description";
-                     action : STATE_SET "hide" 0.1;
-                     target : "preview";
-                     transition : ACCELERATE 0.3;
-                  }
                   program {
                      name : "option_set_show";
                      signal : "option,set,clicked";

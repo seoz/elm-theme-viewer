@@ -62,7 +62,6 @@ gui_left_menu_create(Evas_Object *parent)
    elm_list_select_mode_set(list, ELM_OBJECT_SELECT_MODE_ALWAYS);
    evas_object_data_set(list, "nf", nf);
    elm_naviframe_item_push(nf, "Widgets", NULL, NULL, list, NULL);
-
    evas_object_show(list);
 
    return nf;
@@ -153,6 +152,7 @@ gui_option_force_resize_create(Evas_Object *box)
    evas_object_show(o);
 
 }
+
 void
 gui_option_width_size_create(Evas_Object *box)
 {

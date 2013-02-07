@@ -15,7 +15,7 @@ _block_clicked(void *data EINA_UNUSED, Evas_Object *obj,
 }
 
 static void
-_finger_size_sel_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
+_option_finger_size_sel_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
                     void *event_info EINA_UNUSED)
 {
    Evas_Object *o, *box;
@@ -31,7 +31,7 @@ _finger_size_sel_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
 }
 
 static void
-_scale_sel_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
+_option_scale_sel_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
                    void *event_info EINA_UNUSED)
 {
    Evas_Object *o, *box;
@@ -86,8 +86,9 @@ _mobile_option_create(Evas_Object *parent)
    elm_layout_content_set(gui_layout, "option", tb);
    evas_object_show(tb);
 
-   elm_toolbar_item_append(tb, NULL, "finger", _finger_size_sel_cb, NULL);
-   elm_toolbar_item_append(tb, NULL, "scale", _scale_sel_cb, NULL);
+   elm_toolbar_item_append(tb, NULL, "finger", _option_finger_size_sel_cb,
+                           NULL);
+   elm_toolbar_item_append(tb, NULL, "scale", _option_scale_sel_cb, NULL);
    elm_toolbar_item_append(tb, NULL, "size", _option_size_sel_cb, NULL);
 }
 
