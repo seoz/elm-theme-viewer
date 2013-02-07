@@ -18,9 +18,10 @@ static void
 _finger_size_sel_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
                     void *event_info EINA_UNUSED)
 {
+   Evas_Object *o, *box;
+
    elm_layout_signal_emit(gui_layout, "option,set,clicked", "option");
 
-   Evas_Object *o, *box;
    // outer box
    box = o = elm_box_add(win);
    elm_layout_content_set(gui_layout, "option_set", o);
@@ -33,9 +34,10 @@ static void
 _scale_sel_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
                    void *event_info EINA_UNUSED)
 {
+   Evas_Object *o, *box;
+
    elm_layout_signal_emit(gui_layout, "option,set,clicked", "option");
 
-   Evas_Object *o, *box;
    // outer box
    box = o = elm_box_add(win);
    elm_layout_content_set(gui_layout, "option_set", o);
@@ -48,9 +50,9 @@ static void
 _option_size_sel_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
                     void *event_info EINA_UNUSED)
 {
-   elm_layout_signal_emit(gui_layout, "option,set,clicked", "option");
-
    Evas_Object *o, *box;
+
+   elm_layout_signal_emit(gui_layout, "option,set,clicked", "option");
 
    // outer box
    box = o = elm_box_add(win);

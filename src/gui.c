@@ -5,6 +5,13 @@
 #include "widget.h"
 #include "gui.h"
 
+#define SIZE_WIDTH_MIN 40
+#define SIZE_WIDTH_MAX 500
+#define SIZE_WIDTH_DEFAULT 300
+#define SIZE_HEIGHT_MIN 30
+#define SIZE_HEIGHT_MAX 400
+#define SIZE_HEIGHT_DEFAULT 100
+
 Evas_Object *list, *win, *gui_layout, *preview_box, *preview_obj;
 Evas_Object *description_frame, *option_frame;
 Evas_Object *size_width_slider, *size_height_slider;

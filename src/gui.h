@@ -3,13 +3,6 @@
 
 #define WIN_WIDTH 500
 #define WIN_HEIGHT 600
-#define SIZE_WIDTH_MIN 40
-#define SIZE_WIDTH_MAX 500
-#define SIZE_WIDTH_DEFAULT 300
-#define SIZE_HEIGHT_MIN 30
-#define SIZE_HEIGHT_MAX 400
-#define SIZE_HEIGHT_DEFAULT 100
-
 
 extern Evas_Object *win, *viewer_box;
 extern Evas_Object *gui_layout, *preview_box, *option_frame, *list;
