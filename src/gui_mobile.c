@@ -14,7 +14,7 @@ _hide_btn_clicked_cb(void *data EINA_UNUSED,
 
 static void
 _block_clicked(void *data EINA_UNUSED, Evas_Object *obj,
-			   void *event_info EINA_UNUSED)
+               void *event_info EINA_UNUSED)
 {
    evas_object_hide(obj);
 }
@@ -23,19 +23,48 @@ static void
 _finger_size_sel_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
                     void *event_info EINA_UNUSED)
 {
+   elm_layout_signal_emit(gui_layout, "option,set,clicked", "option");
 
+   Evas_Object *o, *box;
+   // outer box
+   box = o = elm_box_add(win);
+   elm_layout_content_set(gui_layout, "option_set", o);
+   evas_object_show(o);
+
+   gui_option_finger_size_create(box);
 }
 
 static void
-_width_size_sel_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
-                    void *event_info EINA_UNUSED)
+_scale_sel_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
+                   void *event_info EINA_UNUSED)
 {
+   elm_layout_signal_emit(gui_layout, "option,set,clicked", "option");
+
+   Evas_Object *o, *box;
+   // outer box
+   box = o = elm_box_add(win);
+   elm_layout_content_set(gui_layout, "option_set", o);
+   evas_object_show(o);
+
+   gui_option_scale_create(box);
 }
 
 static void
-_height_size_sel_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
+_option_size_sel_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
                     void *event_info EINA_UNUSED)
 {
+   elm_layout_signal_emit(gui_layout, "option,set,clicked", "option");
+
+   Evas_Object *o, *box;
+
+   // outer box
+   box = o = elm_box_add(win);
+   elm_layout_content_set(gui_layout, "option_set", o);
+   evas_object_show(o);
+
+   gui_option_force_resize_create(box);
+   gui_option_width_size_create(box);
+   gui_option_height_size_create(box);
 }
 
 static void
@@ -89,8 +118,8 @@ _mobile_option_create(Evas_Object *parent)
    evas_object_show(tb);
 
    elm_toolbar_item_append(tb, NULL, "finger", _finger_size_sel_cb, NULL);
-   elm_toolbar_item_append(tb, NULL, "width", _width_size_sel_cb, NULL);
-   elm_toolbar_item_append(tb, NULL, "height", _height_size_sel_cb, NULL);
+   elm_toolbar_item_append(tb, NULL, "scale", _scale_sel_cb, NULL);
+   elm_toolbar_item_append(tb, NULL, "size", _option_size_sel_cb, NULL);
 }
 
 void
@@ -137,14 +166,7 @@ gui_mobile_create(const char *edje_file, int width, int height,
                                   _desc_btn_clicked_cb, NULL);
 
    // preview_frame
-   preview_frame = o = elm_frame_add(win);
-   elm_object_text_set(o, "Preview");
-   evas_object_show(o);
-   elm_layout_content_set(gui_layout, "widget_preview", o);
-
-   preview_box = o = elm_box_add(win);
-   elm_object_content_set(preview_frame, o);
-   evas_object_show(o);
+   gui_preview_create(win);
 
    // widget_list
    gui_left_menu_create(win);

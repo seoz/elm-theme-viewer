@@ -3,14 +3,7 @@
 #include "log.h"
 #include "theme.h"
 #include "widget.h"
-#include "gui_mobile.h"
-
-#define SIZE_WIDTH_MIN 40
-#define SIZE_WIDTH_MAX 500
-#define SIZE_WIDTH_DEFAULT 300
-#define SIZE_HEIGHT_MIN 30
-#define SIZE_HEIGHT_MAX 400
-#define SIZE_HEIGHT_DEFAULT 100
+#include "gui.h"
 
 Evas_Object *list, *win, *gui_layout, *preview_box, *preview_obj;
 Evas_Object *description_frame, *option_frame;
@@ -50,7 +43,6 @@ _preview_create(Widget_Type widget, const char *style)
      }
 }
 
-
 void
 gui_left_menu_create(Evas_Object *parent)
 {
@@ -63,9 +55,10 @@ gui_left_menu_create(Evas_Object *parent)
    elm_list_select_mode_set(list, ELM_OBJECT_SELECT_MODE_ALWAYS);
    evas_object_data_set(list, "nf", nf);
    elm_naviframe_item_push(nf, "Widgets", NULL, NULL, list, NULL);
+
    evas_object_show(list);
 
-   elm_layout_content_set(gui_layout, "left_menu", nf);
+   elm_layout_content_set(gui_layout, "menu", nf);
 }
 
 static void
@@ -138,8 +131,8 @@ _force_resize_changed_cb(void *data EINA_UNUSED, Evas_Object *obj,
    elm_object_disabled_set(size_height_slider, !checked);
 }
 
-static void
-_option_size_create(Evas_Object *box)
+void
+gui_option_force_resize_create(Evas_Object *box)
 {
    Evas_Object *o;
 
@@ -147,9 +140,16 @@ _option_size_create(Evas_Object *box)
    elm_object_text_set(o, "Force resize");
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
    evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
-   evas_object_smart_callback_add(o, "changed", _force_resize_changed_cb, NULL);
+   evas_object_smart_callback_add(o, "changed", _force_resize_changed_cb,
+                                  NULL);
    elm_box_pack_end(box, o);
    evas_object_show(o);
+
+}
+void
+gui_option_width_size_create(Evas_Object *box)
+{
+   Evas_Object *o;
 
    o = elm_label_add(box);
    elm_object_text_set(o, "Size Width");
@@ -170,6 +170,12 @@ _option_size_create(Evas_Object *box)
                                   NULL);
    elm_box_pack_end(box, o);
    evas_object_show(o);
+}
+
+void
+gui_option_height_size_create(Evas_Object *box)
+{
+   Evas_Object *o;
 
    o = elm_label_add(box);
    elm_object_text_set(o, "Size Height");
@@ -192,22 +198,11 @@ _option_size_create(Evas_Object *box)
    evas_object_show(o);
 }
 
-static void
-_option_create(Evas_Object *parent)
+void
+gui_option_finger_size_create(Evas_Object *box)
 {
-   Evas_Object *o, *box;
+   Evas_Object *o;
 
-   option_frame = o = elm_frame_add(parent);
-   elm_object_text_set(o, "Option");
-   evas_object_show(o);
-   elm_layout_content_set(gui_layout, "option", o);
-
-   // outer box
-   box = o = elm_box_add(option_frame);
-   elm_object_content_set(option_frame, o);
-   evas_object_show(o);
-
-   // finger size
    o = elm_label_add(box);
    elm_object_text_set(o, "Finger Size");
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
@@ -222,18 +217,17 @@ _option_create(Evas_Object *parent)
    elm_slider_value_set(o, elm_config_finger_size_get());
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
    evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
-   evas_object_smart_callback_add(o, "delay,changed", _finger_size_changed_cb, NULL);
+   evas_object_smart_callback_add(o, "delay,changed", _finger_size_changed_cb,
+                                  NULL);
    elm_box_pack_end(box, o);
    evas_object_show(o);
+}
 
-   o = elm_separator_add(box);
-   elm_separator_horizontal_set(o, EINA_TRUE);
-   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
-   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
-   elm_box_pack_end(box, o);
-   evas_object_show(o);
+void
+gui_option_scale_create(Evas_Object *box)
+{
+   Evas_Object *o;
 
-   // scale
    o = elm_label_add(box);
    elm_object_text_set(o, "Scale");
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
@@ -251,6 +245,25 @@ _option_create(Evas_Object *parent)
    evas_object_smart_callback_add(o, "delay,changed", _scale_changed_cb, NULL);
    elm_box_pack_end(box, o);
    evas_object_show(o);
+}
+
+static void
+_option_create(Evas_Object *parent)
+{
+   Evas_Object *o, *box;
+
+   option_frame = o = elm_frame_add(parent);
+   elm_object_text_set(o, "Option");
+   evas_object_show(o);
+   elm_layout_content_set(gui_layout, "option", o);
+
+   // outer box
+   box = o = elm_box_add(option_frame);
+   elm_object_content_set(option_frame, o);
+   evas_object_show(o);
+
+   // finger size
+   gui_option_finger_size_create(box);
 
    o = elm_separator_add(box);
    elm_separator_horizontal_set(o, EINA_TRUE);
@@ -259,7 +272,20 @@ _option_create(Evas_Object *parent)
    elm_box_pack_end(box, o);
    evas_object_show(o);
 
-   _option_size_create(box);
+   // scale
+   gui_option_scale_create(box);
+
+   o = elm_separator_add(box);
+   elm_separator_horizontal_set(o, EINA_TRUE);
+   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
+   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   elm_box_pack_end(box, o);
+   evas_object_show(o);
+
+   // size
+   gui_option_force_resize_create(box);
+   gui_option_width_size_create(box);
+   gui_option_height_size_create(box);
 
    // padding
    o = elm_box_add(box);
@@ -270,10 +296,26 @@ _option_create(Evas_Object *parent)
 }
 
 void
+gui_preview_create(Evas_Object *parent)
+{
+   Evas_Object *o, *preview_frame;
+
+   preview_frame = o = elm_frame_add(parent);
+   elm_object_text_set(o, "Preview");
+
+   evas_object_show(o);
+   elm_layout_content_set(gui_layout, "preview", o);
+
+   preview_box = o = elm_box_add(win);
+   elm_object_content_set(preview_frame, o);
+   evas_object_show(o);
+}
+
+void
 gui_create(const char *edje_file, Evas_Coord width, Evas_Coord height,
            Eina_Bool fullscreen)
 {
-   Evas_Object *o, *preview_frame;
+   Evas_Object *o;
    char path[PATH_MAX];
 
    if (!edje_file) return;
@@ -302,14 +344,7 @@ gui_create(const char *edje_file, Evas_Coord width, Evas_Coord height,
    gui_left_menu_create(win);
 
    // preview
-   preview_frame = o = elm_frame_add(win);
-   elm_object_text_set(o, "Preview");
-   evas_object_show(o);
-   elm_layout_content_set(gui_layout, "preview", o);
-
-   preview_box = o = elm_box_add(win);
-   elm_object_content_set(preview_frame, o);
-   evas_object_show(o);
+   gui_preview_create(win);
 
    // description
    description_frame = o = elm_frame_add(win);

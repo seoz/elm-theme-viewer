@@ -38,22 +38,23 @@ collections {
                      }
                   }
                }
-               part { name : "left_menu";
+               part { name : "menu";
                   type : SWALLOW;
                   scale : 1;
                   description {
                      state : "default" 0.0;
+                     //fixed : 1 1;
                      rel1 {
-                        to : "widget_preview";
+                        to : "preview";
                         relative : 0.0 1.0;
                      }
                      rel2 {
-                        to : "option";
+                        to : "option_set";
                         relative : 1.0 0.0;
                      }
                   }
                }
-               part { name : "widget_preview";
+               part { name : "preview";
                   type : SWALLOW;
                   scale : 1;
                   description {
@@ -73,7 +74,8 @@ collections {
                         relative : 0.0 1.0;
                      }
                      rel2 {
-                        relative : 1.0 0.95;
+                        to : "option_set";
+                        relative : 1.0 0.0;
                      }
                   }
                }
@@ -92,14 +94,42 @@ collections {
                      }
                   }
                }
-
+               part { name : "option_set";
+                  type : SWALLOW;
+                  scale : 1;
+                  description {
+                     state : "default" 0.0;
+                     fixed : 0 1;
+                     rel1 {
+                        to : "option";
+                        relative : 0.0 0.0;
+                     }
+                     rel2 {
+                        to : "option";
+                        relative : 1.0 0.0;
+                     }
+                  }
+                  description {
+                     state : "set" 0.1;
+                     fixed : 0 1;
+                     align : 0.5 1.0;
+                     rel1 {
+                        to : "option";
+                        relative : 0.0 0.0;
+                     }
+                     rel2 {
+                        to : "option";
+                        relative : 1.0 0.0;
+                     }
+                  }
+               }
                programs {
                   program {
                      name : "left_show";
                      signal : "show,button,clicked";
                      source : "button_description";
                      action : STATE_SET "default" 0.0;
-                     target : "widget_preview";
+                     target : "preview";
                      transition : DECELERATE 0.3;
                   }
                   program {
@@ -107,7 +137,23 @@ collections {
                      signal : "hide,button,clicked";
                      source : "button_description";
                      action : STATE_SET "hide" 0.1;
-                     target : "widget_preview";
+                     target : "preview";
+                     transition : ACCELERATE 0.3;
+                  }
+                  program {
+                     name : "option_set_show";
+                     signal : "option,set,clicked";
+                     source : "option";
+                     action : STATE_SET "set" 0.1;
+                     target : "option_set";
+                     transition : DECELERATE 0.3;
+                  }
+                  program {
+                     name : "option_set_hide";
+                     signal : "option,unset,clicked";
+                     source : "option";
+                     action : STATE_SET "default" 0.0;
+                     target : "option_set";
                      transition : ACCELERATE 0.3;
                   }
                }
