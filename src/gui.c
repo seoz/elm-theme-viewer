@@ -462,15 +462,21 @@ _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info EINA_UNUSED)
    elm_list_item_selected_set(elm_list_first_item_get(li), EINA_TRUE);
    elm_list_go(li);
 
-   prev_btn = elm_button_add(win);
-   elm_object_text_set(prev_btn, "< Back");
-   evas_object_smart_callback_add(prev_btn, "clicked",
-                                  _nf_prev_btn_clicked_cb, nf);
-   evas_object_show(prev_btn);
-
-   it = elm_naviframe_item_push(nf, "Styles", prev_btn, NULL, li, NULL);
+   it = elm_naviframe_item_push(nf, "Styles", NULL, NULL, li, NULL);
    elm_object_item_part_text_set(it, "subtitle",
                                  (char *)widget_name_get_by_type(type));
+   if (ed->tizen)
+     {
+        prev_btn = elm_button_add(win);
+        elm_object_style_set(prev_btn, "naviframe/back_btn/default");
+        evas_object_smart_callback_add(prev_btn, "clicked",
+                                       _nf_prev_btn_clicked_cb, nf);
+        elm_object_item_part_content_set(it, "title_left_btn", prev_btn);
+        evas_object_show(prev_btn);
+
+        elm_object_item_signal_emit(it,
+                                    "elm,state,toolbar,close,internal","elm");
+     }
 
    if (m_version)
      gui_mobile_description_set(widget_desc_get_by_type(type));

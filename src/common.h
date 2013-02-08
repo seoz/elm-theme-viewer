@@ -16,4 +16,6 @@ struct _ETV_Data
    Eina_Bool tizen; // flag to check the Tizen platform
 };
 
+extern ETV_Data *ed;
+
 #endif

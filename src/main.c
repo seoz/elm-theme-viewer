@@ -6,6 +6,7 @@
 #include "gui_mobile.h"
 #include "theme.h"
 
+ETV_Data *ed = NULL;
 static const Ecore_Getopt options = {
    PACKAGE_NAME,
    "%prog [options]",
@@ -37,7 +38,6 @@ EAPI_MAIN int
 elm_main(int argc, char **argv)
 {
    const char *edje_file = NULL;
-   ETV_Data *ed = NULL;
 
    int args;
    char *theme = NULL;
