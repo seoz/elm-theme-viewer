@@ -79,12 +79,17 @@ _desc_btn_clicked_cb(void *data EINA_UNUSED,
                                   _block_clicked, NULL);
 }
 static void
-_mobile_option_create(Evas_Object *parent)
+_mobile_option_create(ETV_Data *ed, Evas_Object *parent)
 {
    Evas_Object *tb;
    tb = elm_toolbar_add(parent);
    elm_layout_content_set(gui_layout, "option", tb);
    evas_object_show(tb);
+
+   elm_toolbar_shrink_mode_set(tb, ELM_TOOLBAR_SHRINK_SCROLL);
+
+   if (ed->tizen)
+     elm_object_style_set(tb, "tabbar");
 
    elm_toolbar_item_append(tb, NULL, "finger", _option_finger_size_sel_cb,
                            NULL);
@@ -93,7 +98,7 @@ _mobile_option_create(Evas_Object *parent)
 }
 
 void
-gui_mobile_create(const char *edje_file, int width, int height,
+gui_mobile_create(ETV_Data *ed, const char *edje_file, int width, int height,
                   Eina_Bool fullscreen)
 {
    Evas_Object *o, *preview_frame;
@@ -146,7 +151,7 @@ gui_mobile_create(const char *edje_file, int width, int height,
    // widget_list
    elm_object_part_content_set(o, "bottom", gui_left_menu_create(win));
 
-   _mobile_option_create(win);
+   _mobile_option_create(ed, win);
 }
 
 void

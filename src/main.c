@@ -22,6 +22,9 @@ static const Ecore_Getopt options = {
                              "WIDTHxHEIGHT format. (300x500)"),
       ECORE_GETOPT_STORE_TRUE('F', "fullscreen",
                               "Go into the fullscreen mode from start."),
+      ECORE_GETOPT_STORE_TRUE('T', "tizen",
+                              "Run as a Tizen platform mode. Use Tizen"
+                              "internal styles"),
       ECORE_GETOPT_VERSION  ('V', "version"),
       ECORE_GETOPT_COPYRIGHT('C', "copyright"),
       ECORE_GETOPT_LICENSE  ('L', "license"),
@@ -34,6 +37,7 @@ EAPI_MAIN int
 elm_main(int argc, char **argv)
 {
    const char *edje_file = NULL;
+   ETV_Data *ed = NULL;
 
    int args;
    char *theme = NULL;
@@ -41,6 +45,7 @@ elm_main(int argc, char **argv)
    Eina_Bool mobile_version = EINA_FALSE;
    Eina_Bool fullscreen = EINA_FALSE;
    Eina_Bool quit_option = EINA_FALSE;
+   Eina_Bool tizen = EINA_FALSE;
    Evas_Coord width = WIN_WIDTH, height = WIN_HEIGHT;
 
    Ecore_Getopt_Value values[] = {
@@ -48,6 +53,7 @@ elm_main(int argc, char **argv)
      ECORE_GETOPT_VALUE_BOOL(mobile_version),
      ECORE_GETOPT_VALUE_STR(screen_size),
      ECORE_GETOPT_VALUE_BOOL(fullscreen),
+     ECORE_GETOPT_VALUE_BOOL(tizen),
      ECORE_GETOPT_VALUE_BOOL(quit_option),
      ECORE_GETOPT_VALUE_BOOL(quit_option),
      ECORE_GETOPT_VALUE_BOOL(quit_option),
@@ -70,6 +76,9 @@ elm_main(int argc, char **argv)
 
    if (quit_option) goto end;
 
+   // allocate ETV app data
+   ed = calloc(1, sizeof(ETV_Data));
+
    if (theme)
      {
         char path[PATH_MAX];
@@ -91,6 +100,8 @@ elm_main(int argc, char **argv)
    theme_load(edje_file);
    theme_set(edje_file);
 
+   ed->tizen = tizen;
+
    if (screen_size)
      {
         width = atoi(strtok(screen_size, "x"));
@@ -101,7 +112,7 @@ elm_main(int argc, char **argv)
 
    if (mobile_version)
      {
-        gui_mobile_create(edje_file, width, height, fullscreen);
+        gui_mobile_create(ed, edje_file, width, height, fullscreen);
         gui_widget_load();
      }
    else
@@ -113,6 +124,11 @@ elm_main(int argc, char **argv)
    elm_run();
 
 end:
+   if (ed)
+     {
+        free(ed);
+        ed = NULL;
+     }
    theme_unset(edje_file);
    elm_shutdown();
    log_shutdown();
