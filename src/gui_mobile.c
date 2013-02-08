@@ -101,7 +101,7 @@ void
 gui_mobile_create(ETV_Data *ed, const char *edje_file, int width, int height,
                   Eina_Bool fullscreen)
 {
-   Evas_Object *o, *preview_frame;
+   Evas_Object *o;
    char path[PATH_MAX];
 
    if (!edje_file) return;

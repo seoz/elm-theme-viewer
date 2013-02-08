@@ -86,5 +86,7 @@ Evas_Object *widget_create(Widget_Type widget, const char *style);
 void widget_resize(Evas_Object *o);
 const char *widget_name_get_by_type(Widget_Type type);
 const char *widget_desc_get_by_type(Widget_Type type);
+Eina_Bool option_is_force_resize(void);
+void option_preview_size_get(Evas_Coord *w, Evas_Coord *h);
 
 #endif
