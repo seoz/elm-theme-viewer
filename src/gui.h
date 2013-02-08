@@ -23,4 +23,6 @@ void gui_option_force_resize_create(Evas_Object *box);
 void gui_option_width_size_create(Evas_Object *box);
 void gui_option_height_size_create(Evas_Object *box);
 
+Evas_Object * gui_description_label_get(void);
+
 #endif

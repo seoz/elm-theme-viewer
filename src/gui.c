@@ -369,18 +369,24 @@ gui_create(const char *edje_file, Evas_Coord width, Evas_Coord height,
    return;
 }
 
-void
-gui_description_set(const char *txt)
+Evas_Object *
+gui_description_label_get(void)
 {
    Evas_Object *o;
+   const char *txt = NULL;
 
    o = elm_label_add(win);
    elm_label_line_wrap_set(o, ELM_WRAP_MIXED);
-   elm_object_text_set(o, txt);
-   elm_object_content_set(description_frame, o);
-   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   txt = widget_desc_get_by_type(ed->selected_widget_type);
+   if (!ed->selected_widget_type)
+     elm_object_text_set(o, "Widget is not selected.");
+   else if (!txt)
+     elm_object_text_set(o, "There is no description for this widget.");
+   else
+     elm_object_text_set(o, txt);
    evas_object_show(o);
+
+   return o;
 }
 
 static void
@@ -444,6 +450,8 @@ _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info EINA_UNUSED)
 
    if (!nf) return;
 
+   ed->selected_widget_type = type;
+
    li = elm_list_add(nf);
    elm_list_select_mode_set(li, ELM_OBJECT_SELECT_MODE_ALWAYS);
    styles = theme_widget_styles_get(type);
@@ -478,10 +486,12 @@ _widget_list_sel_cb(void *data, Evas_Object *obj, void *event_info EINA_UNUSED)
                                     "elm,state,toolbar,close,internal","elm");
      }
 
-   if (m_version)
-     gui_mobile_description_set(widget_desc_get_by_type(type));
+   if (!m_version)
+     elm_object_content_set(description_frame, gui_description_label_get());
    else
-     gui_description_set(widget_desc_get_by_type(type));
+     {
+        // mobile version sets the guidescription on button click
+     }
 }
 
 void

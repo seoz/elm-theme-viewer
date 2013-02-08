@@ -5,7 +5,9 @@
 #include "widget.h"
 #include "gui.h"
 
-Evas_Object *label, *bt_hide, *bt_desc;
+Evas_Object *bt_hide, *bt_desc;
+
+void gui_mobile_description_set(void);
 
 static void
 _block_clicked(void *data EINA_UNUSED, Evas_Object *obj,
@@ -69,14 +71,7 @@ _desc_btn_clicked_cb(void *data EINA_UNUSED,
                      Evas_Object *obj EINA_UNUSED,
                      void *event_info EINA_UNUSED)
 {
-   Evas_Object *popup;
-   popup = elm_popup_add(win);
-   elm_object_part_text_set(popup, "title,text", "Description of Widget");
-   elm_object_content_set(popup, label);
-   evas_object_show(popup);
-
-   evas_object_smart_callback_add(popup, "block,clicked",
-                                  _block_clicked, NULL);
+   gui_mobile_description_set();
 }
 
 static void
@@ -172,9 +167,14 @@ gui_mobile_create(ETV_Data *ed, const char *edje_file, int width, int height,
 }
 
 void
-gui_mobile_description_set(const char *txt)
+gui_mobile_description_set(void)
 {
-   label = elm_label_add(win);
-   elm_label_line_wrap_set(label, ELM_WRAP_MIXED);
-   elm_object_text_set(label, txt);
+   Evas_Object *popup;
+
+   popup = elm_popup_add(win);
+   elm_object_part_text_set(popup, "title,text", "Description of Widget");
+   elm_object_content_set(popup, gui_description_label_get());
+   evas_object_smart_callback_add(popup, "block,clicked",
+                                  _block_clicked, NULL);
+   evas_object_show(popup);
 }
