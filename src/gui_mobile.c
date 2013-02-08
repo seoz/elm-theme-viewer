@@ -78,18 +78,35 @@ _desc_btn_clicked_cb(void *data EINA_UNUSED,
    evas_object_smart_callback_add(popup, "block,clicked",
                                   _block_clicked, NULL);
 }
+
+static void
+_toolbar_item_clicked_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
+                         void *event_info)
+{
+   Evas_Object *option_obj = NULL;
+
+   if (!event_info) return;
+
+   if (!elm_toolbar_item_selected_get(event_info))
+     {
+        option_obj = elm_layout_content_get(gui_layout, "option_set");
+        if (option_obj)
+          evas_object_del(option_obj);
+     }
+}
+
 static void
 _mobile_option_create(ETV_Data *ed, Evas_Object *parent)
 {
    Evas_Object *tb;
+
    tb = elm_toolbar_add(parent);
    elm_layout_content_set(gui_layout, "option", tb);
+   elm_toolbar_shrink_mode_set(tb, ELM_TOOLBAR_SHRINK_SCROLL);
+   evas_object_smart_callback_add(tb, "clicked", _toolbar_item_clicked_cb, NULL);
    evas_object_show(tb);
 
-   elm_toolbar_shrink_mode_set(tb, ELM_TOOLBAR_SHRINK_SCROLL);
-
-   if (ed->tizen)
-     elm_object_style_set(tb, "tabbar");
+   if (ed->tizen) elm_object_style_set(tb, "tabbar");
 
    elm_toolbar_item_append(tb, NULL, "finger", _option_finger_size_sel_cb,
                            NULL);
