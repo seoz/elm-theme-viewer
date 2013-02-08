@@ -145,8 +145,8 @@ gui_option_force_resize_create(Evas_Object *box)
 
    option_force_resize = o = elm_check_add(box);
    elm_object_text_set(o, "Force resize");
-   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
-   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   WEIGHT(o, EVAS_HINT_EXPAND, 0.0);
+   FILL(o);
    evas_object_smart_callback_add(o, "changed", _force_resize_changed_cb,
                                   NULL);
    elm_box_pack_end(box, o);
@@ -161,8 +161,8 @@ gui_option_width_size_create(Evas_Object *box)
 
    o = elm_label_add(box);
    elm_object_text_set(o, "Size Width");
-   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
-   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   WEIGHT(o, EVAS_HINT_EXPAND, 0.0);
+   FILL(o);
    elm_box_pack_end(box, o);
    evas_object_show(o);
 
@@ -172,8 +172,8 @@ gui_option_width_size_create(Evas_Object *box)
    elm_slider_min_max_set(o, SIZE_WIDTH_MIN, SIZE_WIDTH_MAX);
    elm_slider_value_set(o, SIZE_WIDTH_DEFAULT);
    elm_object_disabled_set(o, EINA_TRUE);
-   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
-   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   WEIGHT(o, EVAS_HINT_EXPAND, 0.0);
+   FILL(o);
    evas_object_smart_callback_add(o, "delay,changed", _size_width_changed_cb,
                                   NULL);
    elm_box_pack_end(box, o);
@@ -187,8 +187,8 @@ gui_option_height_size_create(Evas_Object *box)
 
    o = elm_label_add(box);
    elm_object_text_set(o, "Size Height");
-   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
-   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   WEIGHT(o, EVAS_HINT_EXPAND, 0.0);
+   FILL(o);
    elm_box_pack_end(box, o);
    evas_object_show(o);
 
@@ -198,8 +198,8 @@ gui_option_height_size_create(Evas_Object *box)
    elm_slider_min_max_set(o, SIZE_HEIGHT_MIN, SIZE_HEIGHT_MAX);
    elm_slider_value_set(o, SIZE_HEIGHT_DEFAULT);
    elm_object_disabled_set(o, EINA_TRUE);
-   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
-   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   WEIGHT(o, EVAS_HINT_EXPAND, 0.0);
+   FILL(o);
    evas_object_smart_callback_add(o, "delay,changed", _size_height_changed_cb,
                                   NULL);
    elm_box_pack_end(box, o);
@@ -213,8 +213,8 @@ gui_option_finger_size_create(Evas_Object *box)
 
    o = elm_label_add(box);
    elm_object_text_set(o, "Finger Size");
-   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
-   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   WEIGHT(o, EVAS_HINT_EXPAND, 0.0);
+   FILL(o);
    elm_box_pack_end(box, o);
    evas_object_show(o);
 
@@ -223,8 +223,8 @@ gui_option_finger_size_create(Evas_Object *box)
    elm_slider_indicator_format_set(o, "%1.0f");
    elm_slider_min_max_set(o, 5, 200);
    elm_slider_value_set(o, elm_config_finger_size_get());
-   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
-   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   WEIGHT(o, EVAS_HINT_EXPAND, 0.0);
+   FILL(o);
    evas_object_smart_callback_add(o, "delay,changed", _finger_size_changed_cb,
                                   NULL);
    elm_box_pack_end(box, o);
@@ -238,8 +238,8 @@ gui_option_scale_create(Evas_Object *box)
 
    o = elm_label_add(box);
    elm_object_text_set(o, "Scale");
-   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
-   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   WEIGHT(o, EVAS_HINT_EXPAND, 0.0);
+   FILL(o);
    elm_box_pack_end(box, o);
    evas_object_show(o);
 
@@ -248,8 +248,8 @@ gui_option_scale_create(Evas_Object *box)
    elm_slider_indicator_format_set(o, "%1.1f");
    elm_slider_min_max_set(o, 0.25, 5.0);
    elm_slider_value_set(o, elm_config_scale_get());
-   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
-   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   WEIGHT(o, EVAS_HINT_EXPAND, 0.0);
+   FILL(o);
    evas_object_smart_callback_add(o, "delay,changed", _scale_changed_cb, NULL);
    elm_box_pack_end(box, o);
    evas_object_show(o);
@@ -275,8 +275,8 @@ _option_create(Evas_Object *parent)
 
    o = elm_separator_add(box);
    elm_separator_horizontal_set(o, EINA_TRUE);
-   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
-   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   WEIGHT(o, EVAS_HINT_EXPAND, 0.0);
+   FILL(o);
    elm_box_pack_end(box, o);
    evas_object_show(o);
 
@@ -285,8 +285,8 @@ _option_create(Evas_Object *parent)
 
    o = elm_separator_add(box);
    elm_separator_horizontal_set(o, EINA_TRUE);
-   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, 0.0);
-   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   WEIGHT(o, EVAS_HINT_EXPAND, 0.0);
+   FILL(o);
    elm_box_pack_end(box, o);
    evas_object_show(o);
 
@@ -297,8 +297,7 @@ _option_create(Evas_Object *parent)
 
    // padding
    o = elm_box_add(box);
-   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   EXPAND(o); FILL(o);
    elm_box_pack_end(box, o);
    evas_object_show(o);
 }
@@ -342,7 +341,7 @@ gui_create(const char *edje_file, Evas_Coord width, Evas_Coord height,
    gui_layout = o = elm_layout_add(win);
    snprintf(path, sizeof(path), "%s/themes/layout.edj", elm_app_data_dir_get());
    elm_layout_file_set(o, path, "etv/main/layout");
-   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   EXPAND(o);
    elm_win_resize_object_add(win, o);
    evas_object_show(o);
 

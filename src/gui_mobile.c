@@ -132,7 +132,7 @@ gui_mobile_create(ETV_Data *ed, const char *edje_file, int width, int height,
    snprintf(path, sizeof(path), "%s/themes/layout_mobile.edj",
             elm_app_data_dir_get());
    elm_layout_file_set(o, path, "etv/main/layout");
-   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   EXPAND(o);
    elm_win_resize_object_add(win, o);
    evas_object_show(o);
 
