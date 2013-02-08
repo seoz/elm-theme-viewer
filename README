@@ -18,9 +18,20 @@ It loads default theme (default.edj from /usr/local/share/elementary/themes) by
 default. But you can see the preview of other themes with the following
 instruction.
 
-Usage 2:
+Usage 2: Set the theme file
    $ elm_theme_viewer -t ./darkness.edj
 
-Usage 3:
+Usage 3: See the help
    $ elm_theme_viewer -h
 
+Usage 4: Set the mobile mode
+   $ elm_theme_viewer -m
+
+Usage 5: Set the Tizen platform style
+   $ elm_theme_viewer -T
+
+Usage 6: Set the screen size
+   $ elm_theme_viewer -s 1280x720
+
+Usage 7: Set the full screen mode. This overrides screen size setting.
+   $ elm_theme_viewer -F
