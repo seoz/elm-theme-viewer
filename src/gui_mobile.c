@@ -113,7 +113,7 @@ void
 gui_mobile_create(ETV_Data *ed, const char *edje_file, int width, int height,
                   Eina_Bool fullscreen)
 {
-   Evas_Object *o;
+   Evas_Object *o, *conform;
    char path[PATH_MAX];
 
    if (!edje_file) return;
@@ -128,12 +128,16 @@ gui_mobile_create(ETV_Data *ed, const char *edje_file, int width, int height,
      evas_object_resize(o, width, height);
    evas_object_show(o);
 
+   conform = o = elm_conformant_add(win);
+   EXPAND(o);
+   elm_win_resize_object_add(win, o);
+   evas_object_show(o);
+
    gui_layout = o = elm_layout_add(win);
    snprintf(path, sizeof(path), "%s/themes/layout_mobile.edj",
             elm_app_data_dir_get());
    elm_layout_file_set(o, path, "etv/main/layout");
-   EXPAND(o);
-   elm_win_resize_object_add(win, o);
+   elm_object_content_set(conform, o);
    evas_object_show(o);
 
    // button_hide
