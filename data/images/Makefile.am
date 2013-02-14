@@ -4,6 +4,8 @@ files_DATA = \
 sky_01.jpg \
 sky_02.jpg \
 sky_03.jpg \
-sky_04.jpg
+sky_04.jpg \
+ETV_logo.jpg \
+ETV_logo2.jpg
 
 EXTRA_DIST = $(files_DATA)
