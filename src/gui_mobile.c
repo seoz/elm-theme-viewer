@@ -5,9 +5,9 @@
 #include "widget.h"
 #include "gui.h"
 
-Evas_Object *bt_hide, *bt_desc;
 
 void gui_mobile_description_set(void);
+Evas_Object *label, *bt_desc;
 
 static void
 _block_clicked(void *data EINA_UNUSED, Evas_Object *obj,
@@ -91,6 +91,24 @@ _toolbar_item_clicked_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
 }
 
 static void
+_clicked_double(void *data, Evas_Object *obj, void *event_info)
+{
+   double size = 0.0;
+
+   if (elm_panes_content_left_size_get(obj) > 0)
+     {
+        size = elm_panes_content_left_size_get(obj);
+        elm_panes_content_left_size_set(obj, 0.0);
+        printf("Double clicked, hidding.\n");
+     }
+   else
+     {
+        elm_panes_content_left_size_set(obj, size);
+        printf("Double clicked, restoring size.\n");
+     }
+}
+
+static void
 _mobile_option_create(ETV_Data *ed, Evas_Object *parent)
 {
    Evas_Object *tb;
@@ -113,8 +131,8 @@ void
 gui_mobile_create(ETV_Data *ed, const char *edje_file, int width, int height,
                   Eina_Bool fullscreen)
 {
-   Evas_Object *o, *conform;
-   char path[PATH_MAX];
+   Evas_Object *o, *conform, *ic, *box, *label;
+   char buf[PATH_MAX];
 
    if (!edje_file) return;
 
@@ -134,17 +152,30 @@ gui_mobile_create(ETV_Data *ed, const char *edje_file, int width, int height,
    evas_object_show(o);
 
    gui_layout = o = elm_layout_add(win);
-   snprintf(path, sizeof(path), "%s/themes/layout_mobile.edj",
+   snprintf(buf, sizeof(buf), "%s/themes/layout_mobile.edj",
             elm_app_data_dir_get());
-   elm_layout_file_set(o, path, "etv/main/layout");
+   elm_layout_file_set(o, buf, "etv/main/layout");
    elm_object_content_set(conform, o);
    evas_object_show(o);
 
-   // button_hide
-   bt_hide = o = elm_button_add(win);
-   elm_object_text_set(o, "Hide");
+   box = elm_box_add(win);
+   elm_box_horizontal_set(box, EINA_TRUE);
+   elm_layout_content_set(gui_layout, "button_hide", box);
+   evas_object_show(box);
+
+   ic = elm_icon_add(win);
+   snprintf(buf, sizeof(buf), "%s/images/logo.jpg", elm_app_data_dir_get());
+   EXPAND(ic); FILL(ic);
+   elm_image_file_set(ic, buf, NULL);
+   evas_object_size_hint_aspect_set(ic, EVAS_ASPECT_CONTROL_VERTICAL, 1, 1);
+   elm_box_pack_end(box, ic);
+   evas_object_show(ic);
+
+   label = o = elm_label_add(win);
+   EXPAND(o); FILL(o);
+   elm_object_text_set(o, "Elm-Theme-Viewer");
+   elm_box_pack_end(box, o);
    evas_object_show(o);
-   elm_layout_content_set(gui_layout, "button_hide", o);
 
    // button_description
    bt_desc = o = elm_button_add(win);
@@ -158,7 +189,7 @@ gui_mobile_create(ETV_Data *ed, const char *edje_file, int width, int height,
    o = elm_panes_add(win);
    elm_panes_horizontal_set(o, EINA_TRUE);
    evas_object_show(o);
-
+   evas_object_smart_callback_add(o, "clicked,double", _clicked_double, o);
    elm_layout_content_set(gui_layout, "preview", o);
 
    // preview_frame
