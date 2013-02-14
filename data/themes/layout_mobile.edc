@@ -9,23 +9,17 @@ collections {
                part { name : "title";
                   type : SWALLOW;
                   scale : 1;
-                  description {
-                     state : "default" 0.0;
-                     rel1 {
-                        relative : 0.0 0.0;
-                     }
+                  description { state : "default" 0.0;
                      rel2 {
                         to : "button_description";
                         relative : 0.0 1.0;
                      }
-                     color : 0 0 0 0;
                   }
                }
                part { name : "button_description";
                   type : SWALLOW;
                   scale : 1;
-                  description {
-                     state : "default" 0.0;
+                  description { state : "default" 0.0;
                      align : 0.5 0;
                      fixed: 0 1;
                      rel1 {
@@ -39,8 +33,7 @@ collections {
                part { name : "preview";
                   type : SWALLOW;
                   scale : 1;
-                  description {
-                     state : "default" 0.0;
+                  description { state : "default" 0.0;
                      rel1 {
                         to : "title";
                         relative : 0.0 1.0;
@@ -54,41 +47,27 @@ collections {
                part { name : "option";
                   type : SWALLOW;
                   scale : 1;
-                  description {
-                     state : "default" 0.0;
+                  description { state : "default" 0.0;
                      fixed: 0 1;
                      align: 0.5 1.0;
-                     rel1 {
-                        relative : 0.0 1.0;
-                     }
-                     rel2 {
-                        relative : 1.0 1.0;
-                     }
+                     rel1.relative : 0.0 1.0;
                   }
                }
                part { name : "option_set";
                   type : SWALLOW;
                   scale : 1;
-                  description {
-                     state : "default" 0.0;
+                  description { state : "default" 0.0;
                      fixed : 0 1;
-                     rel1 {
-                        to : "option";
-                        relative : 0.0 0.0;
-                     }
+                     rel1.to : "option";
                      rel2 {
                         to : "option";
                         relative : 1.0 0.0;
                      }
                   }
-                  description {
-                     state : "set" 0.1;
+                  description { state : "set" 0.1;
                      fixed : 0 1;
                      align : 0.5 1.0;
-                     rel1 {
-                        to : "option";
-                        relative : 0.0 0.0;
-                     }
+                     rel1.to : "option";
                      rel2 {
                         to : "option";
                         relative : 1.0 0.0;
