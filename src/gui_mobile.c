@@ -5,7 +5,6 @@
 #include "widget.h"
 #include "gui.h"
 
-
 void gui_mobile_description_set(void);
 Evas_Object *bt_desc;
 
