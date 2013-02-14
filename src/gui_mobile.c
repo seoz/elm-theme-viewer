@@ -158,10 +158,10 @@ gui_mobile_create(ETV_Data *ed, const char *edje_file, int width, int height,
    elm_object_content_set(conform, o);
    evas_object_show(o);
 
-   box = elm_box_add(win);
-   elm_box_horizontal_set(box, EINA_TRUE);
-   elm_layout_content_set(gui_layout, "button_hide", box);
-   evas_object_show(box);
+   box = o = elm_box_add(win);
+   elm_box_horizontal_set(o, EINA_TRUE);
+   elm_layout_content_set(gui_layout, "title", o);
+   evas_object_show(o);
 
    ic = elm_icon_add(win);
    snprintf(buf, sizeof(buf), "%s/images/logo.jpg", elm_app_data_dir_get());
@@ -179,7 +179,7 @@ gui_mobile_create(ETV_Data *ed, const char *edje_file, int width, int height,
 
    // button_description
    bt_desc = o = elm_button_add(win);
-   elm_object_text_set(o, "Description");
+   elm_object_text_set(o, "Desc");
    evas_object_show(o);
    elm_layout_content_set(gui_layout, "button_description", o);
    evas_object_smart_callback_add(o, "clicked",
