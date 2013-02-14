@@ -146,6 +146,9 @@ gui_mobile_create(ETV_Data *ed, const char *edje_file, int width, int height,
      evas_object_resize(o, width, height);
    evas_object_show(o);
 
+   elm_win_conformant_set(o, EINA_TRUE);
+   elm_win_indicator_mode_set(o, ELM_WIN_INDICATOR_SHOW);
+
    conform = o = elm_conformant_add(win);
    EXPAND(o);
    elm_win_resize_object_add(win, o);
