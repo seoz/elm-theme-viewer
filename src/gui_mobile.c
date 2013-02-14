@@ -7,7 +7,7 @@
 
 
 void gui_mobile_description_set(void);
-Evas_Object *label, *bt_desc;
+Evas_Object *bt_desc;
 
 static void
 _block_clicked(void *data EINA_UNUSED, Evas_Object *obj,
@@ -91,7 +91,8 @@ _toolbar_item_clicked_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
 }
 
 static void
-_clicked_double(void *data, Evas_Object *obj, void *event_info)
+_clicked_double(void *data EINA_UNUSED, Evas_Object *obj,
+                void *event_info EINA_UNUSED)
 {
    double size = 0.0;
 
@@ -131,7 +132,7 @@ void
 gui_mobile_create(ETV_Data *ed, const char *edje_file, int width, int height,
                   Eina_Bool fullscreen)
 {
-   Evas_Object *o, *conform, *ic, *box, *label;
+   Evas_Object *o, *conform, *ic, *box;
    char buf[PATH_MAX];
 
    if (!edje_file) return;
@@ -171,7 +172,7 @@ gui_mobile_create(ETV_Data *ed, const char *edje_file, int width, int height,
    elm_box_pack_end(box, ic);
    evas_object_show(ic);
 
-   label = o = elm_label_add(win);
+   o = elm_label_add(win);
    EXPAND(o); FILL(o);
    elm_object_text_set(o, "Elm-Theme-Viewer");
    elm_box_pack_end(box, o);
