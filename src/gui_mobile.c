@@ -90,8 +90,8 @@ _toolbar_item_clicked_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
 }
 
 static void
-_clicked_double(void *data EINA_UNUSED, Evas_Object *obj,
-                void *event_info EINA_UNUSED)
+_clicked_double_cb(void *data EINA_UNUSED, Evas_Object *obj,
+                   void *event_info EINA_UNUSED)
 {
    double size = 0.0;
 
@@ -192,7 +192,7 @@ gui_mobile_create(ETV_Data *ed, const char *edje_file, int width, int height,
    o = elm_panes_add(win);
    elm_panes_horizontal_set(o, EINA_TRUE);
    evas_object_show(o);
-   evas_object_smart_callback_add(o, "clicked,double", _clicked_double, o);
+   evas_object_smart_callback_add(o, "clicked,double", _clicked_double_cb, o);
    elm_layout_content_set(gui_layout, "preview", o);
 
    // preview_frame
