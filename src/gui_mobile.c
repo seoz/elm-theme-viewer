@@ -93,18 +93,18 @@ static void
 _clicked_double_cb(void *data EINA_UNUSED, Evas_Object *obj,
                    void *event_info EINA_UNUSED)
 {
-   double size = 0.0;
+   static double size = 0.0;
 
    if (elm_panes_content_left_size_get(obj) > 0)
      {
         size = elm_panes_content_left_size_get(obj);
         elm_panes_content_left_size_set(obj, 0.0);
-        printf("Double clicked, hidding.\n");
+        INF("Double clicked, hidding.");
      }
    else
      {
         elm_panes_content_left_size_set(obj, size);
-        printf("Double clicked, restoring size.\n");
+        INF("Double clicked, restoring size.");
      }
 }
 
