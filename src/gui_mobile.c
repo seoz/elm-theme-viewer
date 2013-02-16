@@ -93,19 +93,30 @@ static void
 _clicked_double_cb(void *data EINA_UNUSED, Evas_Object *obj,
                    void *event_info EINA_UNUSED)
 {
-   static double size = 0.0;
+   static Eina_Bool contracted = EINA_FALSE;
+   Evas_Coord miny = 0, panel_h = 0;
+   double size = 0.0;
+   static double prev_size = 0.0;
 
-   if (elm_panes_content_left_size_get(obj) > 0)
+   if (!contracted)
      {
-        size = elm_panes_content_left_size_get(obj);
-        elm_panes_content_left_size_set(obj, 0.0);
-        INF("Double clicked, hidding.");
+        prev_size = elm_panes_content_left_size_get(obj);
+        if (preview_box)
+          {
+             evas_object_size_hint_min_get(preview_box, NULL, &miny);
+             if (miny <= 0)
+               miny = 50 * elm_config_scale_get();
+             evas_object_geometry_get(obj, NULL, NULL, NULL, &panel_h);
+             size = miny / (double)panel_h;
+          }
+        elm_panes_content_left_size_set(obj, size);
      }
    else
      {
-        elm_panes_content_left_size_set(obj, size);
-        INF("Double clicked, restoring size.");
+        elm_panes_content_left_size_set(obj, prev_size);
      }
+   contracted = !contracted;
+   INF("size y %f %d", size, contracted);
 }
 
 static void
