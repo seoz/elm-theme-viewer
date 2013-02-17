@@ -178,7 +178,7 @@ gui_mobile_create(ETV_Data *ed, const char *edje_file, int width, int height,
    evas_object_show(o);
 
    ic = elm_icon_add(win);
-   snprintf(buf, sizeof(buf), "%s/images/ETV_logo.jpg", elm_app_data_dir_get());
+   snprintf(buf, sizeof(buf), "%s/images/ETV_logo_s.png", elm_app_data_dir_get());
    EXPAND(ic); FILL(ic);
    elm_image_file_set(ic, buf, NULL);
    evas_object_size_hint_aspect_set(ic, EVAS_ASPECT_CONTROL_VERTICAL, 1, 1);
