@@ -5,6 +5,14 @@
 #include "widget.h"
 #include "gui.h"
 
+#if (ELM_VERSION_MAJOR == 1) && (ELM_VERSION_MINOR < 8)
+  #define PANES_TOP "top"
+  #define PANES_BOTTOM "bottom"
+#else
+  #define PANES_TOP "left"
+  #define PANES_BOTTOM "right"
+#endif
+
 void gui_mobile_description_set(void);
 Evas_Object *bt_desc;
 
@@ -207,10 +215,10 @@ gui_mobile_create(ETV_Data *ed, const char *edje_file, int width, int height,
    elm_layout_content_set(gui_layout, "preview", o);
 
    // preview_frame
-   elm_object_part_content_set(o, "top", gui_preview_create(win));
+   elm_object_part_content_set(o, PANES_TOP, gui_preview_create(win));
 
    // widget_list
-   elm_object_part_content_set(o, "bottom", gui_left_menu_create(win));
+   elm_object_part_content_set(o, PANES_BOTTOM, gui_left_menu_create(win));
 
    _mobile_option_create(ed, win);
 }
