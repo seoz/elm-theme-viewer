@@ -1,37 +1,3 @@
-elm-theme-viewer
-===============================================================================
-Author: Daniel Juyung Seo (SeoZ) and others
+THIS GIT IS MOVED TO THE OFFICIAL ENLIGHTENMENT GIT REPOSITORY.
 
-Elm Theme Viewer is an EFL(Enlightenment Foundation Libraries) elementary
-widget preview program. It lists all widgets and styles from the theme.  It
-actually creates widgets with a proper code.
-This is a very useful program for elementary application programmers,
-elementary theme creators, and elementary widget developers.
-
-Build and installation:
-   $ ./autogen.sh && make && sudo make install
-
-Usage 1:
-   $ elm_theme_viewer
-
-It loads default theme (default.edj from /usr/local/share/elementary/themes) by
-default. But you can see the preview of other themes with the following
-instruction.
-
-Usage 2: Set the theme file
-   $ elm_theme_viewer -t ./darkness.edj
-
-Usage 3: See the help
-   $ elm_theme_viewer -h
-
-Usage 4: Set the mobile mode
-   $ elm_theme_viewer -m
-
-Usage 5: Set the Tizen platform style
-   $ elm_theme_viewer -T
-
-Usage 6: Set the screen size
-   $ elm_theme_viewer -s 1280x720
-
-Usage 7: Set the full screen mode. This overrides screen size setting.
-   $ elm_theme_viewer -F
+http://git.enlightenment.org/tools/elm-theme-viewer.git
